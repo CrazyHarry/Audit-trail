@@ -1,0 +1,45 @@
+/**
+ * Model definitions
+ */
+
+namespace be.vlaanderen.audittrail
+
+participant AuditorParticipant identified by auditorId {
+  o String auditorId
+}
+
+participant DepartmentParticipant identified by departmentId {
+  o String departmentId
+}
+
+participant CivilianParticipant identified by participantId {
+  o String participantId
+  o String firstName
+  o String lastName
+}
+
+asset LogItem identified by logId {
+  o String logId
+
+  --> DepartmentParticipant accessedBy
+  --> CivilianParticipant dataOwner
+
+  o String context
+  o String operation
+  o String operationDetails
+
+  o Integer Category
+
+  o String timestamp
+
+  o String originalLogHash
+}
+
+// transaction SampleTransaction {
+//   o String newValue
+// }
+
+// event SampleEvent {
+//   o String oldValue
+//   o String newValue
+// }
