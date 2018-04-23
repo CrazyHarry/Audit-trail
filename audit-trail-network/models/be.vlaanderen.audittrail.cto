@@ -28,10 +28,11 @@ import be.vlaanderen.audittrail.participant.*
     RELEVANT STAKEHOLDER'S ASSETS
 **/
 
-asset AuditReport identified by audit_id {
+asset AuditRequest identified by audit_id {
   // audit Report Details
   o String audit_id
-  o AuditReportState report_state
+  o String timestamp
+  o AuditRequesState request_state
 
   // stakeholders
   --> ParticipantCivilian sender
@@ -41,7 +42,7 @@ asset AuditReport identified by audit_id {
   --> LogEntry log_to_review
 }
 
-    enum AuditReportState {
+    enum AuditRequesState {
       o REQUESTED
       o REVISED
       o DONE
@@ -74,7 +75,7 @@ asset LogEntry identified by log_id {
     Transactions
 **/
 
-transaction t_NewLogEntry {
+transaction NewLogEntry {
   o String carbon_hash
   
   // stakeholders
@@ -87,27 +88,23 @@ transaction t_NewLogEntry {
   o String document optional
 }
 
-transaction t_NewAuditReport {
-    // audit Report Details
-    o String audit_id
-    o AuditReportState report_state
-
+transaction NewAuditRequest {
     // stakeholders
     --> ParticipantCivilian sender
     --> ParticipantAuditor auditor
 
     // relevant log entry
-    --> LogEntry logToReview
+    --> LogEntry log_to_review
 }
 
 /**
     Events
 **/
 
-event event_LogRegistered {
+event LogEntryAdded {
   o String log_id
 }
 
-event event_AuditReportStateChanged {
-  o AuditReportState report_state
+event AuditRequestAdded {
+  o String audit_id
 }
