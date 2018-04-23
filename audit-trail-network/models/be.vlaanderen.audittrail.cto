@@ -1,39 +1,88 @@
 /**
- * Model definitions
+
+    A blockchain network handles resource representations or assets between participants.
+    A partipant is a stakeholder of these assets.
+
+    What is an asset on the blockchain? Their digital #data-enriched version.
+    It will contain unique ids, names, figures or ... you know, data.
+
+    Assets can be modified, which looks like changing "welcoem" to "welcome".
+    On the blockchain however we want to record everything while 
+    keeping it safe, so we call these "transactions", which are like receipts
+    from your local shop.
+
+    What's noted on a receipt? Relevant information including shop details, final price, date, ...
+    In similar fashion, a transaction contains it's relevant information.
+
+    When a transaction is completed, information can be "emitted" or send to someone who
+    also uses our channel on the blockchain.
+
+    Author: Adam 'Blvck' Blazejczak
  */
 
 namespace be.vlaanderen.audittrail
 
-participant AuditorParticipant identified by auditorId {
-  o String auditorId
+/** 
+    STAKEHOLDERS
+**/
+
+participant ParticipantAuditor identified by auditor_id {
+  o String auditor_id
 }
 
-participant DepartmentParticipant identified by departmentId {
-  o String departmentId
+participant ParticipantDepartment identified by department_id {
+  o String department_id
 }
 
-participant CivilianParticipant identified by participantId {
-  o String participantId
-  o String firstName
-  o String lastName
+participant ParticipantCivilian identified by participant_id {
+  o String participant_id
+  o String first_name
+  o String last_name
+  o String salted_hash_rijksregisternummer
 }
 
-asset LogItem identified by logId {
-  o String logId
+/**
+    RELEVANT STAKEHOLDER'S ASSETS
+**/
 
-  --> DepartmentParticipant accessedBy
-  --> CivilianParticipant dataOwner
+asset AuditReport identified by audit_id {
+  // audit Report Details
+  o String audit_id
+  o AuditReportState report_state
 
+  // stakeholders
+  --> ParticipantCivilian sender
+  --> ParticipantAuditor auditor
+}
+
+    enum AuditReportState {
+      o REQUESTED
+      o REVISED
+      o DONE
+    }
+
+asset LogEntry identified by log_id {
+  o String log_id
+  o String timestamp 
+  o String carbon_hash
+
+  // stakeholders
+  --> ParticipantDepartment accessed_by
+  --> ParticipantCivilian data_owner
+
+  // basic log details
+  o LogCategory category
+
+  // details
   o String context
-  o String operation
-  o String operationDetails
-
-  o Integer Category
-
-  o String timestamp
-
-  o String originalLogHash
+  o String document optional
 }
+
+    enum LogCategory {
+      // TODO: ask for clarification on this one
+      o BOUWVERGUNNING
+      o RIJKSREGISTERNUMMER
+    }
 
 // transaction SampleTransaction {
 //   o String newValue
