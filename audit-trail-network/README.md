@@ -2,7 +2,13 @@
 
 This directory contains the HyperLedger Composer Business Network Application for the Audit Trail PoC, for the department environment.
 
-## Installing the business network
+## Testing the model out in Composer Playground
+
+To quikly play around with the business network, try using the [Composer Playground](https://composer-playground.mybluemix.net/). It runs locally on your browser and allows to quickly test transactions and the business network. 
+
+For usage, upload `dist/audit-trail-network@x.x.x.bna` to Playground and deplay the network.
+
+## Installing the business network on a network
 
 Create an archive file:
 ```composer archive create -t dist -n ../```

@@ -1,0 +1,20 @@
+namespace be.vlaanderen.audittrail.participant
+
+/** 
+    STAKEHOLDERS
+**/
+
+participant ParticipantAuditor identified by auditor_id {
+  o String auditor_id
+}
+
+participant ParticipantDepartment identified by department_id {
+  o String department_id
+}
+
+participant ParticipantCivilian identified by participant_id {
+  o String participant_id
+  o String first_name optional
+  o String last_name optional
+  o String salted_hash_rijksregisternummer optional
+}

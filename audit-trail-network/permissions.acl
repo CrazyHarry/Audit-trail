@@ -3,7 +3,7 @@
  */
 rule EverybodyCanReadEverything {
     description: "Allow all participants read access to all resources"
-    participant: "be.vlaanderen.audittrail.CivilianParticipant"
+    participant: "be.vlaanderen.audittrail.participant.*"
     operation: READ
     resource: "be.vlaanderen.audittrail.*"
     action: ALLOW
