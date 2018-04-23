@@ -8,11 +8,11 @@
 
     Assets can be modified, which looks like changing "welcoem" to "welcome".
     On the blockchain however we want to record everything while 
-    keeping it safe, so we call these "transactions", which are like receipts
-    from your local shop.
+    keeping it safe, so we call these modifications "transactions", which is like
+    repairing your bike.
 
-    What's noted on a receipt? Relevant information including shop details, final price, date, ...
-    In similar fashion, a transaction contains it's relevant information.
+    After repairing your bike, you get a receipt... What's noted on a receipt? Relevant information including shop details, final price, date, ...
+    In similar fashion, a transaction contains it's relevant information to complete the transaction.
 
     When a transaction is completed, information can be "emitted" or send to someone who
     also uses our channel on the blockchain.
@@ -36,9 +36,9 @@ participant ParticipantDepartment identified by department_id {
 
 participant ParticipantCivilian identified by participant_id {
   o String participant_id
-  o String first_name
-  o String last_name
-  o String salted_hash_rijksregisternummer
+  o String first_name optional
+  o String last_name optional
+  o String salted_hash_rijksregisternummer optional
 }
 
 /**
@@ -53,6 +53,9 @@ asset AuditReport identified by audit_id {
   // stakeholders
   --> ParticipantCivilian sender
   --> ParticipantAuditor auditor
+
+  // relevant log entry
+  --> LogEntry logToReview
 }
 
     enum AuditReportState {
@@ -84,11 +87,44 @@ asset LogEntry identified by log_id {
       o RIJKSREGISTERNUMMER
     }
 
-// transaction SampleTransaction {
-//   o String newValue
-// }
+/**
+    Transactions
+**/
 
-// event SampleEvent {
-//   o String oldValue
-//   o String newValue
-// }
+transaction t_NewLogEntry {
+  o String carbon_hash
+  
+  // stakeholders
+  --> ParticipantDepartment accessed_by
+  --> ParticipantCivilian data_owner
+
+  // transaction details
+  o LogCategory category
+  o String context
+  o String document optional
+}
+
+transaction t_NewAuditReport {
+    // audit Report Details
+    o String audit_id
+    o AuditReportState report_state
+
+    // stakeholders
+    --> ParticipantCivilian sender
+    --> ParticipantAuditor auditor
+
+    // relevant log entry
+    --> LogEntry logToReview
+}
+
+/**
+    Events
+**/
+
+event event_LogRegistered {
+  o String message
+}
+
+event event_AuditReportStateChanged {
+  o AuditReportState report_state
+}
