@@ -54,7 +54,7 @@ asset LogEntry identified by log_id {
   o String carbon_hash
 
   // stakeholders
-  --> ParticipantDepartment accessed_by
+  --> ParticipantPublicServant accessed_by
   --> ParticipantCivilian data_owner
 
   // basic log details
@@ -79,7 +79,7 @@ transaction NewLogEntry {
   o String carbon_hash
   
   // stakeholders
-  --> ParticipantDepartment accessed_by
+  --> ParticipantPublicServant accessed_by
   --> ParticipantCivilian data_owner
 
   // transaction details
