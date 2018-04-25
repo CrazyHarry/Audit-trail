@@ -17,12 +17,32 @@
     When a transaction is completed, information can be "emitted" or send to someone who
     also uses our channel on the blockchain.
 
+    Below a first version of an audit trail business network model.
+
     Author: Adam 'Blvck' Blazejczak
  */
 
 namespace be.vlaanderen.audittrail
 
-import be.vlaanderen.audittrail.participant.*
+/** 
+    STAKEHOLDERS
+**/
+
+participant ParticipantAuditor identified by auditor_id {
+  o String auditor_id
+}
+
+participant ParticipantPublicServant identified by public_servant_id {
+  o String public_servant_id
+  o String department
+}
+
+participant ParticipantCivilian identified by civilian_id {
+  o String civilian_id
+  o String first_name optional
+  o String last_name optional
+  o String salted_hash_rijksregisternummer optional
+}
 
 /**
     RELEVANT STAKEHOLDER'S ASSETS
@@ -89,12 +109,18 @@ transaction NewLogEntry {
 }
 
 transaction NewAuditRequest {
-    // stakeholders
-    --> ParticipantCivilian sender
-    --> ParticipantAuditor auditor
+  // stakeholders
+  --> ParticipantCivilian sender
+  --> ParticipantAuditor auditor
 
-    // relevant log entry
-    --> LogEntry log_to_review
+  // relevant log entry
+  --> LogEntry log_to_review
+}
+
+transaction ChangeAuditRequestState {
+  // new state for a given 
+  o String audit_id
+  o AuditRequesState new_state
 }
 
 /**
@@ -106,5 +132,9 @@ event LogEntryAdded {
 }
 
 event AuditRequestAdded {
+  o String audit_id
+}
+
+event AuditRequestUpdated {
   o String audit_id
 }

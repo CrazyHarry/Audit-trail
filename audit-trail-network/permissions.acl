@@ -1,11 +1,93 @@
 /**
  * Sample access control list.
  */
-rule EverybodyCanReadEverything {
-    description: "Allow all participants read access to all resources"
-    participant: "be.vlaanderen.audittrail.participant.*"
+// rule EverybodyCanReadEverything {
+//     description: "Allow all participants read access to all resources"
+//     participant: "be.vlaanderen.audittrail.participant.*"
+//     operation: READ
+//     resource: "be.vlaanderen.audittrail.*"
+//     action: ALLOW
+// }
+
+/*
+    Civilian Permissions
+*/
+
+rule R_civilian_read_logs {
+    description: "Allow civilians to read their access logs"
+    participant(p): "be.vlaanderen.audittrail.ParticipantCivilian"
     operation: READ
-    resource: "be.vlaanderen.audittrail.*"
+    resource(r): "be.vlaanderen.audittrail.LogEntry"
+    condition: (r.data_owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule R_civilian_read_auditrequests {
+    description: "Allow civilians to read their audit requests logs"
+    participant(p): "be.vlaanderen.audittrail.ParticipantCivilian"
+    operation: READ
+    resource(r): "be.vlaanderen.audittrail.AuditRequest"
+    condition: (r.sender.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule R_civilian_transaction_create_auditrequest {
+    description: "Allow civilians to create an audit request transactions"
+    participant: "be.vlaanderen.audittrail.ParticipantCivilian"
+    operation: READ
+    resource: "be.vlaanderen.audittrail.AuditRequest"
+    transaction: "be.vlaanderen.audittrail.NewAuditRequest"
+    action: ALLOW
+}
+
+/*
+    Public Servant Permissions
+*/
+
+rule R_publicservant_read_logs {
+    description: "Allow public servants to read logs from their own department"
+    participant(p): "be.vlaanderen.audittrail.ParticipantPublicServant"
+    operation: READ
+    resource(r): "be.vlaanderen.audittrail.LogEntry"
+    condition: (r.accessed_by.department === p.department)
+    action: ALLOW
+}
+
+rule R_publicservant_transaction_create_logentry {
+    description: "Allow public servants to create new log entries"
+    participant: "be.vlaanderen.audittrail.ParticipantPublicServant"
+    operation: READ, CREATE, UPDATE
+    resource: "be.vlaanderen.audittrail.LogEntry"
+    transaction: "be.vlaanderen.audittrail.NewLogEntry"
+    action: ALLOW
+}
+
+/*
+    Public Servant Permissions
+*/
+
+rule R_auditor_read_logs {
+    description: "Allow auditors to read all log entries"
+    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: READ
+    resource: "be.vlaanderen.audittrail.LogEntry"
+    action: ALLOW
+}
+
+rule R_auditor_read_auditrequests {
+    description: "Allow auditors to read all log entries"
+    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: READ
+    resource: "be.vlaanderen.audittrail.AuditRequest"
+    action: ALLOW
+}
+
+rule R_auditor_transaction_change_auditrequest_state {
+    description: "Allow auditors to read all log entries"
+    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: READ, CREATE, UPDATE
+    resource: "be.vlaanderen.audittrail.AuditRequest"
+    transaction: "be.vlaanderen.audittrail.ChangeAuditRequestState"
     action: ALLOW
 }
 

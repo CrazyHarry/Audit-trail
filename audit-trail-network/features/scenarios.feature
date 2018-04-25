@@ -1,6 +1,7 @@
 #
 # Flemish Government - Vlaamse Overheid
 # Author: Adam 'Blvck' Blazejczak
+# smartie.be
 #
 
 Feature: Scenarios
@@ -34,6 +35,8 @@ Feature: Scenarios
         And I have issued the participant be.vlaanderen.audittrail.ParticipantPublicServant#daniel@email.com with the identity daniel
         And I have issued the participant be.vlaanderen.audittrail.ParticipantPublicServant#pascal@email.com with the identity pascal
         And I have issued the participant be.vlaanderen.audittrail.ParticipantAuditor#auditor@email.com with the identity auditor
+
+    
 
     # Scenario: Alice can read all of the assets
     #     When I use the identity alice1

@@ -2,6 +2,8 @@
     Vlaamse Overheid 2018 - April
 
     Author: Adam 'Blvck' Blazejczak
+
+    This file contains the transaction logic when executing
  */
 
 'use strict';
@@ -89,5 +91,38 @@ function newAuditRequest(newAuditData) {
 
             // Add audit to registry
             return auditRegistry.add(audit_entry);
+        });
+}
+
+/**
+ * Add a new log entry to the channel
+ * @param {be.vlaanderen.audittrail.ChangeAuditRequestState} newAuditState
+ * @transaction
+ */
+function changeAuditRequestState(newAuditState) {
+    var auditRegistry={}
+    // Get the Asset Registry
+    return getAssetRegistry('be.vlaanderen.audittrail.AuditRequest')
+        // then execute the following
+        .then(function(registry){
+            auditRegistry = registry;
+            return auditRegistry.get(newAuditState.audit_id);
+        }).then(function(audit_request){
+            // catch if there is no audit request found
+            if(!audit_request) throw new Error("Flight : "+newAuditState.flightId," Not Found!!!");
+
+            // update the audit request state
+            audit_request.request_state = new_state;
+            
+            // update registry
+            return flightRegistry.update(flight);
+        }).then(function(){
+            // successful update
+            var event = getFactory().newEvent('be.vlaanderen.audittrail', 'AuditRequestUpdated');
+            event.audit_id = newAuditState.audit_id;
+            emit(event);
+
+        }).catch(function(error){
+            throw new Error(error);
         });
 }

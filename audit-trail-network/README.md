@@ -32,6 +32,6 @@ To check if the network is up and running
 To upgrade the business network application:
 1. create an archive
 2. install it
-3. composer network upgrade -c PeerAdmin@hlfv1 -n airlinev8 -V 0.0.2
+3. composer network upgrade -c PeerAdmin@hlfv1 -n audit-trail-network -V 0.0.2
 
 To start a rest server, just type in `composer-rest-server` and follow along what's written.
