@@ -100,6 +100,8 @@ asset LogEntry identified by log_id {
 **/
 
 transaction NewLogEntry {
+  o String log_id optional
+
   o String carbon_hash
   
   // stakeholders
@@ -113,6 +115,7 @@ transaction NewLogEntry {
 }
 
 transaction NewAuditRequest {
+
   // stakeholders
   --> ParticipantCivilian sender
   --> ParticipantAuditor auditor

@@ -34,8 +34,8 @@ rule R_civilian_read_auditrequests {
 rule R_civilian_transaction_create_auditrequest {
     description: "Allow civilians to create an audit request transactions"
     participant: "be.vlaanderen.audittrail.ParticipantCivilian"
-    operation: READ, CREATE, UPDATE
-    resource: "be.vlaanderen.audittrail.AuditRequest"
+    operation: CREATE
+    resource: "be.vlaanderen.audittrail.LogEntry"
     transaction: "be.vlaanderen.audittrail.NewAuditRequest"
     action: ALLOW
 }
@@ -44,26 +44,34 @@ rule R_civilian_transaction_create_auditrequest {
     Public Servant Permissions
 */
 
-rule R_publicservant_read_logs {
+rule publicservant_permission_historian {
+  description: "can write HistorianRecord to the Historian"
+  participant: "be.vlaanderen.audittrail.ParticipantPublicServant"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.HistorianRecord"
+  action: ALLOW  
+}
+
+rule R_publicservant_permissions_logs {
     description: "Allow public servants to read logs from their own department"
     participant(p): "be.vlaanderen.audittrail.ParticipantPublicServant"
-    operation: READ
+    operation: READ, CREATE
     resource(r): "be.vlaanderen.audittrail.LogEntry"
-    condition: (r.accessed_by.department === p.department)
+    condition: (r.accessed_by.getIdentifier() === p.getIdentifier() )
     action: ALLOW
 }
 
 rule R_publicservant_transaction_create_logentry {
     description: "Allow public servants to create new log entries"
     participant: "be.vlaanderen.audittrail.ParticipantPublicServant"
-    operation: READ, CREATE, UPDATE
-    resource: "be.vlaanderen.audittrail.LogEntry"
-    transaction: "be.vlaanderen.audittrail.NewLogEntry"
+    operation: CREATE
+    // resource: "be.vlaanderen.audittrail.LogEntry"
+    resource: "be.vlaanderen.audittrail.NewLogEntry"
     action: ALLOW
 }
 
 /*
-    Public Servant Permissions
+    Auditor Permissions
 */
 
 rule R_auditor_read_logs {

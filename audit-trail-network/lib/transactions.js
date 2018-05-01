@@ -26,6 +26,9 @@ function newLogEntry(newLogData) {
 
             // generate a random log_id
             var log_id = Math.random().toString(36).substr(2, 15);
+            if ('log_id' in newLogData){
+                log_id = newLogData.log_id;
+            }
 
             // generate Log Entry Asset
             var logentry = factory.newResource(ns, asset, log_id);
