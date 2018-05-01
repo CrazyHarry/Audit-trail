@@ -13,6 +13,14 @@
     Civilian Permissions
 */
 
+rule civilian_permission_historian {
+  description: "can write HistorianRecord to the Historian"
+  participant: "be.vlaanderen.audittrail.ParticipantCivilian"
+  operation: CREATE
+  resource: "org.hyperledger.composer.system.HistorianRecord"
+  action: ALLOW  
+}
+
 rule R_civilian_read_logs {
     description: "Allow civilians to read their access logs"
     participant(p): "be.vlaanderen.audittrail.ParticipantCivilian"
@@ -35,7 +43,7 @@ rule R_civilian_transaction_create_auditrequest {
     description: "Allow civilians to create an audit request transactions"
     participant: "be.vlaanderen.audittrail.ParticipantCivilian"
     operation: CREATE
-    resource: "be.vlaanderen.audittrail.LogEntry"
+    resource: "be.vlaanderen.audittrail.*"
     transaction: "be.vlaanderen.audittrail.NewAuditRequest"
     action: ALLOW
 }
@@ -55,7 +63,7 @@ rule publicservant_permission_historian {
 rule R_publicservant_permissions_logs {
     description: "Allow public servants to read logs from their own department"
     participant(p): "be.vlaanderen.audittrail.ParticipantPublicServant"
-    operation: READ, CREATE
+    operation: READ
     resource(r): "be.vlaanderen.audittrail.LogEntry"
     condition: (r.accessed_by.getIdentifier() === p.getIdentifier() )
     action: ALLOW
@@ -65,8 +73,8 @@ rule R_publicservant_transaction_create_logentry {
     description: "Allow public servants to create new log entries"
     participant: "be.vlaanderen.audittrail.ParticipantPublicServant"
     operation: CREATE
-    // resource: "be.vlaanderen.audittrail.LogEntry"
-    resource: "be.vlaanderen.audittrail.NewLogEntry"
+    resource: "be.vlaanderen.audittrail.*"
+    transaction: "be.vlaanderen.audittrail.NewLogEntry"
     action: ALLOW
 }
 
@@ -93,8 +101,8 @@ rule R_auditor_read_auditrequests {
 rule R_auditor_transaction_change_auditrequest_state {
     description: "Allow auditors to read all log entries"
     participant: "be.vlaanderen.audittrail.ParticipantAuditor"
-    operation: READ, CREATE, UPDATE
-    resource: "be.vlaanderen.audittrail.AuditRequest"
+    operation: CREATE
+    resource: "be.vlaanderen.audittrail.*"
     transaction: "be.vlaanderen.audittrail.ChangeAuditRequestState"
     action: ALLOW
 }

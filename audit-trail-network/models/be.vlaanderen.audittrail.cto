@@ -115,6 +115,7 @@ transaction NewLogEntry {
 }
 
 transaction NewAuditRequest {
+  o String audit_id optional
 
   // stakeholders
   --> ParticipantCivilian sender

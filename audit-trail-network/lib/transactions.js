@@ -74,6 +74,9 @@ function newAuditRequest(newAuditData) {
 
             // generate a random log_id
             var audit_id = Math.random().toString(36).substr(2, 15);
+            if ('audit_id' in newAuditData){
+                audit_id = newAuditData.audit_id;
+            }
 
             // generate Audit Request
             var audit_entry = factory.newResource(ns, asset, audit_id);
