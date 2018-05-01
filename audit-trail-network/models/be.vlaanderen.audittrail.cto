@@ -64,7 +64,7 @@ asset AuditRequest identified by audit_id {
 
     enum AuditRequesState {
       o REQUESTED
-      o REVISED
+      o UNDERREVISION
       o DONE
     }
 
@@ -86,9 +86,13 @@ asset LogEntry identified by log_id {
 }
 
     enum LogCategory {
-      // TODO: ask for clarification on this one
       o BOUWVERGUNNING
-      o RIJKSREGISTERNUMMER
+      o SUBSIDIE
+      o GESLACHTSVERANDERING
+      o HUWELIJK
+      o SOCIALEWONING
+      o STEMPELGELD
+      o VERKAVELING
     }
 
 /**

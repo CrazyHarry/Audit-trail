@@ -34,7 +34,7 @@ rule R_civilian_read_auditrequests {
 rule R_civilian_transaction_create_auditrequest {
     description: "Allow civilians to create an audit request transactions"
     participant: "be.vlaanderen.audittrail.ParticipantCivilian"
-    operation: READ
+    operation: READ, CREATE, UPDATE
     resource: "be.vlaanderen.audittrail.AuditRequest"
     transaction: "be.vlaanderen.audittrail.NewAuditRequest"
     action: ALLOW

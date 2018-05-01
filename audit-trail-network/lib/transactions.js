@@ -19,7 +19,6 @@ function newLogEntry(newLogData) {
 
         // then execute the following
         .then(function(logRegistry){
-            
             // information needed to create new log
             var factory = getFactory();
             var ns =  'be.vlaanderen.audittrail'; // namespace
@@ -30,7 +29,7 @@ function newLogEntry(newLogData) {
 
             // generate Log Entry Asset
             var logentry = factory.newResource(ns, asset, log_id);
-            d = new Date();
+            var d = new Date();
             logentry.timestamp = d.toUTCString();
 
             // add extra information
@@ -40,8 +39,9 @@ function newLogEntry(newLogData) {
             logentry.category = newLogData.category;
             logentry.context = newLogData.context;
 
-            if (newLogData.document) // if document exists -> add
-                logentry.document = newLogData.document;          
+            if (newLogData.document){ // if document exists -> add
+                logentry.document = newLogData.document;
+            }
 
             // emit event regarding registration of the log
             var event = factory.newEvent(ns, 'LogEntryAdded');
@@ -64,7 +64,6 @@ function newAuditRequest(newAuditData) {
 
         // then execute the following
         .then(function(auditRegistry){
-            
             // information needed to create new log
             var factory = getFactory();
             var ns =  'be.vlaanderen.audittrail'; // namespace
@@ -73,16 +72,16 @@ function newAuditRequest(newAuditData) {
             // generate a random log_id
             var audit_id = Math.random().toString(36).substr(2, 15);
 
-            // generate Audit Request 
+            // generate Audit Request
             var audit_entry = factory.newResource(ns, asset, audit_id);
             var d = new Date();
             audit_entry.timestamp = d.toUTCString();
-            audit_entry.request_state = "REQUESTED";
+            audit_entry.request_state = 'REQUESTED';
 
             // add extra information
             audit_entry.sender = newAuditData.sender;
             audit_entry.auditor = newAuditData.auditor;
-            audit_entry.log_to_review = newAuditData.log_to_review;      
+            audit_entry.log_to_review = newAuditData.log_to_review;
 
             // emit event regarding registration of the log
             var event = factory.newEvent(ns, 'AuditRequestAdded');
@@ -100,7 +99,7 @@ function newAuditRequest(newAuditData) {
  * @transaction
  */
 function changeAuditRequestState(newAuditState) {
-    var auditRegistry={}
+    var auditRegistry={};
     // Get the Asset Registry
     return getAssetRegistry('be.vlaanderen.audittrail.AuditRequest')
         // then execute the following
@@ -109,13 +108,15 @@ function changeAuditRequestState(newAuditState) {
             return auditRegistry.get(newAuditState.audit_id);
         }).then(function(audit_request){
             // catch if there is no audit request found
-            if(!audit_request) throw new Error("Flight : "+newAuditState.flightId," Not Found!!!");
+            if(!audit_request){
+                throw new Error('Flight : '+newAuditState.flightId,' Not Found!!!');
+            }
 
             // update the audit request state
-            audit_request.request_state = new_state;
-            
+            audit_request.request_state = newAuditState.new_state;
+
             // update registry
-            return flightRegistry.update(flight);
+            return auditRegistry.update(audit_request);
         }).then(function(){
             // successful update
             var event = getFactory().newEvent('be.vlaanderen.audittrail', 'AuditRequestUpdated');

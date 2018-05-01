@@ -21,22 +21,28 @@ Feature: Scenarios
             | auditor@email.com |
         And I have added the following assets of type be.vlaanderen.audittrail.LogEntry
             | log_id | timestamp | carbon_hash | accessed_by | data_owner | category | context |
-            | log1 | 22-01-2018  | qgfv34afa | be.vlaanderen.audittrail.ParticipantPublicServant#daniel@email.com | be.vlaanderen.audittrail.ParticipantCivilian#adam@email.com   | aanvraag | aanvraag |
-            | log2 | 23-02-2018  | fafvawqfu | be.vlaanderen.audittrail.ParticipantPublicServant#pascal@email.com | be.vlaanderen.audittrail.ParticipantCivilian#adam@email.com   | rijksregister | bouwvergunning |
-            | log3 | 24-03-2018  | wawew2eaa | be.vlaanderen.audittrail.ParticipantPublicServant#daniel@email.com | be.vlaanderen.audittrail.ParticipantCivilian#dieter@email.com | geboorteplaats | bouwvergunning |
-            | log3 | 25-04-2018  | 7a2razw2e | be.vlaanderen.audittrail.ParticipantPublicServant#pascal@email.com | be.vlaanderen.audittrail.ParticipantCivilian#dieter@email.com | aanvraag | bouwvergunning |
+            | log1 | 22-01-2018  | qgfv34afa | daniel@email.com | adam@email.com   | BOUWVERGUNNING | aanvraag |
+            | log2 | 23-02-2018  | fafvawqfu | pascal@email.com | adam@email.com   | SUBSIDIE | bouwvergunning |
+            | log3 | 24-03-2018  | wawew2eaa | daniel@email.com | dieter@email.com | HUWELIJK | bouwvergunning |
+            | log4 | 25-04-2018  | 7a2razw2e | pascal@email.com | dieter@email.com | SOCIALEWONING | bouwvergunning |
         And I have added the following assets of type be.vlaanderen.audittrail.AuditRequest
             | audit_id | timestamp | request_state | sender | auditor | log_to_review |
-            | audit1 | 24-03-2018 | REQUESTED | be.vlaanderen.audittrail.ParticipantCivilian#adam@email.com | be.vlaanderen.audittrail.ParticipantAuditor#adauditor@email.com | be.vlaanderen.audittrail.LogEntry#log2 |
-            | audit1 | 24-03-2018 | REQUESTED | be.vlaanderen.audittrail.ParticipantCivilian#dieter@email.com | be.vlaanderen.audittrail.ParticipantAuditor#adauditor@email.com | be.vlaanderen.audittrail.LogEntry#log3 |
+            | audit1 | 24-03-2018 | REQUESTED | adam@email.com | adauditor@email.com | log2 |
+            | audit2 | 24-03-2018 | REQUESTED | dieter@email.com | adauditor@email.com | log3 |
 
-        And I have issued the participant be.vlaanderen.audittrail.ParticipantCivilian#adam@email.com with the identity adam
-        And I have issued the participant be.vlaanderen.audittrail.ParticipantCivilian#dieter@email.com with the identity dieter
-        And I have issued the participant be.vlaanderen.audittrail.ParticipantPublicServant#daniel@email.com with the identity daniel
-        And I have issued the participant be.vlaanderen.audittrail.ParticipantPublicServant#pascal@email.com with the identity pascal
-        And I have issued the participant be.vlaanderen.audittrail.ParticipantAuditor#auditor@email.com with the identity auditor
+        And I have issued the participant be.vlaanderen.audittrail.ParticipantCivilian#adam@email.com with the identity adam1
+        And I have issued the participant be.vlaanderen.audittrail.ParticipantCivilian#dieter@email.com with the identity dieter1
+        And I have issued the participant be.vlaanderen.audittrail.ParticipantPublicServant#daniel@email.com with the identity daniel1
+        And I have issued the participant be.vlaanderen.audittrail.ParticipantPublicServant#pascal@email.com with the identity pascal1
+        And I have issued the participant be.vlaanderen.audittrail.ParticipantAuditor#auditor@email.com with the identity auditor1
 
-    
+    Scenario: Adam can read only his own logs
+        When I use the identity adam1 
+        Then I should only have the following assets of type be.vlaanderen.audittrail.LogEntry
+            | log_id | timestamp | carbon_hash | accessed_by | data_owner | category | context |
+            | log1 | 22-01-2018  | qgfv34afa | daniel@email.com | adam@email.com   | BOUWVERGUNNING | aanvraag |
+            | log2 | 23-02-2018  | fafvawqfu | pascal@email.com | adam@email.com   | SUBSIDIE | bouwvergunning |
+        # And I should have the following assets of type be.vlaanderen.audittrail.AuditRequest
 
     # Scenario: Alice can read all of the assets
     #     When I use the identity alice1
