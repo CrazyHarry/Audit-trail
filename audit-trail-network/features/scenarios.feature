@@ -139,6 +139,10 @@ Feature: Scenarios
         And I submit the following transaction of type be.vlaanderen.audittrail.NewLogEntry
             | log_id | carbon_hash | accessed_by | data_owner | category | context |
             | testlog | jkljlkfa    | daniel@email.com | adam@email.com | BOUWVERGUNNING | aanvraag |
+        Then I should have received the following event of type be.vlaanderen.audittrail.LogEntryAdded
+            | log_id   |
+            | testlog  |
+
         When I use the identity adam1
         Then I should have the following assets of type be.vlaanderen.audittrail.LogEntry
             | log_id | timestamp | carbon_hash | accessed_by | data_owner | category | context |
@@ -163,8 +167,9 @@ Feature: Scenarios
             | testlog2 | * | jkljlkfa    | pascal@email.com | dieter@email.com | BOUWVERGUNNING | aanvraag |
 
     #####
-    # Civilian Audit Request Creation Access Test
-    # : Daniel + Pascal
+    # Audit Request Creation + Access Test
+    # Public servants: Daniel + Pascal
+    # 
     #####
     Scenario: Adam & Dieter can read each their own audit request submissions (and can't read each other's)
         When I use the identity adam1
@@ -203,10 +208,13 @@ Feature: Scenarios
         Then I should have the following assets of type be.vlaanderen.audittrail.AuditRequest
             | audit_id | timestamp | request_state | sender | auditor | log_to_review |
             | audittest | * | REQUESTED | adam@email.com | auditor1@email.com | log3 |
+        And I should have received the following event of type be.vlaanderen.audittrail.AuditRequestAdded
+            | audit_id   |
+            | audittest     |
 
         When I use the identity dieter1
         Then I should not have the following assets of type be.vlaanderen.audittrail.AuditRequest
-            | audit_id | timestamp | request_state | sender | auditor | log_to_review |
+            | audit_id | timestamp | requsest_state | sender | auditor | log_to_review |
             | audittest | * | REQUESTED | adam@email.com | auditor1@email.com | log3 |
 
         When I use the identity auditor1
@@ -217,6 +225,18 @@ Feature: Scenarios
         Then I should have the following assets of type be.vlaanderen.audittrail.AuditRequest
             | audittest | * | REQUESTED | adam@email.com | auditor1@email.com | log3 |
 
+
+    Scenario: Auditors can change audit requests states
+        When I use the identity auditor1
+        And I submit the following transaction of type be.vlaanderen.audittrail.ChangeAuditRequestState
+            | audit_id | new_state |
+            | audit1   | UNDERREVISION |
+        Then I should have the following assets of type be.vlaanderen.audittrail.AuditRequest
+            | audit_id | timestamp | request_state | sender | auditor | log_to_review |
+            | audit1 | 24-03-2018 | UNDERREVISION | adam@email.com | auditor1@email.com | log2 |
+        And I should have received the following event of type be.vlaanderen.audittrail.AuditRequestUpdated
+            | audit_id   |
+            | audit1     |
 
     # Scenario: Alice can read all of the assets
     #     When I use the identity alice1

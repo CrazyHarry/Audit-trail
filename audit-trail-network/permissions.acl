@@ -101,7 +101,7 @@ rule R_auditor_read_auditrequests {
 rule R_auditor_transaction_change_auditrequest_state {
     description: "Allow auditors to read all log entries"
     participant: "be.vlaanderen.audittrail.ParticipantAuditor"
-    operation: CREATE
+    operation: CREATE, UPDATE
     resource: "be.vlaanderen.audittrail.*"
     transaction: "be.vlaanderen.audittrail.ChangeAuditRequestState"
     action: ALLOW

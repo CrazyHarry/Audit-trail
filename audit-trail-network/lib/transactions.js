@@ -115,7 +115,7 @@ function changeAuditRequestState(newAuditState) {
         }).then(function(audit_request){
             // catch if there is no audit request found
             if(!audit_request){
-                throw new Error('Flight : '+newAuditState.flightId,' Not Found!!!');
+                throw new Error('Flight : '+newAuditState.audit_id,' Not Found!!!');
             }
 
             // update the audit request state
