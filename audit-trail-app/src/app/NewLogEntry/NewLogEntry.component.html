@@ -1,0 +1,355 @@
+<!--
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<div class="modal fade" id="addTransactionModal" tabindex="-1" role="dialog" aria-labelledby="addTransactionModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="addTransactionModalLabel">Create Transaction</h4>
+          <p class="modal-intro">Enter the required values below.</p>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body">
+
+
+          
+
+            
+              <div class="form-group text-left">
+                <label for="carbon_hash">carbon_hash</label>
+                
+                  <input formControlName="carbon_hash" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="accessed_by">accessed_by</label>
+                
+                    <textarea formControlName="accessed_by" class="form-control" rows="3"></textarea>
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="data_owner">data_owner</label>
+                
+                    <textarea formControlName="data_owner" class="form-control" rows="3"></textarea>
+                
+              </div>
+            
+          
+
+            
+              <label for="category">category</label>
+              <div class="checkbox">
+                
+                  <label>
+                    <input
+                      
+                        formControlName="category"
+                      
+                      name="category"
+                      value="BOUWVERGUNNING"
+                      type="radio"
+                      
+                    />
+                    BOUWVERGUNNING
+                  </label>
+                
+                  <label>
+                    <input
+                      
+                        formControlName="category"
+                      
+                      name="category"
+                      value="RIJKSREGISTERNUMMER"
+                      type="radio"
+                      
+                    />
+                    RIJKSREGISTERNUMMER
+                  </label>
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="context">context</label>
+                
+                  <input formControlName="context" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="document">document</label>
+                
+                  <input formControlName="document" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="transactionId">transactionId</label>
+                
+                  <input formControlName="transactionId" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+            
+              <div class="form-group text-left">
+                <label for="timestamp">timestamp</label>
+                
+                  <input formControlName="timestamp" type="text" class="form-control">
+                
+              </div>
+            
+          
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button (click)="addTransaction(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Confirm</button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="modal fade" id="updateTransactionModal" tabindex="-1" role="dialog" aria-labelledby="updateTransactionModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="updateTransactionModalLabel">Update Transaction</h4>
+      </div>
+      <form [formGroup]="myForm">
+        <div class="modal-body">
+
+
+          
+            <div class="form-group text-left">
+              <label for="carbon_hash">carbon_hash</label>
+
+              
+                <input [ngModel]="carbon_hash"formControlName="carbon_hash" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="accessed_by">accessed_by</label>
+
+              
+                
+                  <textarea [ngModel]="accessed_by" formControlName="accessed_by" class="form-control" rows="3"></textarea>
+                
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="data_owner">data_owner</label>
+
+              
+                
+                  <textarea [ngModel]="data_owner" formControlName="data_owner" class="form-control" rows="3"></textarea>
+                
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="category">category</label>
+
+              
+                
+                  <div class="row">
+                    <div class="col-xs-12 checkbox">
+                    
+                      <label>
+                        <input
+                          
+                            formControlName="category"
+                            [ngModel]="category"
+                          
+                          name="category"
+                          value="BOUWVERGUNNING"
+                          type="radio"
+                          
+                        />
+                        BOUWVERGUNNING
+                      </label>
+                    
+                      <label>
+                        <input
+                          
+                            formControlName="category"
+                            [ngModel]="category"
+                          
+                          name="category"
+                          value="RIJKSREGISTERNUMMER"
+                          type="radio"
+                          
+                        />
+                        RIJKSREGISTERNUMMER
+                      </label>
+                    
+                    </div>
+                  </div>
+                
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="context">context</label>
+
+              
+                <input [ngModel]="context"formControlName="context" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="document">document</label>
+
+              
+                <input [ngModel]="document"formControlName="document" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="transactionId">transactionId</label>
+
+              
+                <input [ngModel]="transactionId"formControlName="transactionId" type="text" class="form-control">
+              
+
+            </div>
+          
+            <div class="form-group text-left">
+              <label for="timestamp">timestamp</label>
+
+              
+                <input [ngModel]="timestamp"formControlName="timestamp" type="text" class="form-control">
+              
+
+            </div>
+          
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button (click)="updateTransaction(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="deleteTransactionModal" tabindex="-1" role="dialog" aria-labelledby="deleteTransactionModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="deleteTransactionModalLabel">Delete Transaction</h4>
+      </div>
+      <form [formGroup]="myForm" (ngSubmit)="deleteTransaction()">
+        <div class="modal-body">
+          Are you sure you want to delete this Transaction?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <button (click)="deleteTransaction()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="container">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        <strong>Error:</strong> {{errorMessage}}
+    </div>
+  
+  <div class="row">
+    <div class="col-md-9">
+        <h1 class="transaction-title" id='transactionName'>NewLogEntry</h1>
+    </div>
+    <div class="col-md-3">
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-12">
+          When invoked, this transaction will have the following attributes:
+          <br>
+          <ul>
+            
+              <li><span class="attribute"><b>carbon_hash</b></span></li>
+            
+              <li><span class="attribute"><b>accessed_by</b></span></li>
+            
+              <li><span class="attribute"><b>data_owner</b></span></li>
+            
+              <li><span class="attribute"><b>category</b></span></li>
+            
+              <li><span class="attribute"><b>context</b></span></li>
+            
+              <li><span class="attribute"><b>document</b></span></li>
+            
+              <li><span class="attribute"><b>transactionId</b></span></li>
+            
+              <li><span class="attribute"><b>timestamp</b></span></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
