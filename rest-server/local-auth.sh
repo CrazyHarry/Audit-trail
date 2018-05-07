@@ -9,21 +9,21 @@ export COMPOSER_AUTHENTICATION=true
 
 #4. Set up the Passport strategy provider
 export COMPOSER_PROVIDERS='{
-  "github": {
-    "provider": "github",
-    "module": "passport-github",
-    "clientID": "4e00cf76b6da18159a0d",
-    "clientSecret": "974eafab3788cdf4eefc74fa220ac40d0f2b3196",
-    "authPath": "/auth/github",
-    "callbackURL": "/auth/github/callback",
-    "successRedirect": "/",
-    "failureRedirect": "/"
-  }
+  "local": { 
+    "provider": "local", 
+    "module": "passport-local", 
+    "usernameField": "username", 
+    "passwordField": "password", 
+    "authPath": "/auth/local", 
+    "callbackURL":"/auth/local/callback",
+    "successRedirect": "/", 
+    "failureRedirect": "/", 
+    "setAccessToken": true, 
+    "callbackHTTPMethod": "post" 
+   }
 }'
 
 #5. Execute the REST server
-composer-rest-server 
-
-# for sockets:  -w true
+composer-rest-server
 
 # "successRedirect": "http://localhost:4200?loggedIn=true"
