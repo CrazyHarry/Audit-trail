@@ -28,12 +28,21 @@ function main(error){
         process.exit(1);
     }
 
+    var auditors = ['auditor1', 'auditor2'];
+    var civilians = ['adam', 'dieter', 'bram'];
+    var publicServants = ['daniel', 'pascal'];
+
+    var contextTypes = ['BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', 
+                        'SOCIALEWONING', 'STEMPELGELD', 'VERKAVELING'];
+
     // 2. Get the 'LogEntry' AssetRegistry
     return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.LogEntry').then((registry)=>{
         console.log('1. Received Registry: ', registry.id);
 
         // add the dummy logs
-        addLogEntry(registry, 'daniel', 'adam', 'BOUWVERGUNNING');
+        for (let i = 0; i < 20; i++) { 
+            addLogEntry(registry, rand(publicServants), rand(civilians), rand(contextTypes));
+        }
 
         // 3. Get the 'AuditRequest' AssetRegistry
         return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.AuditRequest');
@@ -42,35 +51,9 @@ function main(error){
         console.log('2. Received Registry: ', registry.id);
 
         // add the audit request logs
-        addAuditRequest(registry, 'adam', 'auditor1', 'randomlog');
-
-        // 4. Add civilians to the network (participants)
-        return bnUtil.connection.getParticipantRegistry('be.vlaanderen.audittrail.ParticipantCivilian');
-
-    }).then((registry)=>{
-        console.log('3. Received Registry: ', registry.id);
-
-        addCivilian(registry, 'adam');
-        addCivilian(registry, 'dieter');
-        addCivilian(registry, 'bram');
-
-        // 5. Add public servants to the network (participants)
-        return bnUtil.connection.getParticipantRegistry('be.vlaanderen.audittrail.ParticipantPublicServant');
-
-    }).then((registry)=>{
-        console.log('4. Received Registry: ', registry.id);
-
-        addPublicServant(registry, 'daniel', 'INFORMATIEVLAANDEREN');
-        addPublicServant(registry, 'pascal', 'DEPARTEMENTOMGEVING');
-
-        // 6. Add public servants to the network (participants)
-        return bnUtil.connection.getParticipantRegistry('be.vlaanderen.audittrail.ParticipantAuditor');
-
-    }).then((registry)=>{
-        console.log('5. Received Registry: ', registry.id);
-
-        addAuditor(registry, 'auditor1');
-        addAuditor(registry, 'auditor2');
+        for (let i = 0; i < 5; i++) { 
+            addAuditRequest(registry, rand(civilians), rand(auditors), Math.random().toString(36).substr(2, 15));
+        }
 
     }).catch((error)=>{
         console.log(error);
@@ -78,66 +61,12 @@ function main(error){
     });
 }
 
+// function pick random from array
 /**
- * @param registry
- * @param id
+ * @param arr
  */
-function addCivilian(registry, id){
-    const bnDef = bnUtil.connection.getBusinessNetwork();
-    const factory = bnDef.getFactory();
-
-    let civilian = factory.newResource('be.vlaanderen.audittrail', 'ParticipantCivilian', id);
-
-    // add dummy to the registry, which will add it to the network
-    return registry.add(civilian).then(()=>{
-        console.log('Successfully added civilian',id);
-        return;
-    }).catch((error)=>{
-        console.log(error);
-        bnUtil.disconnect();
-    });
-}
-
-/**
- * @param registry
- * @param id
- * @param department
- */
-function addPublicServant(registry, id, department){
-    const bnDef = bnUtil.connection.getBusinessNetwork();
-    const factory = bnDef.getFactory();
-
-    let publicServant = factory.newResource('be.vlaanderen.audittrail', 'ParticipantPublicServant', id);
-    publicServant.department = department;
-
-    // add dummy to the registry, which will add it to the network
-    return registry.add(publicServant).then(()=>{
-        console.log('Successfully added public servant',id);
-        return;
-    }).catch((error)=>{
-        console.log(error);
-        bnUtil.disconnect();
-    });
-}
-
-/**
- * @param registry
- * @param id
- */
-function addAuditor(registry, id){
-    const bnDef = bnUtil.connection.getBusinessNetwork();
-    const factory = bnDef.getFactory();
-
-    let auditor = factory.newResource('be.vlaanderen.audittrail', 'ParticipantAuditor', id);
-
-    // add dummy to the registry, which will add it to the network
-    return registry.add(auditor).then(()=>{
-        console.log('Successfully added auditor',id);
-        return;
-    }).catch((error)=>{
-        console.log(error);
-        bnUtil.disconnect();
-    });
+function rand(arr){
+    return arr[Math.floor(Math.random() * arr.length)];
 }
 
 // function to create new dummy LogEntry
