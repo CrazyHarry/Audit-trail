@@ -11,8 +11,8 @@ module.exports = {
     cardStore : require('composer-common').FileSystemCardStore,
     BusinessNetworkConnection : require('composer-client').BusinessNetworkConnection,
     // Used for connect()
-    cardName : "admin@audit-trail-network", //createFlightTransactions,
-   
+    cardName : 'admin@audit-trail-network', //createFlightTransactions,
+
     // Holds the Business Network Connection
     connection: {},
 
@@ -24,7 +24,7 @@ module.exports = {
         // Composer 0.19.0 Change
         //const cardStore = new this.cardStore();
         //this.connection = new this.BusinessNetworkConnection({ cardStore: cardStore });
-        var cardType = { type: 'composer-wallet-filesystem' }
+        var cardType = { type: 'composer-wallet-filesystem' };
         this.connection = new this.BusinessNetworkConnection(cardType);
 
         // Invoke connect
@@ -48,4 +48,4 @@ module.exports = {
             callback({}, error);
         });
     }
- }
+};

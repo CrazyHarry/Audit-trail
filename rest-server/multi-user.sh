@@ -23,3 +23,4 @@ export COMPOSER_DATASOURCES='{
 
 # Execute the script for enabling authentication
 ./github-auth.sh
+#./local-auth.sh
