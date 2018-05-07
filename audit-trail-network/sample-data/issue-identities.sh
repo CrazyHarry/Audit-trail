@@ -9,3 +9,6 @@ composer identity issue -u pascal -a be.vlaanderen.audittrail.ParticipantPublicS
 
 composer identity issue -u auditor1 -a be.vlaanderen.audittrail.ParticipantAuditor#auditor1 -c admin@audit-trail-network
 composer identity issue -u auditor2 -a be.vlaanderen.audittrail.ParticipantAuditor#auditor2 -c admin@audit-trail-network
+
+# move card to a different folder
+mv *.card ./cards/
