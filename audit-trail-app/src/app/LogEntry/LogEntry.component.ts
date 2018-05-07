@@ -32,7 +32,7 @@ export class LogEntryComponent implements OnInit {
   private asset;
   private currentId;
 	private errorMessage;
-  
+
   log_id = new FormControl("", Validators.required);
   timestamp = new FormControl("", Validators.required);
   carbon_hash = new FormControl("", Validators.required);
@@ -55,17 +55,24 @@ export class LogEntryComponent implements OnInit {
     });
   };
 
+  setAsset(asset: any): void{
+    this.asset = asset;
+  }
+
   ngOnInit(): void {
     this.loadAll();
   }
 
+  /**
+   * submits a new audit request based on the current component's details
+   */
   submitAuditRequest(): Promise<any> {
 
     let auditRequestTransaction = {
       $class: "be.vlaanderen.audittrail.NewAuditRequest",
-      "sender": 'test',
-      "auditor": 'test',
-      "log_to_review": "testytesy"
+      "sender": this.asset.data_owner,
+      "auditor": "be.vlaanderen.audittrail.ParticipantAuditor#auditor1",
+      "log_to_review": "be.vlaanderen.audittrail.LogEntry#"+this.currentId
     };
 
     return this.serviceNewAuditRequest.addTransaction(auditRequestTransaction)
