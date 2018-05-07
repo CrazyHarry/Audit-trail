@@ -39,12 +39,20 @@ rule R_civilian_read_auditrequests {
     action: ALLOW
 }
 
-rule R_civilian_transaction_create_auditrequest {
-    description: "Allow civilians to create an audit request transactions"
+rule R_civilian_create_auditrequest {
+    description: "Allow civilians to create an auditrequest through transactions"
     participant: "be.vlaanderen.audittrail.ParticipantCivilian"
     operation: CREATE
-    resource: "be.vlaanderen.audittrail.*"
+    resource: "be.vlaanderen.audittrail.AuditRequest"
     transaction: "be.vlaanderen.audittrail.NewAuditRequest"
+    action: ALLOW
+}
+
+rule R_civilian_transaction_create_newauditrequest {
+    description: "Allow civilians to create NewAuditRequest transactions"
+    participant: "be.vlaanderen.audittrail.ParticipantCivilian"
+    operation: CREATE
+    resource: "be.vlaanderen.audittrail.NewAuditRequest"
     action: ALLOW
 }
 
