@@ -1,5 +1,5 @@
 {
-  "name": "audit-trail-app",
+  "name": "audit-trail-app-2",
   "description": "Hyperledger Composer Angular project",
   "version": "0.0.1",
   "author": "Adam &#39;Blvck&#39; Blazejczak",
@@ -10,7 +10,7 @@
     "npm": ">=5"
   },
   "bin": {
-    "audit-trail-app": "app.js"
+    "audit-trail-app-2": "app.js"
   },
   "scripts": {
     "ng": "ng",

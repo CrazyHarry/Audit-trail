@@ -136,51 +136,19 @@ export class NewAuditRequestComponent implements OnInit {
   addTransaction(form: any): Promise<any> {
     this.Transaction = {
       $class: "be.vlaanderen.audittrail.NewAuditRequest",
-      
-        
-          "sender":this.sender.value,
-        
-      
-        
-          "auditor":this.auditor.value,
-        
-      
-        
-          "log_to_review":this.log_to_review.value,
-        
-      
-        
-          "transactionId":this.transactionId.value,
-        
-      
-        
-          "timestamp":this.timestamp.value
-        
-      
+      "sender":this.sender.value,
+      "auditor":this.auditor.value,
+      "log_to_review":this.log_to_review.value,
+      "transactionId":this.transactionId.value,
+      "timestamp":this.timestamp.value
     };
 
     this.myForm.setValue({
-      
-        
-          "sender":null,
-        
-      
-        
-          "auditor":null,
-        
-      
-        
-          "log_to_review":null,
-        
-      
-        
-          "transactionId":null,
-        
-      
-        
-          "timestamp":null
-        
-      
+      "sender":null,
+      "auditor":null,
+      "log_to_review":null,
+      "transactionId":null,
+      "timestamp":null
     });
 
     return this.serviceNewAuditRequest.addTransaction(this.Transaction)
@@ -188,27 +156,11 @@ export class NewAuditRequestComponent implements OnInit {
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
-      
-        
-          "sender":null,
-        
-      
-        
-          "auditor":null,
-        
-      
-        
-          "log_to_review":null,
-        
-      
-        
-          "transactionId":null,
-        
-      
-        
-          "timestamp":null 
-        
-      
+        "sender":null,
+        "auditor":null,
+        "log_to_review":null,
+        "transactionId":null,
+        "timestamp":null 
       });
     })
     .catch((error) => {

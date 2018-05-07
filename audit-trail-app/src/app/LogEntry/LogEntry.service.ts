@@ -16,6 +16,7 @@ import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs/Observable';
 import { LogEntry } from '../be.vlaanderen.audittrail';
+import { NewAuditRequest } from '../be.vlaanderen.audittrail';
 import 'rxjs/Rx';
 
 // Can be injected into a constructor
@@ -23,7 +24,7 @@ import 'rxjs/Rx';
 export class LogEntryService {
 
 	
-		private NAMESPACE: string = 'be.vlaanderen.audittrail.LogEntry';
+		private NAMESPACE: string = 'LogEntry';
 	
 
 
@@ -50,5 +51,4 @@ export class LogEntryService {
     public deleteAsset(id: any): Observable<LogEntry> {
       return this.dataService.delete(this.NAMESPACE, id);
     }
-
 }

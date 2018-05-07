@@ -40,21 +40,15 @@ import { LogEntryComponent } from './LogEntry/LogEntry.component';
 		HomeComponent,
     // TransactionComponent,
     AuditRequestComponent,
-    
-    LogEntryComponent
-    ,
+    LogEntryComponent,
 
     ParticipantAuditorComponent,
-      ParticipantPublicServantComponent,
-      
-      ParticipantCivilianComponent
-      ,
+    ParticipantPublicServantComponent,
+    ParticipantCivilianComponent,
 
     NewLogEntryComponent,
-        NewAuditRequestComponent,
-        
-        ChangeAuditRequestStateComponent
-        
+    NewAuditRequestComponent,
+    ChangeAuditRequestStateComponent
   ],
   imports: [
     BrowserModule,

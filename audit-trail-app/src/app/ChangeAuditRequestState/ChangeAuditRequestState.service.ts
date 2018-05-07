@@ -23,7 +23,7 @@ import 'rxjs/Rx';
 export class ChangeAuditRequestStateService {
 
 	
-		private NAMESPACE: string = 'be.vlaanderen.audittrail.ChangeAuditRequestState';
+		private NAMESPACE: string = 'ChangeAuditRequestState';
 	
 
 

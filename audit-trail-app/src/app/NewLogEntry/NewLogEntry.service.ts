@@ -23,7 +23,7 @@ import 'rxjs/Rx';
 export class NewLogEntryService {
 
 	
-		private NAMESPACE: string = 'be.vlaanderen.audittrail.NewLogEntry';
+		private NAMESPACE: string = 'NewLogEntry';
 	
 
 

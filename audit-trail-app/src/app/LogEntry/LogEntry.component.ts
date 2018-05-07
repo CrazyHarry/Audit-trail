@@ -15,12 +15,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { LogEntryService } from './LogEntry.service';
+import { NewAuditRequestService } from '../NewAuditRequest/NewAuditRequest.service';
+
 import 'rxjs/add/operator/toPromise';
 @Component({
 	selector: 'app-LogEntry',
 	templateUrl: './LogEntry.component.html',
 	styleUrls: ['./LogEntry.component.css'],
-  providers: [LogEntryService]
+  providers: [LogEntryService, NewAuditRequestService]
 })
 export class LogEntryComponent implements OnInit {
 
@@ -30,82 +32,55 @@ export class LogEntryComponent implements OnInit {
   private asset;
   private currentId;
 	private errorMessage;
+  
+  log_id = new FormControl("", Validators.required);
+  timestamp = new FormControl("", Validators.required);
+  carbon_hash = new FormControl("", Validators.required);
+  accessed_by = new FormControl("", Validators.required);
+  data_owner = new FormControl("", Validators.required);
+  category = new FormControl("", Validators.required);
+  context = new FormControl("", Validators.required);
+  document = new FormControl("", Validators.required);
 
-  
-      
-          log_id = new FormControl("", Validators.required);
-        
-  
-      
-          timestamp = new FormControl("", Validators.required);
-        
-  
-      
-          carbon_hash = new FormControl("", Validators.required);
-        
-  
-      
-          accessed_by = new FormControl("", Validators.required);
-        
-  
-      
-          data_owner = new FormControl("", Validators.required);
-        
-  
-      
-          category = new FormControl("", Validators.required);
-        
-  
-      
-          context = new FormControl("", Validators.required);
-        
-  
-      
-          document = new FormControl("", Validators.required);
-        
-  
-
-
-  constructor(private serviceLogEntry:LogEntryService, fb: FormBuilder) {
+  constructor(private serviceLogEntry:LogEntryService, private serviceNewAuditRequest:NewAuditRequestService, fb: FormBuilder) {
     this.myForm = fb.group({
-    
-        
           log_id:this.log_id,
-        
-    
-        
           timestamp:this.timestamp,
-        
-    
-        
           carbon_hash:this.carbon_hash,
-        
-    
-        
           accessed_by:this.accessed_by,
-        
-    
-        
           data_owner:this.data_owner,
-        
-    
-        
           category:this.category,
-        
-    
-        
           context:this.context,
-        
-    
-        
           document:this.document
-        
-    
     });
   };
 
   ngOnInit(): void {
     this.loadAll();
+  }
+
+  submitAuditRequest(): Promise<any> {
+
+    let auditRequestTransaction = {
+      $class: "be.vlaanderen.audittrail.NewAuditRequest",
+      "sender": 'test',
+      "auditor": 'test',
+      "log_to_review": "testytesy"
+    };
+
+    return this.serviceNewAuditRequest.addTransaction(auditRequestTransaction)
+    .toPromise()
+    .then(() => {
+
+    })
+    .catch((error) => {
+        if(error == 'Server error'){
+            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
+        }
+        else{
+            this.errorMessage = error;
+        }
+    });
   }
 
   loadAll(): Promise<any> {
@@ -160,75 +135,25 @@ export class LogEntryComponent implements OnInit {
   addAsset(form: any): Promise<any> {
     this.asset = {
       $class: "be.vlaanderen.audittrail.LogEntry",
-      
-        
           "log_id":this.log_id.value,
-        
-      
-        
           "timestamp":this.timestamp.value,
-        
-      
-        
           "carbon_hash":this.carbon_hash.value,
-        
-      
-        
           "accessed_by":this.accessed_by.value,
-        
-      
-        
           "data_owner":this.data_owner.value,
-        
-      
-        
           "category":this.category.value,
-        
-      
-        
           "context":this.context.value,
-        
-      
-        
           "document":this.document.value
-        
-      
     };
 
     this.myForm.setValue({
-      
-        
           "log_id":null,
-        
-      
-        
           "timestamp":null,
-        
-      
-        
           "carbon_hash":null,
-        
-      
-        
           "accessed_by":null,
-        
-      
-        
           "data_owner":null,
-        
-      
-        
           "category":null,
-        
-      
-        
           "context":null,
-        
-      
-        
           "document":null
-        
-      
     });
 
     return this.serviceLogEntry.addAsset(this.asset)
@@ -236,39 +161,14 @@ export class LogEntryComponent implements OnInit {
     .then(() => {
 			this.errorMessage = null;
       this.myForm.setValue({
-      
-        
           "log_id":null,
-        
-      
-        
           "timestamp":null,
-        
-      
-        
           "carbon_hash":null,
-        
-      
-        
           "accessed_by":null,
-        
-      
-        
           "data_owner":null,
-        
-      
-        
           "category":null,
-        
-      
-        
           "context":null,
-        
-      
-        
           "document":null 
-        
-      
       });
     })
     .catch((error) => {
@@ -285,53 +185,13 @@ export class LogEntryComponent implements OnInit {
    updateAsset(form: any): Promise<any> {
     this.asset = {
       $class: "be.vlaanderen.audittrail.LogEntry",
-      
-        
-          
-        
-    
-        
-          
             "timestamp":this.timestamp.value,
-          
-        
-    
-        
-          
             "carbon_hash":this.carbon_hash.value,
-          
-        
-    
-        
-          
             "accessed_by":this.accessed_by.value,
-          
-        
-    
-        
-          
             "data_owner":this.data_owner.value,
-          
-        
-    
-        
-          
             "category":this.category.value,
-          
-        
-    
-        
-          
             "context":this.context.value,
-          
-        
-    
-        
-          
             "document":this.document.value
-          
-        
-    
     };
 
     return this.serviceLogEntry.updateAsset(form.get("log_id").value,this.asset)
@@ -384,39 +244,14 @@ export class LogEntryComponent implements OnInit {
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
-        
-          
             "log_id":null,
-          
-        
-          
             "timestamp":null,
-          
-        
-          
             "carbon_hash":null,
-          
-        
-          
             "accessed_by":null,
-          
-        
-          
             "data_owner":null,
-          
-        
-          
             "category":null,
-          
-        
-          
             "context":null,
-          
-        
-          
             "document":null 
-          
-        
       };
 
 
@@ -506,39 +341,14 @@ export class LogEntryComponent implements OnInit {
 
   resetForm(): void{
     this.myForm.setValue({
-      
-        
           "log_id":null,
-        
-      
-        
           "timestamp":null,
-        
-      
-        
           "carbon_hash":null,
-        
-      
-        
           "accessed_by":null,
-        
-      
-        
           "data_owner":null,
-        
-      
-        
           "category":null,
-        
-      
-        
           "context":null,
-        
-      
-        
           "document":null 
-        
-      
       });
   }
 

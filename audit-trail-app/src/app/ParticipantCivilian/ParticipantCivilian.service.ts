@@ -23,7 +23,7 @@ import 'rxjs/Rx';
 export class ParticipantCivilianService {
 
 	
-		private NAMESPACE: string = 'be.vlaanderen.audittrail.ParticipantCivilian';
+		private NAMESPACE: string = 'ParticipantCivilian';
 	
 
 

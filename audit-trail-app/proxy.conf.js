@@ -14,15 +14,15 @@
 
 module.exports = [{
     context: ['/auth', '/api'],
-    target: process.env.REST_SERVER_URL || 'http://localhost:3000/',
+    target: process.env.REST_SERVER_URL || 'http://localhost:3000',
     secure: true,
     changeOrigin: true
 }, {
     context: '/',
-    target: process.env.REST_SERVER_URL || 'http://localhost:3000/',
+    target: process.env.REST_SERVER_URL || 'http://localhost:3000',
     secure: true,
     changeOrigin: true,
-    ws: true,
+    ws: false,
     bypass: function (req, res, proxyOptions) {
         const accept = req.headers.accept || '';
         if (accept.indexOf('html') !== -1) {

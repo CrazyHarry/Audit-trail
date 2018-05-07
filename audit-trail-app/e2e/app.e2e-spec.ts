@@ -17,17 +17,17 @@ import { ExpectedConditions, browser, element, by } from 'protractor';
 import {} from 'jasmine';
 
 
-describe('Starting tests for audit-trail-app', function() {
+describe('Starting tests for audit-trail-app-2', function() {
   let page: AngularTestPage;
 
   beforeEach(() => {
     page = new AngularTestPage();
   });
 
-  it('website title should be audit-trail-app', () => {
+  it('website title should be audit-trail-app-2', () => {
     page.navigateTo('/');
     return browser.getTitle().then((result)=>{
-      expect(result).toBe('audit-trail-app');
+      expect(result).toBe('audit-trail-app-2');
     })
   });
 
@@ -41,13 +41,13 @@ describe('Starting tests for audit-trail-app', function() {
     });
   });
 
-  it('navbar-brand should be audit-trail-app',() => {
+  it('navbar-brand should be audit-trail-app-2',() => {
     element(by.css('.navbar-brand')).getWebElement()
     .then((webElement) => {
       return webElement.getText();
     })
     .then((txt) => {
-      expect(txt).toBe('audit-trail-app');
+      expect(txt).toBe('audit-trail-app-2');
     });
   });
 

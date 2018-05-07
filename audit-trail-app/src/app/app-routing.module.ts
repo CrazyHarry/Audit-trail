@@ -32,27 +32,18 @@ import { LogEntryComponent } from './LogEntry/LogEntry.component';
 const routes: Routes = [
      //{ path: 'transaction', component: TransactionComponent },
     {path: '', component: HomeComponent},
-		
 		{ path: 'AuditRequest', component: AuditRequestComponent},
-    
 		{ path: 'LogEntry', component: LogEntryComponent},
     
-    
-      { path: 'ParticipantAuditor', component: ParticipantAuditorComponent},
-      
-      { path: 'ParticipantPublicServant', component: ParticipantPublicServantComponent},
-      
-      { path: 'ParticipantCivilian', component: ParticipantCivilianComponent},
-      
-      
-        { path: 'NewLogEntry', component: NewLogEntryComponent},
+    { path: 'ParticipantAuditor', component: ParticipantAuditorComponent},
+    { path: 'ParticipantPublicServant', component: ParticipantPublicServantComponent},
+    { path: 'ParticipantCivilian', component: ParticipantCivilianComponent},
         
-        { path: 'NewAuditRequest', component: NewAuditRequestComponent},
-        
-        { path: 'ChangeAuditRequestState', component: ChangeAuditRequestStateComponent},
+    { path: 'NewLogEntry', component: NewLogEntryComponent},  
+    { path: 'NewAuditRequest', component: NewAuditRequestComponent},
+    { path: 'ChangeAuditRequestState', component: ChangeAuditRequestStateComponent},
         
 		{path: '**', redirectTo:''}
-
 ];
 
 @NgModule({
