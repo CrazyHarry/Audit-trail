@@ -56,8 +56,19 @@ rule R_civilian_transaction_create_newauditrequest {
     action: ALLOW
 }
 
+rule R_civilian_read_personalParticipant {
+    description: "Allow civilians to read their own Participant profile"
+    participant (p): "be.vlaanderen.audittrail.ParticipantCivilian"
+    operation: READ
+    resource (r): "be.vlaanderen.audittrail.ParticipantCivilian"
+    condition: (p.getIdentifier() === r.getIdentifier())
+    action: ALLOW
+}
+
 /*
     Public Servant Permissions
+
+    // condition: (p.getIdentifier() === r.getIdentifier())
 */
 
 rule publicservant_permission_historian {

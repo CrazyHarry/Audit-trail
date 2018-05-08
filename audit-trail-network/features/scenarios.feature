@@ -45,7 +45,13 @@ Feature: Scenarios
     #####
     # Civilian Log Access
     # Cilians: Adam, Dieter, Tien
-    #####    
+    #####
+    Scenario: Adam can view his own Participant Profile
+        When I use the identity adam1
+        Then I should have the following participant of type be.vlaanderen.audittrail.ParticipantCivilian
+            | civilian_id       | first_name| last_name |
+            | adam@email.com    | Adam      | B         |
+
     Scenario: Adam can read his own logs
         When I use the identity adam1 
         Then I should have the following assets of type be.vlaanderen.audittrail.LogEntry
