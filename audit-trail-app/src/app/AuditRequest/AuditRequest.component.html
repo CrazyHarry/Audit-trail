@@ -346,17 +346,17 @@
           <tr *ngFor="let asset of allAssets">
 
             
-                <td class="asset-properties">{{asset.audit_id}}</td>
+                <td class="asset-properties" >{{asset.audit_id}}</td>
             
                 <td class="asset-properties">{{asset.timestamp}}</td>
             
                 <td class="asset-properties">{{asset.request_state}}</td>
             
-                <td class="asset-properties">{{asset.sender}}</td>
+                 <td class="asset-properties">{{asset.sender | slice:34}}</td>  <!--| slice:-31 -->
             
-                <td class="asset-properties">{{asset.auditor}}</td>
+                <td class="asset-properties">{{asset.auditor | slice:34}}</td>
             
-                <td class="asset-properties">{{asset.log_to_review}}</td>
+                <td class="asset-properties">{{asset.log_to_review | slice:34}}</td>
             
             <td>
               <button (click)="getForm(asset.audit_id);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateAssetModal">

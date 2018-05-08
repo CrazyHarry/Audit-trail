@@ -335,12 +335,12 @@
       <table class="table table-responsive">
         <thead class="thead">
           <tr class="thead-cols">
-                <th class="info">log_id</th>
-                <th class="info">timestamp</th>
+                <th class="info">Log ID</th>
+                <th class="info">Datum</th>
                 <!-- <th class="info">carbon_hash</th> -->
-                <th class="info">accessed_by</th>
-                <th class="info">data_owner</th>
-                <th class="info">category</th>
+                <th class="info">Accessed By</th>
+                <th class="info">Owner of Data</th>
+                <th class="info">Category</th>
                 <!-- <th class="info">context</th> -->
                 <!-- <th class="info">document</th> -->
             
@@ -349,12 +349,12 @@
         </thead>
         <tbody>
           <tr *ngFor="let asset of allAssets">
-                <td class="asset-properties">{{asset.log_id}}</td>
-                <td class="asset-properties">{{asset.timestamp}}</td>
+                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.log_id}}</td>
+                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.timestamp}}</td>
                 <!-- <td class="asset-properties">{{asset.carbon_hash}}</td> -->
-                <td class="asset-properties">{{asset.accessed_by}}</td>
-                <td class="asset-properties">{{asset.data_owner}}</td>
-                <td class="asset-properties">{{asset.category}}</td>
+                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.accessed_by | slice:34}}</td>
+                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.data_owner | slice:34}}</td>
+                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.category}}</td>
                 <!-- <td class="asset-properties">{{asset.context}}</td> -->
                 <!-- <td class="asset-properties">{{asset.document}}</td> -->
 
