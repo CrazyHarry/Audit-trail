@@ -11,6 +11,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+ #wrapper {
+    width: 600px;
+    /* border: 1px solid black; */
+    overflow: hidden; /* will contain if #first is longer than #second */
+}
+#first {
+    width: 300px;
+    float:left; /* add this */
+    /* border: 1px solid red; */
+}
+#second {
+    /* border: 1px solid green; */
+    /* overflow: hidden; */
+    margin-top: 35px;
+}
+
 .container-fluid {
     display: grid;
     margin-left: 72px;
@@ -24,7 +40,7 @@
 }
 
 .navbar-header {
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 30px;
 }
 
@@ -48,6 +64,10 @@
 }
 .network-name:hover{
     letter-spacing: 2px;
+}
+
+.navbar-nav {
+    margin-left: 20px;
 }
 
 .navbar-nav > li {
@@ -82,7 +102,7 @@
 
 .navbar-nav .active > a {
     background-color: #fff;
-    color: #6C4CC4 !important;
+    color: #343C41 !important;
 }
 
 .dropdown-menu {
