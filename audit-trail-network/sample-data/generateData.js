@@ -32,15 +32,14 @@ function main(error){
     var civilians = ['adam', 'dieter', 'bram'];
     var publicServants = ['daniel', 'pascal'];
 
-    var contextTypes = ['BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', 
-                        'SOCIALEWONING', 'STEMPELGELD', 'VERKAVELING'];
+    var contextTypes = ['BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', 'SOCIALEWONING', 'STEMPELGELD', 'VERKAVELING'];
 
     // 2. Get the 'LogEntry' AssetRegistry
     return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.LogEntry').then((registry)=>{
         console.log('1. Received Registry: ', registry.id);
 
         // add the dummy logs
-        for (let i = 0; i < 20; i++) { 
+        for (let i = 0; i < 20; i++) {
             addLogEntry(registry, rand(publicServants), rand(civilians), rand(contextTypes));
         }
 
@@ -51,7 +50,7 @@ function main(error){
         console.log('2. Received Registry: ', registry.id);
 
         // add the audit request logs
-        for (let i = 0; i < 5; i++) { 
+        for (let i = 0; i < 5; i++) {
             addAuditRequest(registry, rand(civilians), rand(auditors), Math.random().toString(36).substr(2, 15));
         }
 
