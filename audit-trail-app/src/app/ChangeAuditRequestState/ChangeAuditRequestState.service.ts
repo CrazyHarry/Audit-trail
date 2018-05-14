@@ -14,11 +14,11 @@
 
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { ChangeAuditRequestState } from '../be.vlaanderen.audittrail';
-import 'rxjs/Rx';
+//import 'rxjs/Rx';
 
-// Can be injected into a constructor
+// Can be injected into a constructors
 @Injectable()
 export class ChangeAuditRequestStateService {
 

@@ -25,15 +25,17 @@ import { HomeComponent } from './home/home.component';
 import { AuditRequestComponent } from './AuditRequest/AuditRequest.component';
 import { LogEntryComponent } from './LogEntry/LogEntry.component';
 
+import { ParticipantAuditorComponent } from './ParticipantAuditor/ParticipantAuditor.component';
+import { ParticipantPublicServantComponent } from './ParticipantPublicServant/ParticipantPublicServant.component';
+import { ParticipantCivilianComponent } from './ParticipantCivilian/ParticipantCivilian.component';
 
-  import { ParticipantAuditorComponent } from './ParticipantAuditor/ParticipantAuditor.component';
-  import { ParticipantPublicServantComponent } from './ParticipantPublicServant/ParticipantPublicServant.component';
-  import { ParticipantCivilianComponent } from './ParticipantCivilian/ParticipantCivilian.component';
+import { NewLogEntryComponent } from './NewLogEntry/NewLogEntry.component';
+import { NewAuditRequestComponent } from './NewAuditRequest/NewAuditRequest.component';
+import { ChangeAuditRequestStateComponent } from './ChangeAuditRequestState/ChangeAuditRequestState.component';
 
+import { MatCardModule } from '@angular/material/card'
+// import { MatExpansionModule } from '@angular/material/expansion';
 
-  import { NewLogEntryComponent } from './NewLogEntry/NewLogEntry.component';
-  import { NewAuditRequestComponent } from './NewAuditRequest/NewAuditRequest.component';
-  import { ChangeAuditRequestStateComponent } from './ChangeAuditRequestState/ChangeAuditRequestState.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +57,11 @@ import { LogEntryComponent } from './LogEntry/LogEntry.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+
+    // material componentes
+    MatCardModule
+    //MatExpansionModule
   ],
   providers: [
     DataService

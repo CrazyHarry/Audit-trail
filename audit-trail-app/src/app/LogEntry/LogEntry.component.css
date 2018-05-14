@@ -161,6 +161,12 @@ label {
     fill: currentColor;
 }
 
+.word-wrap-td {
+    word-wrap: break-word;
+    min-width: 200px;
+    max-width: 200px;
+}
+
 /***.asset-properties:hover, .asset-properties:hover span{  
 overflow: visible;
 position: relative;

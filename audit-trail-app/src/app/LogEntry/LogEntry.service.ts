@@ -14,22 +14,18 @@
 
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { LogEntry } from '../be.vlaanderen.audittrail';
 import { NewAuditRequest } from '../be.vlaanderen.audittrail';
-import 'rxjs/Rx';
+// import 'rxjs/Rx';
 
 // Can be injected into a constructor
 @Injectable()
-export class LogEntryService {
-
-	
+export class LogEntryService {	
 		private NAMESPACE: string = 'LogEntry';
-	
-
-
 
     constructor(private dataService: DataService<LogEntry>) {
+
     };
 
     public getAll(): Observable<LogEntry[]> {

@@ -14,7 +14,7 @@
 
 import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { NewLogEntry } from '../be.vlaanderen.audittrail';
 import 'rxjs/Rx';
 
