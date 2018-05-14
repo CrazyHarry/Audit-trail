@@ -1,14 +1,3 @@
-/**
- * Sample access control list.
- */
-// rule EverybodyCanReadEverything {
-//     description: "Allow all participants read access to all resources"
-//     participant: "be.vlaanderen.audittrail.participant.*"
-//     operation: READ
-//     resource: "be.vlaanderen.audittrail.*"
-//     action: ALLOW
-// }
-
 /*
     Civilian Permissions
 */
@@ -97,6 +86,15 @@ rule R_publicservant_transaction_create_logentry {
     action: ALLOW
 }
 
+rule R_publicservant_read_personalParticipant {
+    description: "Allow civilians to read their own Participant profile"
+    participant (p): "be.vlaanderen.audittrail.ParticipantPublicServant"
+    operation: READ
+    resource (r): "be.vlaanderen.audittrail.ParticipantPublicServant"
+    condition: (p.getIdentifier() === r.getIdentifier())
+    action: ALLOW
+}
+
 /*
     Auditor Permissions
 */
@@ -126,22 +124,14 @@ rule R_auditor_transaction_change_auditrequest_state {
     action: ALLOW
 }
 
-// rule EverybodyCanSubmitTransactions {
-//     description: "Allow all participants to submit transactions"
-//     participant: "be.vlaanderen.audittrail.CivilianParticipant"
-//     operation: CREATE
-//     resource: "be.vlaanderen.audittrail.SampleTransaction"
-//     action: ALLOW
-// }
-
-// rule OwnerHasFullAccessToTheirAssets {
-//     description: "Allow all participants full access to their assets"
-//     participant(p): "be.vlaanderen.audittrail.CivilianParticipant"
-//     operation: ALL
-//     resource(r): "be.vlaanderen.audittrail.SampleAsset"
-//     condition: (r.owner.getIdentifier() === p.getIdentifier())
-//     action: ALLOW
-// }
+rule R_auditor_read_personalParticipant {
+    description: "Allow civilians to read their own Participant profile"
+    participant (p): "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: READ
+    resource (r): "be.vlaanderen.audittrail.ParticipantAuditor"
+    condition: (p.getIdentifier() === r.getIdentifier())
+    action: ALLOW
+}
 
 rule SystemACL {
   description:  "System ACL to permit all access"
