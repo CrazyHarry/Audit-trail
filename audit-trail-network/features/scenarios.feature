@@ -51,6 +51,10 @@ Feature: Scenarios
         Then I should have the following participant of type be.vlaanderen.audittrail.ParticipantCivilian
             | civilian_id       | first_name| last_name |
             | adam@email.com    | Adam      | B         |
+        And I should not have the following participant of type be.vlaanderen.audittrail.ParticipantCivilian
+            | civilian_id       | first_name| last_name |
+            | dieter@email.com  | Dieter    | V         |
+            | tien@email.com    | Tien      | T         |
 
     Scenario: Adam can read his own logs
         When I use the identity adam1 
