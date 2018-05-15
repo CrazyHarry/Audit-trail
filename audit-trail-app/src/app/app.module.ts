@@ -34,7 +34,10 @@ import { NewAuditRequestComponent } from './NewAuditRequest/NewAuditRequest.comp
 import { ChangeAuditRequestStateComponent } from './ChangeAuditRequestState/ChangeAuditRequestState.component';
 
 import { MatCardModule } from '@angular/material/card'
-// import { MatExpansionModule } from '@angular/material/expansion';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatInputModule, MatFormFieldModule, MatButtonModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -60,8 +63,12 @@ import { MatCardModule } from '@angular/material/card'
     AppRoutingModule,
 
     // material componentes
-    MatCardModule
-    //MatExpansionModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatCardModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatButtonModule
   ],
   providers: [
     DataService

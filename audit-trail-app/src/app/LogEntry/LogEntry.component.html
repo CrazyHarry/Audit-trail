@@ -11,6 +11,8 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+
+<!-- addAsset Modal -->
 <div class="modal fade" id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="addAssetModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -140,9 +142,7 @@
   </div>
 </div>
 
-
-
-
+<!-- updateAsset Modal -->
 <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -277,8 +277,7 @@
   </div>
 </div>
 
-
-
+<!-- createAuditReport Modal -->
 <div class="modal fade" id="createAuditReport" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -299,16 +298,7 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
+<!-- Component template -->
 <div class="container">
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
 		<strong>Error:</strong> {{errorMessage}}
@@ -316,7 +306,7 @@
   
   <div class="row">
     <div class="col-md-9">
-        <h1 class="asset-title" id='assetName'>LogEntry</h1>
+        <h1 class="asset-title" id='assetName'>Logs</h1>
     </div>
     <div class="col-md-3">
       <!-- <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">
@@ -332,48 +322,56 @@
   <br>
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-responsive">
-        <thead class="thead">
-          <tr class="thead-cols">
-                <th class="info">Log ID</th>
-                <th class="info">Date</th>
-                <!-- <th class="info">carbon_hash</th> -->
-                <th class="info">Accessed By</th>
-                <th class="info">Owner of Data</th>
-                <th class="info">Category</th>
-                <!-- <th class="info">context</th> -->
-                <!-- <th class="info">document</th> -->
+
+        <!-- Create an accordion (expandable list) of expansion-panels which will contain the logs -->
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let asset of allAssets">
+            {{setAsset(asset)}}
+
+            <!-- Expansion Panel Header (title and date) -->
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ asset.category | titlecase }}
+                </mat-panel-title>
+
+                <mat-panel-description class="asset-short-description">
+                    {{ asset.timestamp | date: 'dd/MM/yyyy'}}
+                </mat-panel-description>  
+            </mat-expansion-panel-header>
             
-              <th class="info-actions">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let asset of allAssets">
-                <td class="asset-properties">{{asset.log_id}}</td>
-                <td class="asset-properties">{{asset.timestamp}}</td>
-                <!-- <td class="asset-properties">{{asset.carbon_hash}}</td> -->
-                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.accessed_by | slice:34}}</td>
-                <td class="asset-properties" style="word-wrap: break-word;min-width: 200px;max-width: 200px;">{{asset.data_owner | slice:34}}</td>
-                <td class="asset-properties">{{asset.category}}</td>
-                <!-- <td class="asset-properties">{{asset.context}}</td> -->
-                <!-- <td class="asset-properties">{{asset.document}}</td> -->
+            <!-- Expansion Panel Contents when expanded (log details) -->
+            <div class="asset-container">
+              <mat-form-field>
+                  <input [readonly]="true" matInput placeholder="Accessed By" value="{{ asset.accessed_by | slice:45}}">
+              </mat-form-field>
+              <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Owner Data" value="{{ asset.data_owner | slice:45}}">
+              </mat-form-field>
+              <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Context" value="{{ asset.context }}">
+              </mat-form-field>
+              <h4>Details</h4>
+              <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Date" value="{{ asset.timestamp }}">
+              </mat-form-field>
+              <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Carbon Hash" value="{{ asset.carbon_hash }}">
+              </mat-form-field>
+              <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Log ID" value="{{ asset.log_id }}">
+              </mat-form-field>
+              <mat-action-row>
+                <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Report Log</button>
+              </mat-action-row>
+            </div>
 
-                {{setAsset(asset)}}
+          </mat-expansion-panel>
+        </mat-accordion>
 
-            <td>
-              <button (click)="getForm(asset.log_id);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateAssetModal">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                  width="12.8px" height="12.8px" viewBox="0 0 30.7 30.7" style="enable-background:new 0 0 30.7 30.7;" xml:space="preserve"><path d="M16 10c-3.314 0-6 2.685-6 6s2.686 6 6 6c3.315 0 6-2.685 6-6s-2.685-6-6-6zm0 8c-1.106 0-2-.895-2-2s.894-2 2-2a2 2 0 1 1 0 4z"/><path d="M16 7C9.269 7 4.147 10.625 1 16c3.147 5.375 8.269 9 15 9 6.73 0 11.854-3.625 15-9-3.146-5.375-8.27-9-15-9zm0 16c-5.164 0-9.612-2.475-12.642-7C6.388 11.475 10.836 9 16 9s9.612 2.475 12.642 7c-3.03 4.525-7.478 7-12.642 7z"/></svg>
-              </button>
-
-              <button (click)="setId(asset.log_id);" type="button" class="btn btn-search" data-toggle="modal" data-target="#createAuditReport">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                  width="12.8px" height="12.8px" viewBox="0 0 30.7 30.7" style="enable-background:new 0 0 30.7 30.7;" xml:space="preserve"><path d="M10 7h5v21h-5zM17 17h5v1h-5zM17 15h5v1h-5zM17 19h5v1h-5zM17 21h5v1h-5zM17 23h5v1h-5zM17 25h5v1h-5zM17 27h5v1h-5z"/><path d="M6 1v30h20V1H6zm18 28H8V5h16v24z"/></svg>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+        <button (click)="getForm(asset.log_id);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateAssetModal">
+          <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            width="12.8px" height="12.8px" viewBox="0 0 30.7 30.7" style="enable-background:new 0 0 30.7 30.7;" xml:space="preserve"><path d="M16 10c-3.314 0-6 2.685-6 6s2.686 6 6 6c3.315 0 6-2.685 6-6s-2.685-6-6-6zm0 8c-1.106 0-2-.895-2-2s.894-2 2-2a2 2 0 1 1 0 4z"/><path d="M16 7C9.269 7 4.147 10.625 1 16c3.147 5.375 8.269 9 15 9 6.73 0 11.854-3.625 15-9-3.146-5.375-8.27-9-15-9zm0 16c-5.164 0-9.612-2.475-12.642-7C6.388 11.475 10.836 9 16 9s9.612 2.475 12.642 7c-3.03 4.525-7.478 7-12.642 7z"/></svg>
+        </button>
     </div>
   </div>
 </div>
