@@ -133,9 +133,6 @@
   </div>
 </div>
 
-
-
-
 <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -268,8 +265,6 @@
   </div>
 </div>
 
-
-
 <div class="modal fade" id="deleteAssetModal" tabindex="-1" role="dialog" aria-labelledby="deleteAssetModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -289,16 +284,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 
 <div class="container">
 	<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
@@ -323,50 +308,45 @@
   <br>
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-responsive">
-        <thead class="thead">
-          <tr class="thead-cols">
-            
-                <th class="info">Audit ID</th>
-            
-                <th class="info">Date</th>
-            
-                <th class="info">Status</th>
-            
-                <th class="info">Sender</th>
-            
-                <th class="info">Auditor</th>
-            
-                <th class="info">Log In Question</th>
-            
-              <th class="info-actions">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let asset of allAssets">
 
-            
-                <td class="asset-properties" >{{asset.audit_id}}</td>
-            
-                <td class="asset-properties">{{asset.timestamp}}</td>
-            
-                <td class="asset-properties">{{asset.request_state}}</td>
-            
-                 <td class="asset-properties">{{asset.sender | slice:34}}</td>  <!--| slice:-31 -->
-            
-                <td class="asset-properties">{{asset.auditor | slice:34}}</td>
-            
-                <td class="asset-properties">{{asset.log_to_review | slice:34}}</td>
-            
-            <td>
-              <button (click)="getForm(asset.audit_id);" type="button" class="btn btn-update" data-toggle="modal" data-target="#updateAssetModal">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                width="12.8px" height="12.8px" viewBox="0 0 30.7 30.7" style="enable-background:new 0 0 30.7 30.7;" xml:space="preserve"><path d="M16 10c-3.314 0-6 2.685-6 6s2.686 6 6 6c3.315 0 6-2.685 6-6s-2.685-6-6-6zm0 8c-1.106 0-2-.895-2-2s.894-2 2-2a2 2 0 1 1 0 4z"/><path d="M16 7C9.269 7 4.147 10.625 1 16c3.147 5.375 8.269 9 15 9 6.73 0 11.854-3.625 15-9-3.146-5.375-8.27-9-15-9zm0 16c-5.164 0-9.612-2.475-12.642-7C6.388 11.475 10.836 9 16 9s9.612 2.475 12.642 7c-3.03 4.525-7.478 7-12.642 7z"/></svg>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- Create an accordion (expandable list) of expansion-panels which will contain the logs -->
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let asset of allAssets">
+
+          <!-- Expansion Panel Header (title and date) -->
+          <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ asset.request_state | titlecase }}
+              </mat-panel-title>
+
+              <mat-panel-description class="asset-short-description">
+                  {{ asset.timestamp | date: 'dd/MM/yyyy'}}
+              </mat-panel-description>  
+          </mat-expansion-panel-header>
+          
+          <!-- Expansion Panel Contents when expanded (log details) -->
+          <div class="asset-container">
+            <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Requested By" value="{{ asset.sender | slice:45}}">
+            </mat-form-field>
+            <mat-form-field>
+              <input [readonly]="true" matInput placeholder="Assigned Auditor" value="{{ asset.auditor | slice:45}}">
+            </mat-form-field>
+            <mat-form-field>
+              <input [readonly]="true" matInput placeholder="Log to Review" value="{{ asset.log_to_review | slice:34 }}">
+            </mat-form-field>
+            <h4>Details</h4>
+            <mat-form-field>
+              <input [readonly]="true" matInput placeholder="Date" value="{{ asset.timestamp }}">
+            </mat-form-field>
+            <mat-form-field>
+              <input [readonly]="true" matInput placeholder="Audit Request ID" value="{{ asset.audit_id }}">
+            </mat-form-field>
+          </div>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
     </div>
   </div>
 </div>

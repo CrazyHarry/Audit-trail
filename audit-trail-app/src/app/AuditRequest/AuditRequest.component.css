@@ -17,6 +17,20 @@
     padding-right: 72px;
 }
 
+/* asset-container = list of expansion cards */
+.asset-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.asset-container > * {
+    width: 100%;
+}
+
+.asset-short-description{
+    justify-content: flex-end;
+}
+
 .btn-primary {
     background: #844AE4;
     border-radius: 4px;
