@@ -24,7 +24,7 @@
 #second {
     /* border: 1px solid green; */
     /* overflow: hidden; */
-    margin-top: 35px;
+    margin-top: 16px;
 }
 
 .container-fluid {
@@ -40,8 +40,8 @@
 }
 
 .navbar-header {
-    margin-top: 20px;
-    margin-bottom: 30px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .navbar-brand {

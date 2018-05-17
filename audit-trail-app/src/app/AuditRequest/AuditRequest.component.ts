@@ -79,13 +79,13 @@ export class AuditRequestComponent implements OnInit {
     })
     .catch((error) => {
         if(error == 'Server error'){
-            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
+          this.errorMessage = "Could not connect to REST server. Please check your configuration details";
         }
         else if(error == '404 - Not Found'){
-				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
+				  this.errorMessage = "Some Audit Requests have no attached log entries!"
         }
         else{
-            this.errorMessage = error;
+          this.errorMessage = error;
         }
     });
   }
