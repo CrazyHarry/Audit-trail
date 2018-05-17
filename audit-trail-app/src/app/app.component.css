@@ -11,6 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+* {
+    font-family: 'Open Sans', sans-serif;
+}
+
  #wrapper {
     width: 600px;
     /* border: 1px solid black; */
@@ -46,7 +52,7 @@
 
 .navbar-brand {
     height: 100%;
-    font-size: 32px;
+    font-size: 26px;
     letter-spacing: 0.28px;
     padding: 0px;
     margin-left: 0px !important;

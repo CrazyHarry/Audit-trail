@@ -65,8 +65,8 @@ function main(error){
             return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.AuditRequest');
         }).then((registry)=>{
             console.log('2. Received Registry: ', registry.id);
+            
             // add the audit request logs
-
             var createAuditRequestPromises = [];
             for (let i = 0; i < 5; i++) {
                 var sender = rand(logEntryIds);

@@ -38,7 +38,7 @@ import { MatCardModule } from '@angular/material/card'
 import { MatExpansionModule } from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatInputModule, MatFormFieldModule, MatButtonModule } from '@angular/material';
+import { MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -70,7 +70,8 @@ import { MatInputModule, MatFormFieldModule, MatButtonModule } from '@angular/ma
     MatCardModule,
     MatExpansionModule,
     MatFormFieldModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
   ],
   providers: [
     DataService

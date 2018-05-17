@@ -17,6 +17,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { AuditRequestService } from './AuditRequest.service';
 import { LogEntryService } from '../LogEntry/LogEntry.service';
 import 'rxjs/add/operator/toPromise';
+import {MatSelectChange} from '@angular/material';
+
 @Component({
 	selector: 'app-AuditRequest',
 	templateUrl: './AuditRequest.component.html',
@@ -60,6 +62,15 @@ export class AuditRequestComponent implements OnInit {
 
   logDetails(): boolean {
     return 'log_details' in this.asset;
+  }
+
+  updateState(value:any): void {
+    console.log("State changed!", value);
+  }
+
+  // invoke a transaction to change the audit request state
+  commitRequestStateChange(): void {
+    console.log("We've arrived!", this.asset.request_state);
   }
 
   loadAll(): Promise<any> {
