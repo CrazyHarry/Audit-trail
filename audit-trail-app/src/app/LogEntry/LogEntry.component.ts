@@ -78,7 +78,7 @@ export class LogEntryComponent implements OnInit {
     return this.serviceNewAuditRequest.addTransaction(auditRequestTransaction)
     .toPromise()
     .then(() => {
-
+      alert("Succesfully added new audit request!");
     })
     .catch((error) => {
         if(error == 'Server error'){

@@ -16,7 +16,6 @@ import { Injectable } from '@angular/core';
 import { DataService } from '../data.service';
 import { Observable } from 'rxjs';
 import { LogEntry } from '../be.vlaanderen.audittrail';
-import { NewAuditRequest } from '../be.vlaanderen.audittrail';
 // import 'rxjs/Rx';
 
 // Can be injected into a constructor

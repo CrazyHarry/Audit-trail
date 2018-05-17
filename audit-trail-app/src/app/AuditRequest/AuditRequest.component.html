@@ -382,7 +382,7 @@
               <textarea matInput placeholder="Written justification"></textarea>
             </mat-form-field>
             <mat-form-field>
-              <mat-select placeholder="Audit Request State" [(ngModel)]="asset.request_state" (change)="updateState($event.value)">
+              <mat-select placeholder="Audit Request State" [(ngModel)]="asset.request_state" (selectionChange)="updateState($event.value)">
                   <mat-option value="REQUESTED">Requested</mat-option>
                   <mat-option value="UNDERREVISION">Under Revision</mat-option>
                   <mat-option value="DONE">Done</mat-option>

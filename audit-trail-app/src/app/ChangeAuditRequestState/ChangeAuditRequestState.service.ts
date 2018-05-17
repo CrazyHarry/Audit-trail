@@ -21,12 +21,7 @@ import { ChangeAuditRequestState } from '../be.vlaanderen.audittrail';
 // Can be injected into a constructors
 @Injectable()
 export class ChangeAuditRequestStateService {
-
-	
 		private NAMESPACE: string = 'ChangeAuditRequestState';
-	
-
-
 
     constructor(private dataService: DataService<ChangeAuditRequestState>) {
     };

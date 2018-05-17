@@ -16,14 +16,16 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuditRequestService } from './AuditRequest.service';
 import { LogEntryService } from '../LogEntry/LogEntry.service';
+import { ChangeAuditRequestStateService } from '../ChangeAuditRequestState/ChangeAuditRequestState.service';
+
 import 'rxjs/add/operator/toPromise';
-import {MatSelectChange} from '@angular/material';
+
 
 @Component({
 	selector: 'app-AuditRequest',
 	templateUrl: './AuditRequest.component.html',
 	styleUrls: ['./AuditRequest.component.css'],
-  providers: [AuditRequestService, LogEntryService]
+  providers: [AuditRequestService, LogEntryService, ChangeAuditRequestStateService]
 })
 export class AuditRequestComponent implements OnInit {
 
@@ -33,6 +35,7 @@ export class AuditRequestComponent implements OnInit {
   private asset;
   private currentId;
 	private errorMessage;
+  private new_state = "";
 
   audit_id = new FormControl("", Validators.required);
   timestamp = new FormControl("", Validators.required);
@@ -41,7 +44,10 @@ export class AuditRequestComponent implements OnInit {
   auditor = new FormControl("", Validators.required);
   log_to_review = new FormControl("", Validators.required);
 
-  constructor(private serviceAuditRequest:AuditRequestService, private serviceLogEntry:LogEntryService,fb: FormBuilder) {
+  constructor(private serviceAuditRequest:AuditRequestService, 
+              private serviceLogEntry:LogEntryService, 
+              private serviceChangeAuditRequest: ChangeAuditRequestStateService, 
+              fb: FormBuilder) {
     this.myForm = fb.group({
       audit_id:this.audit_id,
       timestamp:this.timestamp,
@@ -66,11 +72,31 @@ export class AuditRequestComponent implements OnInit {
 
   updateState(value:any): void {
     console.log("State changed!", value);
+    this.new_state = value;
   }
 
   // invoke a transaction to change the audit request state
-  commitRequestStateChange(): void {
-    console.log("We've arrived!", this.asset.request_state);
+  commitRequestStateChange(): Promise<any> {
+    let transaction = {
+      "$class": "be.vlaanderen.audittrail.ChangeAuditRequestState",
+      "audit_id": this.asset.audit_id,
+      "new_state": this.asset.request_state
+    };
+
+    return this.serviceChangeAuditRequest.addTransaction(transaction)
+    .toPromise()
+    .then(() => {
+      alert("Succesfully updated audit request!");
+    })
+    .catch((error) => {
+        if(error == 'Server error'){
+            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
+        }
+        else{
+            this.errorMessage = error;
+        }
+    });
+
   }
 
   loadAll(): Promise<any> {
