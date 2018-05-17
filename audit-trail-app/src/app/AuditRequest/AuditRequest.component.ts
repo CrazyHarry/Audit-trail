@@ -15,12 +15,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AuditRequestService } from './AuditRequest.service';
+import { LogEntryService } from '../LogEntry/LogEntry.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
 	selector: 'app-AuditRequest',
 	templateUrl: './AuditRequest.component.html',
 	styleUrls: ['./AuditRequest.component.css'],
-  providers: [AuditRequestService]
+  providers: [AuditRequestService, LogEntryService]
 })
 export class AuditRequestComponent implements OnInit {
 
@@ -31,65 +32,34 @@ export class AuditRequestComponent implements OnInit {
   private currentId;
 	private errorMessage;
 
-  
-      
-          audit_id = new FormControl("", Validators.required);
-        
-  
-      
-          timestamp = new FormControl("", Validators.required);
-        
-  
-      
-          request_state = new FormControl("", Validators.required);
-        
-  
-      
-          sender = new FormControl("", Validators.required);
-        
-  
-      
-          auditor = new FormControl("", Validators.required);
-        
-  
-      
-          log_to_review = new FormControl("", Validators.required);
-        
-  
+  audit_id = new FormControl("", Validators.required);
+  timestamp = new FormControl("", Validators.required);
+  request_state = new FormControl("", Validators.required);
+  sender = new FormControl("", Validators.required);
+  auditor = new FormControl("", Validators.required);
+  log_to_review = new FormControl("", Validators.required);
 
-
-  constructor(private serviceAuditRequest:AuditRequestService, fb: FormBuilder) {
+  constructor(private serviceAuditRequest:AuditRequestService, private serviceLogEntry:LogEntryService,fb: FormBuilder) {
     this.myForm = fb.group({
-    
-        
-          audit_id:this.audit_id,
-        
-    
-        
-          timestamp:this.timestamp,
-        
-    
-        
-          request_state:this.request_state,
-        
-    
-        
-          sender:this.sender,
-        
-    
-        
-          auditor:this.auditor,
-        
-    
-        
-          log_to_review:this.log_to_review
-        
-    
+      audit_id:this.audit_id,
+      timestamp:this.timestamp,
+      request_state:this.request_state,        
+      sender:this.sender,        
+      auditor:this.auditor,        
+      log_to_review:this.log_to_review
     });
   };
 
   ngOnInit(): void {
     this.loadAll();
+  }
+
+  setAsset(asset: any): void{
+    this.asset = asset;
+  }
+
+  logDetails(): boolean {
+    return 'log_details' in this.asset;
   }
 
   loadAll(): Promise<any> {
@@ -100,8 +70,12 @@ export class AuditRequestComponent implements OnInit {
 			this.errorMessage = null;
       result.forEach(asset => {
         tempList.push(asset);
+
+        // for every asset, load a relevant log!
+        return this.loadRelevantLog(asset.log_to_review, asset);
       });
       this.allAssets = tempList;
+      console.log(this.allAssets);
     })
     .catch((error) => {
         if(error == 'Server error'){
@@ -112,6 +86,34 @@ export class AuditRequestComponent implements OnInit {
         }
         else{
             this.errorMessage = error;
+        }
+    });
+  }
+
+
+  /**
+   * 
+   * @param {any} id - LogEntry ID, providing the fully qualified username will work best here
+   * @param {any} asset - asset references by pointer, retrieved with loadAll()
+   */
+  loadRelevantLog(id:any, asset) {
+    return this.serviceLogEntry.getAsset(id.split('#')[1])
+    .toPromise()
+    .then((result) => {
+      this.errorMessage = null;
+      
+      // store log_details in the asset (which is referenced by pointer)
+      asset['log_details'] = result;
+    })
+    .catch((error) => {
+        if(error == 'Server error'){
+          this.errorMessage = "Could not connect to REST server. Please check your configuration details";
+        }
+        else if(error == '404 - Not Found'){
+				  this.errorMessage = "404 - Could not find API route. Please check your available APIs."
+        }
+        else{
+          this.errorMessage = error;
         }
     });
   }
