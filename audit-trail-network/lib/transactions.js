@@ -39,7 +39,7 @@ function newLogEntry(newLogData) {
             logentry.carbon_hash = newLogData.carbon_hash;
             logentry.accessed_by = newLogData.accessed_by;
             logentry.data_owner = newLogData.data_owner;
-            logentry.category = newLogData.category;
+            logentry.department_name = newLogData.department_name;
             logentry.context = newLogData.context;
 
             if (newLogData.document){ // if document exists -> add
@@ -89,6 +89,13 @@ function newAuditRequest(newAuditData) {
             audit_entry.auditor = newAuditData.auditor;
             audit_entry.log_to_review = newAuditData.log_to_review;
 
+            audit_entry.issue_context = newAuditData.issue_context;
+            audit_entry.contact_email = newAuditData.contact_email;
+
+            if (audit_entry.contact_channel){ // if document exists -> add
+                audit_entry.contact_channel = newAuditData.contact_channel;
+            }
+
             // emit event regarding registration of the log
             var event = factory.newEvent(ns, 'AuditRequestAdded');
             event.audit_id = audit_id;
@@ -115,7 +122,7 @@ function changeAuditRequestState(newAuditState) {
         }).then(function(audit_request){
             // catch if there is no audit request found
             if(!audit_request){
-                throw new Error('Flight : '+newAuditState.audit_id,' Not Found!!!');
+                throw new Error('Audit Request : '+newAuditState.audit_id,' Not Found!!!');
             }
 
             // update the audit request state

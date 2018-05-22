@@ -27,14 +27,20 @@ namespace be.vlaanderen.audittrail
 /** 
     STAKEHOLDERS
 **/
+participant Entity identified by entity_id {
+  o String entity_id
+  o String entity_name
+  o String location optional
+}
 
 participant ParticipantAuditor identified by auditor_id {
   o String auditor_id
+  --> Entity entity // equivalent to department
 }
 
 participant ParticipantPublicServant identified by public_servant_id {
   o String public_servant_id
-  o String department
+  --> Entity entity // equivalent to department
 }
 
 participant ParticipantCivilian identified by civilian_id {
@@ -49,19 +55,25 @@ participant ParticipantCivilian identified by civilian_id {
 **/
 
 asset AuditRequest identified by audit_id {
-  // audit Report Details
   o String audit_id
-  o String timestamp
-  o AuditRequesState request_state
 
-  // stakeholders
+  // Core Information
+  o String issue_context // filled by civilian
+  o String contact_email optional
+  o String contact_channel optional
+
+  // pointers to stakeholders
   --> ParticipantCivilian sender
   --> ParticipantAuditor auditor
 
-  // relevant log entry
+  // pointer to log entry
   --> LogEntry log_to_review
-}
 
+  // details
+  o String timestamp
+  o AuditRequesState request_state
+}
+    // categorical variable indicating audit request state
     enum AuditRequesState {
       o REQUESTED
       o UNDERREVISION
@@ -77,23 +89,11 @@ asset LogEntry identified by log_id {
   --> ParticipantPublicServant accessed_by
   --> ParticipantCivilian data_owner
 
-  // basic log details
-  o LogCategory category
-
   // details
+  o String department_name
   o String context
   o String document optional
 }
-
-    enum LogCategory {
-      o BOUWVERGUNNING
-      o SUBSIDIE
-      o GESLACHTSVERANDERING
-      o HUWELIJK
-      o SOCIALEWONING
-      o STEMPELGELD
-      o VERKAVELING
-    }
 
 /**
     Transactions
@@ -101,7 +101,6 @@ asset LogEntry identified by log_id {
 
 transaction NewLogEntry {
   o String log_id optional
-
   o String carbon_hash
   
   // stakeholders
@@ -109,7 +108,7 @@ transaction NewLogEntry {
   --> ParticipantCivilian data_owner
 
   // transaction details
-  o LogCategory category
+  o String department_name
   o String context
   o String document optional
 }
@@ -123,6 +122,9 @@ transaction NewAuditRequest {
 
   // relevant log entry
   --> LogEntry log_to_review
+  o String issue_context
+  o String contact_email optional
+  o String contact_channel optional
 }
 
 transaction ChangeAuditRequestState {

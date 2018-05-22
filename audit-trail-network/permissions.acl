@@ -68,14 +68,14 @@ rule publicservant_permission_historian {
   action: ALLOW  
 }
 
-rule R_publicservant_permissions_logs {
-    description: "Allow public servants to read logs from their own department"
-    participant(p): "be.vlaanderen.audittrail.ParticipantPublicServant"
-    operation: READ
-    resource(r): "be.vlaanderen.audittrail.LogEntry"
-    condition: (r.accessed_by.getIdentifier() === p.getIdentifier() )
-    action: ALLOW
-}
+// rule R_publicservant_permissions_logs {
+//     description: "Allow public servants to read logs from their own department"
+//     participant(p): "be.vlaanderen.audittrail.ParticipantPublicServant"
+//     operation: READ
+//     resource(r): "be.vlaanderen.audittrail.LogEntry"
+//     condition: (r.accessed_by.getIdentifier() === p.getIdentifier() )
+//     action: ALLOW
+// }
 
 rule R_publicservant_transaction_create_logentry {
     description: "Allow public servants to create new log entries"
@@ -99,28 +99,49 @@ rule R_publicservant_read_personalParticipant {
     Auditor Permissions
 */
 
-rule R_auditor_read_logs {
-    description: "Allow auditors to read all log entries"
-    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
+rule R_auditor_read_civilians {
+  description: "Allow auditors to read participants "
+    participant (p): "be.vlaanderen.audittrail.ParticipantAuditor"
     operation: READ
-    resource: "be.vlaanderen.audittrail.LogEntry"
+    resource (r): "be.vlaanderen.audittrail.ParticipantPublicServant"
+    condition: (p.entity.getIdentifier() === r.entity.getIdentifier())
+    action: ALLOW
+}
+
+rule R_auditor_read_logs {
+    description: "Allow auditors to read logs created by his entity"
+    participant (p): "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: READ
+    resource (r): "be.vlaanderen.audittrail.LogEntry"
+    condition: (p.entity.getIdentifier() === r.accessed_by.entity.getIdentifier())
     action: ALLOW
 }
 
 rule R_auditor_read_auditrequests {
-    description: "Allow auditors to read all log entries"
-    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
+    description: "Allow auditors to read audit requests created for their department"
+    participant (p): "be.vlaanderen.audittrail.ParticipantAuditor"
     operation: READ
-    resource: "be.vlaanderen.audittrail.AuditRequest"
+    resource (r): "be.vlaanderen.audittrail.AuditRequest"
+    condition: (p.entity.getIdentifier() === r.log_to_review.accessed_by.entity.getIdentifier())
+    action: ALLOW
+}
+
+rule R_auditor_allow_creating_change_audit_request_states {
+    description: "Allow auditors to create ChangeAuditRequestState transactions"
+    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: CREATE
+    resource: "be.vlaanderen.audittrail.ChangeAuditRequestState"
+    transaction: "be.vlaanderen.audittrail.ChangeAuditRequestState"
     action: ALLOW
 }
 
 rule R_auditor_transaction_change_auditrequest_state {
-    description: "Allow auditors to read all log entries"
-    participant: "be.vlaanderen.audittrail.ParticipantAuditor"
-    operation: CREATE, UPDATE
-    resource: "be.vlaanderen.audittrail.*"
+    description: "Allow  to update audit requests if they match their department"
+    participant (p): "be.vlaanderen.audittrail.ParticipantAuditor"
+    operation: UPDATE
+    resource (r): "be.vlaanderen.audittrail.AuditRequest"
     transaction: "be.vlaanderen.audittrail.ChangeAuditRequestState"
+    condition: (p.entity.getIdentifier() ===  r.log_to_review.accessed_by.entity.getIdentifier())
     action: ALLOW
 }
 
