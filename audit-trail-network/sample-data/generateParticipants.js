@@ -42,8 +42,8 @@ function main(error){
     }).then((registry)=>{
         console.log('2. Received Registry: ', registry.id);
 
-        addPublicServant(registry, 'daniel', 'INFORMATIEVLAANDEREN');
-        addPublicServant(registry, 'pascal', 'DEPARTEMENTOMGEVING');
+        addPublicServant(registry, 'daniel', 'AIV');
+        addPublicServant(registry, 'pascal', 'OMGEVING');
 
         // 3. Add auditor to the network (participants)
         return bnUtil.connection.getParticipantRegistry('be.vlaanderen.audittrail.ParticipantAuditor');
@@ -51,8 +51,17 @@ function main(error){
     }).then((registry)=>{
         console.log('3. Received Registry: ', registry.id);
 
-        addAuditor(registry, 'auditor1');
-        addAuditor(registry, 'auditor2');
+        addAuditor(registry, 'auditor_aiv', 'AIV');
+        addAuditor(registry, 'auditor_omgeving', 'OMGEVING');
+
+        // 4. Add auditor to the network (participants)
+        return bnUtil.connection.getParticipantRegistry('be.vlaanderen.audittrail.Entity');
+
+    }).then((registry)=>{
+        console.log('4. Received Registry: ', registry.id);
+
+        addEntity(registry, 'AIV', 'Informatie Vlaanderen');
+        addEntity(registry, 'OMGEVING', 'Departement Omgeving');
 
     }).catch((error)=>{
         console.log(error);
@@ -85,12 +94,12 @@ function addCivilian(registry, id){
  * @param id
  * @param department
  */
-function addPublicServant(registry, id, department){
+function addPublicServant(registry, id, entity){
     const bnDef = bnUtil.connection.getBusinessNetwork();
     const factory = bnDef.getFactory();
 
-    let publicServant = factory.newResource('be.vlaanderen.audittrail', 'ParticipantPublicServant', id);
-    publicServant.department = department;
+    let publicServant = factory.newResource(namespace, 'ParticipantPublicServant', id);
+    publicServant.entity = factory.newRelationship(namespace, 'Entity', entity);
 
     // add dummy to the registry, which will add it to the network
     return registry.add(publicServant).then(()=>{
@@ -106,15 +115,38 @@ function addPublicServant(registry, id, department){
  * @param registry
  * @param id
  */
-function addAuditor(registry, id){
+function addAuditor(registry, id, entity){
     const bnDef = bnUtil.connection.getBusinessNetwork();
     const factory = bnDef.getFactory();
 
-    let auditor = factory.newResource('be.vlaanderen.audittrail', 'ParticipantAuditor', id);
+    let auditor = factory.newResource(namespace, 'ParticipantAuditor', id);
+    auditor.entity = factory.newRelationship(namespace, 'Entity', entity);
 
     // add dummy to the registry, which will add it to the network
     return registry.add(auditor).then(()=>{
         console.log('Successfully added auditor',id);
+        return;
+    }).catch((error)=>{
+        console.log(error);
+        bnUtil.disconnect();
+    });
+}
+
+/**
+ * @param registry
+ * @param id
+ * @param name
+ */
+function addEntity(registry, id, name){
+    const bnDef = bnUtil.connection.getBusinessNetwork();
+    const factory = bnDef.getFactory();
+
+    let entity = factory.newResource(namespace, 'Entity', id);
+    entity.entity_name = name;
+
+    // add dummy to the registry, which will add it to the network
+    return registry.add(entity).then(()=>{
+        console.log('Successfully added entity', id);
         return;
     }).catch((error)=>{
         console.log(error);

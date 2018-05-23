@@ -1,6 +1,6 @@
 {
   "name": "audit-trail-network",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "Audit Trail PoC for the department environment",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/audit-trail-network.bna",
@@ -25,5 +25,8 @@
     "nyc": "latest",
     "mkdirp": "latest",
     "mocha": "latest"
+  },
+  "dependencies": {
+    "lorem-ipsum": "^1.0.4"
   }
 }

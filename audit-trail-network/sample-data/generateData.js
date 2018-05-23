@@ -28,20 +28,34 @@ function main(error){
         process.exit(1);
     }
 
-    var auditors = ['auditor1', 'auditor2'];
+    var departments = ['AIV', 'OMGEVING'];
+    var auditors = ['auditor_aiv', 'auditor_omgeving'];
+    var publicServants = [{name:'daniel', dep: 'AIV'}, {name:'pascal', dep:'OMGEVING'}]; // daniel = entity 'AIV', pascal = entity 'omgeving'
+
     var civilians = ['adam', 'dieter', 'bram'];
-    var publicServants = ['daniel', 'pascal'];
 
     var contextTypes = ['BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', 'SOCIALEWONING', 'STEMPELGELD', 'VERKAVELING'];
 
+    var Promise = require('es6-promise').Promise;
+    var loremIpsum = require('lorem-ipsum'); // to generate free-text
+
+    // generate random log entries
     var logEntryIds = [];
     for (let i = 0; i < 20; i++){
-        var info = {}
 
+        var info = {};
+
+        // set id
         info.id = Math.random().toString(36).substr(2, 15);
-        info.publicservant = rand(publicServants);
+
+        // stakeholders
+        let publicServant = rand(publicServants)
+        info.publicservant = publicServant.name;
         info.civilian = rand(civilians);
-        info.contexttype = rand(contextTypes);
+
+        // details
+        info.context = rand(contextTypes);
+        info.department_name = publicServant.dep;
 
         logEntryIds.push(info);
     }
@@ -53,29 +67,32 @@ function main(error){
         // add the dummy logs
         var createLogPromises = [];
         for (let i = 0; i < 20; i++) {
-            createLogPromises.push(addLogEntry(registry, logEntryIds[i].id, 
-                                                         logEntryIds[i].publicservant, 
-                                                         logEntryIds[i].civilian, 
-                                                         logEntryIds[i].contexttype )); //, rand(publicServants), rand(civilians), rand(contextTypes)));
+            createLogPromises.push(addLogEntry(registry, 
+                logEntryIds[i].id,
+                logEntryIds[i].publicservant,
+                logEntryIds[i].civilian,
+                logEntryIds[i].context,
+                logEntryIds[i].department_name));
         }
 
         // add log entries!
         Promise.all(createLogPromises).then(() => {
-            console.log("Sucessfully created logs!");
+            console.log('Sucessfully created logs!');
+
             return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.AuditRequest');
         }).then((registry)=>{
             console.log('2. Received Registry: ', registry.id);
-            
+
             // add the audit request logs
             var createAuditRequestPromises = [];
             for (let i = 0; i < 5; i++) {
                 var sender = rand(logEntryIds);
-                createAuditRequestPromises.push(addAuditRequest(registry, sender.civilian, rand(auditors), sender.id));
+                createAuditRequestPromises.push(addAuditRequest(registry, sender.civilian, rand(auditors), sender.id, loremIpsum()));
             }
 
             // execute all audit request promises!
             Promise.all(createLogPromises).then(() => {
-                console.log("Sucessfully created audit request logs!");
+                console.log('Sucessfully created audit request logs!');
             }).catch((error)=>{
                 console.log(error);
                 bnUtil.disconnect();
@@ -101,16 +118,20 @@ function main(error){
     // function to create new dummy LogEntry
     /**
      * @param registry
+     * @param id
      * @param accssed_by_id
      * @param data_owner_id
-     * @param category
+     * @param context
+     * @param department
      */
-    function addLogEntry(registry, log_id, accssed_by_id, data_owner_id, category){
+    function addLogEntry(registry, id, accssed_by_id, data_owner_id, context, department){
         const bnDef = bnUtil.connection.getBusinessNetwork();
         const factory = bnDef.getFactory();
-        var id = log_id;
+
+        // create fabric resource
         let logResource = factory.newResource(namespace,logEntryType, id);
 
+        // create relationships to relevant stakeholders
         let accessed_by = factory.newRelationship(namespace, 'ParticipantPublicServant', accssed_by_id);
         let data_owner = factory.newRelationship(namespace, 'ParticipantCivilian', data_owner_id);
 
@@ -123,8 +144,8 @@ function main(error){
         logResource.setPropertyValue('carbon_hash', require('crypto').createHash('md5').update(date).digest('hex'));
         logResource.setPropertyValue('accessed_by', accessed_by);
         logResource.setPropertyValue('data_owner', data_owner);
-        logResource.setPropertyValue('category', category);
-        logResource.setPropertyValue('context', 'document context');
+        logResource.setPropertyValue('context', context);
+        logResource.setPropertyValue('department_name', department);
 
         return registry.add(logResource);
     }
@@ -134,8 +155,9 @@ function main(error){
      * @param sender_id
      * @param auditor_id
      * @param log_id
+     * @param issue_context
      */
-    function addAuditRequest(registry, sender_id, auditor_id, log_id){
+    function addAuditRequest(registry, sender_id, auditor_id, log_id, issue_context){
         const bnDef = bnUtil.connection.getBusinessNetwork();
         const factory = bnDef.getFactory();
         var id = Math.random().toString(36).substr(2, 15);
@@ -155,6 +177,9 @@ function main(error){
         auditRequestResource.setPropertyValue('sender', sender);
         auditRequestResource.setPropertyValue('auditor', auditor);
         auditRequestResource.setPropertyValue('log_to_review', log_to_review);
+
+        auditRequestResource.setPropertyValue('issue_context', issue_context);
+        auditRequestResource.setPropertyValue('contact_email', 'name@email.com');
 
         // add dummy to the registry, which will add it to the network
         return registry.add(auditRequestResource);

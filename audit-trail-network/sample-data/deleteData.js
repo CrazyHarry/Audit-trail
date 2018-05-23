@@ -27,38 +27,44 @@ function main(error){
         console.log(error);
         process.exit(1);
     }
-    
+
     // first remove all log entries, THEN remove all audit requests
     removeLogEntries().then(() => {
         return removeAuditRequests();
-    })
+    });
 
+    // main function - calls all other functions that will generate data
+    /**
+     */
     function removeLogEntries(){
         return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.LogEntry').then((registry)=>{
-            console.log("Got registry with id:", registry.id);
-    
+            console.log('Got registry with id:', registry.id);
+
             return registry.getAll().then((resources) => {
                 return registry.removeAll(resources).then(() => {
-                    console.log("Sucessfully removed all logs!");
-                })
+                    console.log('Sucessfully removed all logs!');
+                });
             });
-    
+
         }).catch((error)=>{
             console.log(error);
             bnUtil.disconnect();
         });
     }
 
+    // main function - calls all other functions that will generate data
+    /**
+     */
     function removeAuditRequests(){
         return bnUtil.connection.getAssetRegistry('be.vlaanderen.audittrail.AuditRequest').then((registry)=>{
-            console.log("Got registry with id:", registry.id);
-    
+            console.log('Got registry with id:', registry.id);
+
             return registry.getAll().then((resources) => {
                 return registry.removeAll(resources).then(() => {
-                    console.log("Sucessfully removed all audit requests!");
-                })
+                    console.log('Sucessfully removed all audit requests!');
+                });
             });
-    
+
         }).catch((error)=>{
             console.log(error);
             bnUtil.disconnect();

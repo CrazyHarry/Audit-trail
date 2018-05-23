@@ -1,3 +1,9 @@
+/**
+  Vlaamse Overheid - Flemish Government - 2018
+  Author: Adam 'Blvck' Blazejczak
+  Audit Trail PoC - Business Network ACL
+*/
+
 /*
     Civilian Permissions
 */
@@ -153,6 +159,10 @@ rule R_auditor_read_personalParticipant {
     condition: (p.getIdentifier() === r.getIdentifier())
     action: ALLOW
 }
+
+/*
+  System ACL rules
+*/
 
 rule SystemACL {
   description:  "System ACL to permit all access"
