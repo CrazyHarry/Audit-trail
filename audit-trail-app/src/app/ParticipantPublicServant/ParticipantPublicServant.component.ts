@@ -31,28 +31,13 @@ export class ParticipantPublicServantComponent implements OnInit {
   private currentId;
 	private errorMessage;
 
-  
-      
-          public_servant_id = new FormControl("", Validators.required);
+  public_servant_id = new FormControl("", Validators.required);
+  entity = new FormControl("", Validators.required);
         
-  
-      
-          department = new FormControl("", Validators.required);
-        
-  
-
-
   constructor(private serviceParticipantPublicServant:ParticipantPublicServantService, fb: FormBuilder) {
     this.myForm = fb.group({
-    
-        
           public_servant_id:this.public_servant_id,
-        
-    
-        
-          department:this.department
-        
-    
+          entity:this.entity
     });
   };
 
@@ -118,7 +103,7 @@ export class ParticipantPublicServantComponent implements OnInit {
         
       
         
-          "department":this.department.value
+          "entity":this.entity.value
         
       
     };
@@ -130,7 +115,7 @@ export class ParticipantPublicServantComponent implements OnInit {
         
       
         
-          "department":null
+          "entity":null
         
       
     });
@@ -146,7 +131,7 @@ export class ParticipantPublicServantComponent implements OnInit {
         
       
         
-          "department":null 
+          "entity":null 
         
       
       });
@@ -172,7 +157,7 @@ export class ParticipantPublicServantComponent implements OnInit {
     
         
           
-            "department":this.department.value
+            "entity":this.entity.value
           
         
     
@@ -234,7 +219,7 @@ export class ParticipantPublicServantComponent implements OnInit {
           
         
           
-            "department":null 
+            "entity":null 
           
         
       };
@@ -250,12 +235,12 @@ export class ParticipantPublicServantComponent implements OnInit {
           formObject.public_servant_id = null;
         }
       
-        if(result.department){
+        if(result.entity){
           
-            formObject.department = result.department;
+            formObject.entity = result.entity;
           
         }else{
-          formObject.department = null;
+          formObject.entity = null;
         }
       
 

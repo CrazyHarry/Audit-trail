@@ -311,7 +311,7 @@
 
       <!-- Create an accordion (expandable list) of expansion-panels which will contain the logs -->
       <mat-accordion multi="true">
-        <mat-expansion-panel *ngFor="let asset of allAssets; let last = last">
+        <mat-expansion-panel *ngFor="let asset of allAssets; let last = last" class="asset-panel">
           {{ setAsset(asset) }}
 
           <!-- Expansion Panel Header (title and date) -->
@@ -321,30 +321,30 @@
               </mat-panel-title>
 
               <mat-panel-description class="asset-short-description">
-                  {{ asset.timestamp | date: 'dd/MM/yyyy'}}
+                  {{ asset.timestamp | date: 'EEE, dd/MM/yyyy'}}
               </mat-panel-description>  
           </mat-expansion-panel-header>
   
 
           <!-- Expansion Panel Contents when expanded (log details) -->
           <div class="asset-container">
-            <mat-form-field>
-                <input [readonly]="true" matInput placeholder="Requested By" value="{{ asset.sender | slice:45}}">
-            </mat-form-field>
-            <mat-form-field>
-              <input [readonly]="true" matInput placeholder="Assigned Auditor" value="{{ asset.auditor | slice:45}}">
-            </mat-form-field>
-            <!-- <mat-form-field>
-              <input [readonly]="true" matInput placeholder="Log to Review" value="{{ asset.log_to_review | slice:34 }}">
-            </mat-form-field> -->
 
-            <!-- {{ loadRelevantLog() }} -->
-            <p>Log To Review</p>
+            <mat-form-field>
+                <input [readonly]="true" matInput placeholder="Zender" value="{{ asset.sender | slice:45}}">
+            </mat-form-field>
+
+            <mat-form-field>
+              <textarea matInput [readonly]="true" placeholder="Aanvraag context">{{ asset.issue_context }}</textarea>
+            </mat-form-field>
+
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                    {{ asset.log_to_review | slice:34 }}
+                    Log in Kwestie
                 </mat-panel-title>
+                <mat-panel-description class="asset-short-description">
+                    {{ asset.timestamp | date: 'dd/MM/yyyy'}}
+                </mat-panel-description>  
               </mat-expansion-panel-header>
               <div class="asset-container" *ngIf="asset.log_details; else nodetails" >
                   <mat-form-field>
@@ -353,6 +353,9 @@
                   <mat-form-field>
                     <input [readonly]="true" matInput placeholder="Owner Data" value="{{ asset.log_details.data_owner | slice:45}}">
                   </mat-form-field>
+                  <mat-form-field>
+                      <input [readonly]="true" matInput placeholder="Departement" value="{{ asset.log_details.department_name }}">
+                    </mat-form-field>
                   <mat-form-field>
                     <input [readonly]="true" matInput placeholder="Context" value="{{ asset.log_details.context }}">
                   </mat-form-field>
@@ -363,35 +366,28 @@
                   <mat-form-field>
                     <input [readonly]="true" matInput placeholder="Carbon Hash" value="{{ asset.log_details.carbon_hash }}">
                   </mat-form-field>
+                  <mat-form-field>
+                      <input [readonly]="true" matInput placeholder="Log ID" value="{{ asset.log_to_review | slice:34 }}">
+                    </mat-form-field>
               </div>
 
-              <ng-template #nodetails>No log attached or current user is not allowed to see attached log</ng-template>
+              <ng-template #nodetails>Log niet gevonden op de blockchain.</ng-template>
 
             </mat-expansion-panel>
-
-            <h4>Details</h4>
-            <mat-form-field>
-              <input [readonly]="true" matInput placeholder="Date" value="{{ asset.timestamp }}">
-            </mat-form-field>
-            <mat-form-field>
-              <input [readonly]="true" matInput placeholder="Audit Request ID" value="{{ asset.audit_id }}">
-            </mat-form-field>
-
-            <h4>Justification Details</h4>
-            <mat-form-field>
-              <textarea matInput placeholder="Written justification"></textarea>
-            </mat-form-field>
-            <mat-form-field>
-              <mat-select placeholder="Audit Request State" [(ngModel)]="asset.request_state" (selectionChange)="updateState($event.value)">
-                  <mat-option value="REQUESTED">Requested</mat-option>
-                  <mat-option value="UNDERREVISION">Under Revision</mat-option>
-                  <mat-option value="DONE">Done</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <br>
 
             <mat-action-row>
+                <mat-form-field>
+                    <mat-select placeholder="Audit Request State" [(ngModel)]="asset.request_state" (selectionChange)="updateState($event.value)">
+                        <mat-option value="REQUESTED">Requested</mat-option>
+                        <mat-option value="UNDERREVISION">Under Revision</mat-option>
+                        <mat-option value="DONE">Done</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
                 <button mat-button color="primary" type="button" (click)="commitRequestStateChange()">Commit Changes</button>
             </mat-action-row>
+
           </div>
 
         </mat-expansion-panel>

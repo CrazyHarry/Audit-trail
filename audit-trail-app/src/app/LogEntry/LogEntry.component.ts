@@ -38,8 +38,8 @@ export class LogEntryComponent implements OnInit {
   carbon_hash = new FormControl("", Validators.required);
   accessed_by = new FormControl("", Validators.required);
   data_owner = new FormControl("", Validators.required);
-  category = new FormControl("", Validators.required);
   context = new FormControl("", Validators.required);
+  department_name = new FormControl("", Validators.required);
   document = new FormControl("", Validators.required);
 
   constructor(private serviceLogEntry:LogEntryService, private serviceNewAuditRequest:NewAuditRequestService, fb: FormBuilder) {
@@ -49,7 +49,7 @@ export class LogEntryComponent implements OnInit {
           carbon_hash:this.carbon_hash,
           accessed_by:this.accessed_by,
           data_owner:this.data_owner,
-          category:this.category,
+          department_name:this.department_name,
           context:this.context,
           document:this.document
     });
@@ -147,7 +147,7 @@ export class LogEntryComponent implements OnInit {
           "carbon_hash":this.carbon_hash.value,
           "accessed_by":this.accessed_by.value,
           "data_owner":this.data_owner.value,
-          "category":this.category.value,
+          "category":this.department_name.value,
           "context":this.context.value,
           "document":this.document.value
     };
@@ -196,7 +196,7 @@ export class LogEntryComponent implements OnInit {
             "carbon_hash":this.carbon_hash.value,
             "accessed_by":this.accessed_by.value,
             "data_owner":this.data_owner.value,
-            "category":this.category.value,
+            "category":this.department_name.value,
             "context":this.context.value,
             "document":this.document.value
     };
@@ -304,9 +304,9 @@ export class LogEntryComponent implements OnInit {
           formObject.data_owner = null;
         }
       
-        if(result.category){
+        if(result.department_name){
           
-            formObject.category = result.category;
+            formObject.category = result.department_name;
           
         }else{
           formObject.category = null;

@@ -31,76 +31,27 @@ export class NewLogEntryComponent implements OnInit {
   private currentId;
 	private errorMessage;
 
-  
-      
-          carbon_hash = new FormControl("", Validators.required);
-        
-  
-      
-          accessed_by = new FormControl("", Validators.required);
-        
-  
-      
-          data_owner = new FormControl("", Validators.required);
-        
-  
-      
-          category = new FormControl("", Validators.required);
-        
-  
-      
-          context = new FormControl("", Validators.required);
-        
-  
-      
-          document = new FormControl("", Validators.required);
-        
-  
-      
-          transactionId = new FormControl("", Validators.required);
-        
-  
-      
-          timestamp = new FormControl("", Validators.required);
-        
-  
-
+  carbon_hash = new FormControl("", Validators.required);
+  accessed_by = new FormControl("", Validators.required);
+  data_owner = new FormControl("", Validators.required);
+  department_name = new FormControl("", Validators.required);
+  context = new FormControl("", Validators.required);
+  document = new FormControl("", Validators.required);
+  transactionId = new FormControl("", Validators.required);
+  timestamp = new FormControl("", Validators.required);
 
   constructor(private serviceNewLogEntry:NewLogEntryService, fb: FormBuilder) {
     this.myForm = fb.group({
-    
-        
-          carbon_hash:this.carbon_hash,
-        
-    
-        
-          accessed_by:this.accessed_by,
-        
-    
-        
-          data_owner:this.data_owner,
-        
-    
-        
-          category:this.category,
-        
-    
-        
-          context:this.context,
-        
-    
-        
-          document:this.document,
-        
-    
-        
-          transactionId:this.transactionId,
-        
-    
-        
-          timestamp:this.timestamp
-        
-    
+
+      carbon_hash:this.carbon_hash,
+      accessed_by:this.accessed_by,
+      data_owner:this.data_owner,
+      department_name:this.department_name,
+      context:this.context,
+      document:this.document,
+      transactionId:this.transactionId,
+      timestamp:this.timestamp
+
     });
   };
 
@@ -160,75 +111,27 @@ export class NewLogEntryComponent implements OnInit {
   addTransaction(form: any): Promise<any> {
     this.Transaction = {
       $class: "be.vlaanderen.audittrail.NewLogEntry",
-      
-        
-          "carbon_hash":this.carbon_hash.value,
-        
-      
-        
-          "accessed_by":this.accessed_by.value,
-        
-      
-        
-          "data_owner":this.data_owner.value,
-        
-      
-        
-          "category":this.category.value,
-        
-      
-        
-          "context":this.context.value,
-        
-      
-        
-          "document":this.document.value,
-        
-      
-        
-          "transactionId":this.transactionId.value,
-        
-      
-        
-          "timestamp":this.timestamp.value
-        
-      
+
+        "carbon_hash":this.carbon_hash.value,
+        "accessed_by":this.accessed_by.value,
+        "data_owner":this.data_owner.value,
+        "department_name":this.department_name.value,
+        "context":this.context.value,
+        "document":this.document.value,
+        "transactionId":this.transactionId.value,
+        "timestamp":this.timestamp.value
     };
 
     this.myForm.setValue({
       
-        
           "carbon_hash":null,
-        
-      
-        
           "accessed_by":null,
-        
-      
-        
           "data_owner":null,
-        
-      
-        
-          "category":null,
-        
-      
-        
+          "department_name":null,
           "context":null,
-        
-      
-        
           "document":null,
-        
-      
-        
           "transactionId":null,
-        
-      
-        
           "timestamp":null
-        
-      
     });
 
     return this.serviceNewLogEntry.addTransaction(this.Transaction)
@@ -237,38 +140,14 @@ export class NewLogEntryComponent implements OnInit {
 			this.errorMessage = null;
       this.myForm.setValue({
       
-        
-          "carbon_hash":null,
-        
-      
-        
-          "accessed_by":null,
-        
-      
-        
-          "data_owner":null,
-        
-      
-        
-          "category":null,
-        
-      
-        
-          "context":null,
-        
-      
-        
-          "document":null,
-        
-      
-        
-          "transactionId":null,
-        
-      
-        
-          "timestamp":null 
-        
-      
+        "carbon_hash":null,
+        "accessed_by":null,
+        "data_owner":null,
+        "category":null,
+        "context":null,
+        "document":null,
+        "transactionId":null,
+        "timestamp":null 
       });
     })
     .catch((error) => {
@@ -286,52 +165,13 @@ export class NewLogEntryComponent implements OnInit {
     this.Transaction = {
       $class: "be.vlaanderen.audittrail.NewLogEntry",
       
-        
-          
-            "carbon_hash":this.carbon_hash.value,
-          
-        
-    
-        
-          
-            "accessed_by":this.accessed_by.value,
-          
-        
-    
-        
-          
-            "data_owner":this.data_owner.value,
-          
-        
-    
-        
-          
-            "category":this.category.value,
-          
-        
-    
-        
-          
-            "context":this.context.value,
-          
-        
-    
-        
-          
-            "document":this.document.value,
-          
-        
-    
-        
-          
-        
-    
-        
-          
-            "timestamp":this.timestamp.value
-          
-        
-    
+        "carbon_hash":this.carbon_hash.value,
+        "accessed_by":this.accessed_by.value,
+        "data_owner":this.data_owner.value,
+        "category":this.department_name.value,
+        "context":this.context.value,
+        "document":this.document.value,
+        "timestamp":this.timestamp.value
     };
 
     return this.serviceNewLogEntry.updateTransaction(form.get("transactionId").value,this.Transaction)
@@ -398,7 +238,7 @@ export class NewLogEntryComponent implements OnInit {
           
         
           
-            "category":null,
+            "department_name":null,
           
         
           
@@ -446,12 +286,12 @@ export class NewLogEntryComponent implements OnInit {
           formObject.data_owner = null;
         }
       
-        if(result.category){
+        if(result.department_name){
           
-            formObject.category = result.category;
+            formObject.department_name = result.department_name;
           
         }else{
-          formObject.category = null;
+          formObject.department_name = null;
         }
       
         if(result.context){

@@ -18,6 +18,11 @@
     flex-direction: column;
 }
 
+strong {
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
 .asset-container > * {
     width: 100%;
 }

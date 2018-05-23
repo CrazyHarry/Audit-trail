@@ -78,15 +78,15 @@
           
 
             
-              <label for="category">category</label>
+              <label for="department_name">department_name</label>
               <div class="checkbox">
                 
                   <label>
                     <input
                       
-                        formControlName="category"
+                        formControlName="department_name"
                       
-                      name="category"
+                      name="department_name"
                       value="BOUWVERGUNNING"
                       type="radio"
                       
@@ -97,9 +97,9 @@
                   <label>
                     <input
                       
-                        formControlName="category"
+                        formControlName="department_name"
                       
-                      name="category"
+                      name="department_name"
                       value="RIJKSREGISTERNUMMER"
                       type="radio"
                       
@@ -205,7 +205,7 @@
             </div>
           
             <div class="form-group text-left">
-              <label for="category">category</label>
+              <label for="department_name">department_name</label>
               
               
                 
@@ -215,10 +215,10 @@
                       <label>
                         <input
                           
-                            formControlName="category"
-                            [ngModel]="category"
+                            formControlName="department_name"
+                            [ngModel]="department_name"
                           
-                          name="category"
+                          name="department_name"
                           value="BOUWVERGUNNING"
                           type="radio"
                           
@@ -229,10 +229,10 @@
                       <label>
                         <input
                           
-                            formControlName="category"
-                            [ngModel]="category"
+                            formControlName="department_name"
+                            [ngModel]="department_name"
                           
-                          name="category"
+                          name="department_name"
                           value="RIJKSREGISTERNUMMER"
                           type="radio"
                           
@@ -331,35 +331,23 @@
             <!-- Expansion Panel Header (title and date) -->
             <mat-expansion-panel-header>
                 <mat-panel-title>
-                  {{ asset.category | titlecase }}
+                  Entiteit <strong> {{ asset.department_name }}</strong> heeft uw gegevens bekeken in het kader van <strong>{{ asset.context | titlecase }}</strong>
                 </mat-panel-title>
 
                 <mat-panel-description class="asset-short-description">
-                    {{ asset.timestamp | date: 'dd/MM/yyyy'}}
+                    {{ asset.timestamp | date: 'EEE, dd/MM/yyyy'}}
                 </mat-panel-description>  
             </mat-expansion-panel-header>
             
             <!-- Expansion Panel Contents when expanded (log details) -->
             <div class="asset-container">
               <mat-form-field>
-                  <input [readonly]="true" matInput placeholder="Accessed By" value="{{ asset.accessed_by | slice:45}}">
-              </mat-form-field>
-              <mat-form-field>
-                <input [readonly]="true" matInput placeholder="Owner Data" value="{{ asset.data_owner | slice:45}}">
+                  <input [readonly]="true" matInput placeholder="Bekeken door departement" value="{{ asset.department_name }}">
               </mat-form-field>
               <mat-form-field>
                 <input [readonly]="true" matInput placeholder="Context" value="{{ asset.context }}">
               </mat-form-field>
-              <h4>Details</h4>
-              <mat-form-field>
-                <input [readonly]="true" matInput placeholder="Date" value="{{ asset.timestamp }}">
-              </mat-form-field>
-              <mat-form-field>
-                <input [readonly]="true" matInput placeholder="Carbon Hash" value="{{ asset.carbon_hash }}">
-              </mat-form-field>
-              <mat-form-field>
-                <input [readonly]="true" matInput placeholder="Log ID" value="{{ asset.log_id }}">
-              </mat-form-field>
+              
               <mat-action-row>
                 <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Report Log</button>
               </mat-action-row>

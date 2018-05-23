@@ -23,6 +23,11 @@
     flex-direction: column;
 }
 
+.asset-panel {
+    max-width: 95%;
+    left: 5%;
+}
+
 .asset-container > * {
     width: 100%;
 }
