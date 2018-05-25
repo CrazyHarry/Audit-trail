@@ -283,15 +283,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteAssetModalLabel">Create Audit Report</h4>
+        <h4 class="modal-title" id="deleteAssetModalLabel">Betwist raadpleging</h4>
       </div>
-      <form [formGroup]="myForm" (ngSubmit)="submitAuditRequest()">
+      <form [formGroup]="myForm" (ngSubmit)="submitAuditRequest(issue_context, contact_email)">
         <div class="modal-body">
-          Are you sure you want to report this log for review?
+          Bent u zeker dat u de raadpleging wilt betwisten en hierbij een audit aanvraag zal doorsturen naar de Vlaamse Overheid?
         </div>
+
+        <!-- Issue context text -->
+        <mat-form-field class="issue_context">
+          <textarea [(ngModel)]="issue_context" matInput placeholder="Typ hier je bedenkingen voor de ombudsman" #issuecontext></textarea>
+        </mat-form-field>
+
+        <!-- email contact input field -->
+        <mat-form-field class="issue_context">
+          <input [(ngModel)]="contact_email" matInput placeholder="Hoe kan de overheid u contacteren? Voer je email in" #contactmail>
+        </mat-form-field>
+
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-          <button (click)="submitAuditRequest()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          <button (click)="alert(issue_context)" type="button" class="btn btn-default" >Terug</button> <!-- data-dismiss="modal" -->
+          <button (click)="submitAuditRequest(contactmail.value, issuecontext.value)" type="submit" class="btn btn-danger" data-dismiss="modal">Versturen</button>
         </div>
       </form>
     </div>
@@ -349,7 +360,7 @@
               </mat-form-field>
               
               <mat-action-row>
-                <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Report Log</button>
+                <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Betwist raadpleging</button>
               </mat-action-row>
             </div>
 

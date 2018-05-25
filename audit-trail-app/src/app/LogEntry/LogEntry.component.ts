@@ -42,6 +42,9 @@ export class LogEntryComponent implements OnInit {
   department_name = new FormControl("", Validators.required);
   document = new FormControl("", Validators.required);
 
+  issue_context: String;
+  contact_email: String;
+
   constructor(private serviceLogEntry:LogEntryService, private serviceNewAuditRequest:NewAuditRequestService, fb: FormBuilder) {
     this.myForm = fb.group({
           log_id:this.log_id,
@@ -66,13 +69,15 @@ export class LogEntryComponent implements OnInit {
   /**
    * submits a new audit request based on the current component's details
    */
-  submitAuditRequest(): Promise<any> {
+  submitAuditRequest(contact_email, issue_text) /*: Promise<any>*/ {
 
     let auditRequestTransaction = {
       $class: "be.vlaanderen.audittrail.NewAuditRequest",
       "sender": this.asset.data_owner,
       "auditor": "be.vlaanderen.audittrail.ParticipantAuditor#auditor1",
-      "log_to_review": "be.vlaanderen.audittrail.LogEntry#"+this.currentId
+      "log_to_review": "be.vlaanderen.audittrail.LogEntry#"+this.currentId,
+      "issue_context": issue_text,
+      "contact_email": contact_email
     };
 
     return this.serviceNewAuditRequest.addTransaction(auditRequestTransaction)

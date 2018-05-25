@@ -83,6 +83,13 @@ strong {
     background: #F4F4F4;
     border-radius: 5px;
 }
+
+.issue_context {
+    width: 100%;
+    padding: 15px;
+    background: #F4F4F4;
+}
+
 .modal-footer{
     background: #F4F4F4;
     border-radius: 5px;
@@ -108,41 +115,41 @@ label {
 
 }
 .btn-default {
-    color: #844EF4;
+    color: #000000;
     background-color: #ffffff;
-    border-color: #844EF4;
+    border-color: #ffe716;
     border-radius: 4px;
     width: 76px;
     height: 40px;
 }
 .btn-danger{
-    color: #ffffff;
-    background-color: #844AE4;
-    border-color: #844AE4;
+    color: #000000;
+    background-color: #ffe716;
+    border-color: #ffe716;
     border-radius: 4px;
-    width: 76px;
+    width: 81px;
     height: 40px;
 }
 .btn-danger:focus{
-    background-color: #4D21A8;
-    border-color: #4D21A8;
+    background-color: #b6a71f;
+    border-color: #b6a71f;
 }
 .btn-success {
-    color: #ffffff;
-    background-color: #844AE4;
-    border-color: #844AE4;
+    color: #000000;
+    background-color: #ffe716;
+    border-color: #ffe716;
     border-radius: 4px;
     width: 76px;
     height: 40px;
 }
 .btn-success:focus{
-    background-color: #4D21A8;
-    border-color: #4D21A8;
+    background-color: #b6a71f;
+    border-color: #b6a71f;
 }
 .btn-default:focus{
     background-color: #fff;
-    border-color: #4d21a8;  
-    color: #4d21a8;      
+    border-color: #b6a71f;  
+    color: #b6a71f;      
 }
 .asset-title{
     font-family: inherit;
