@@ -20,7 +20,7 @@ export class SharedService {
     //** Observable functions */
     civilianLogin(name:String){
         console.log('Civilian Login:', name); 
-        this.userSource.next('civ#'+name);
+        this.userSource.next('burger#'+name);
     }
 
     auditorLogin(name:String){

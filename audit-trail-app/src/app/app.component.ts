@@ -27,12 +27,29 @@ import $ from 'jquery';
 export class AppComponent implements OnInit {
   title = 'app works!';
 
-  constructor() {
-    
+  loggedInUser:String;
+
+  constructor(private ss: SharedService) {
+    this.loggedInUser = 'burger Adam';
+  }
+
+  active:String;
+
+  toggle(page:String): void {
+    this.active = page;
+    console.log(page);
   }
 
   ngOnInit(): void {
-    //this.getLoggedInUser();
+    // subscribe component to currently logged in user variable
+    this.ss.currentUser.subscribe(value => this.loggedInUser = value);
+
+    // determine logged in user
+    this.ss.getLoggedInUser();
+  }
+
+  getLoggedInUser(): String {
+    return this.loggedInUser.replace('#', ' ');
   }
 
   ngAfterViewInit() {

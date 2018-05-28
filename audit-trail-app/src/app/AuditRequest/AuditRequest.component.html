@@ -343,17 +343,20 @@
                 </mat-panel-description>  
               </mat-expansion-panel-header>
               <div class="asset-container" *ngIf="asset.log_details; else nodetails" >
-                  <mat-form-field *ngIf="auditorView()">
-                      <input [readonly]="true" matInput placeholder="Accessed By" value="{{ asset.log_details.accessed_by | slice:45}}">
-                  </mat-form-field>
                   <mat-form-field>
-                    <input [readonly]="true" matInput placeholder="Owner Data" value="{{ asset.log_details.data_owner | slice:45}}">
+                    <input [readonly]="true" matInput placeholder="Context" value="{{ asset.log_details.context }}">
                   </mat-form-field>
                   <mat-form-field>
                       <input [readonly]="true" matInput placeholder="Departement" value="{{ asset.log_details.department_name }}">
-                    </mat-form-field>
+                  </mat-form-field>
                   <mat-form-field>
-                    <input [readonly]="true" matInput placeholder="Context" value="{{ asset.log_details.context }}">
+                      <input [readonly]="true" matInput placeholder="Weergave gebruiker" value="Entiteit {{ asset.log_details.department_name }} heeft uw gegevens bekeken in het kader van {{ asset.log_details.context | titlecase }}">
+                  </mat-form-field>
+                  <mat-form-field *ngIf="auditorView()">
+                      <input [readonly]="true" matInput placeholder="Data geraadpleegd door" value="{{ asset.log_details.accessed_by | slice:45}}">
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input [readonly]="true" matInput placeholder="Data Eigenaar" value="{{ asset.log_details.data_owner | slice:45}}">
                   </mat-form-field>
                   <h4 *ngIf="auditorView()">Details</h4>
                   <mat-form-field *ngIf="auditorView()">

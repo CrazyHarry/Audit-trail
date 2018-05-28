@@ -81,7 +81,7 @@ export class LogEntryComponent implements OnInit {
 
   // returns true is the current logged in user is an auditor
   civilianView(): boolean {
-    if (this.loggedInUser.split('#')[0] == 'civ'){
+    if (this.loggedInUser.split('#')[0] == 'burger'){
       return true;
     } else {
       return false;

@@ -18,7 +18,7 @@
 }
 
  #wrapper {
-    width: 600px;
+    width: 100%;
     /* border: 1px solid black; */
     overflow: hidden; /* will contain if #first is longer than #second */
 }
@@ -31,6 +31,12 @@
     /* border: 1px solid green; */
     /* overflow: hidden; */
     margin-top: 16px;
+}
+
+#last {
+    margin-top: 20px;
+    float:right; /* add this */
+    /* border: 1px solid red; */
 }
 
 .container-fluid {
@@ -76,40 +82,46 @@
     margin-left: 20px;
 }
 
-.navbar-nav > li {
+.nav-tabs > li {
     margin-right: 12px;
     cursor: pointer;
 }
 
-.navbar-nav > a {
+.nav-tabs > a {
     font-size: 14px;
     color: #343C41;
     letter-spacing: 0.2px;
 }
 
-.navbar-nav > li:hover {
+/* .nav-tabs > li:hover {
     background-color: #fff;
     color: #000;
 }
+*/
 
-.navbar-nav > li > a {
+.nav-tabs > li > a {
     color: #000;
     padding: 10px;
     font-weight: bold;
 }
 
-.navbar-nav > li > .active:hover > a {
+.nav-tabs > li > .active:hover > a {
     color: #6C4CC4 !important;
 }
 
-.navbar-nav > li:hover > a {
+.nav-tabs > li:hover > a {
     color: #000;
 }
 
-.navbar-nav .active > a {
+.nav-tabs .active > a {
     background-color: #fff;
     color: #343C41 !important;
 }
+
+/* .navbar-nav .active > a[tabindex]:focus {
+    background-color: #fff;
+    color: #343C41 !important;
+} */
 
 .dropdown-menu {
     border-radius: 0px;
