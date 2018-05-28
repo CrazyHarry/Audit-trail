@@ -73,6 +73,7 @@ asset AuditRequest identified by audit_id {
   o String timestamp
   o AuditRequesState request_state
 }
+
     // categorical variable indicating audit request state
     enum AuditRequesState {
       o REQUESTED
