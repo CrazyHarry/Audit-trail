@@ -12,16 +12,28 @@
  * limitations under the License.
  */
 
-import { Component } from '@angular/core';
+import { Component,  OnInit, Input } from '@angular/core';
+import { ParticipantAuditorService } from './ParticipantAuditor/ParticipantAuditor.service';
+import { ParticipantCivilianService } from './ParticipantCivilian/ParticipantCivilian.service';
+import { SharedService } from './shared.service';
 import $ from 'jquery';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  providers: [ParticipantAuditorService, ParticipantCivilianService, SharedService]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app works!';
+
+  constructor() {
+    
+  }
+
+  ngOnInit(): void {
+    //this.getLoggedInUser();
+  }
 
   ngAfterViewInit() {
     $('.nav a').on('click', function(){
@@ -41,4 +53,5 @@ export class AppComponent {
       $(this).parent().parent().addClass('active');
     });
   }
+
 }

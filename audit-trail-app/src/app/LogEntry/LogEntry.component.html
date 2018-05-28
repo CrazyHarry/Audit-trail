@@ -359,7 +359,7 @@
                 <input [readonly]="true" matInput placeholder="Context" value="{{ asset.context }}">
               </mat-form-field>
               
-              <mat-action-row>
+              <mat-action-row *ngIf="civilianView()">
                 <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Betwist raadpleging</button>
               </mat-action-row>
             </div>

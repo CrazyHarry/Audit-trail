@@ -295,14 +295,6 @@
         <h1 class="asset-title" id='assetName'>Audit Requests</h1>
     </div>
     <div class="col-md-3">
-      <!-- <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">
-          <span style="font-size: 14px;font-family: inherit;border-right:1px solid rgba(255,255,255,0.5);padding-right:0.6em;margin-right:0.5em;vertical-align:middle;">
-              <svg class="plus-svg" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                <path fill-rule="evenodd" d="M5.5,4.5 L9.5,4.5 L10,4.5 L10,5.5 L9.5,5.5 L5.5,5.5 L5.5,9.5 L5.5,10 L4.5,10 L4.5,9.5 L4.5,5.5 L0.5,5.5 L0,5.5 L0,4.5 L0.5,4.5 L4.5,4.5 L4.5,0.5 L4.5,0 L5.5,0 L5.5,0.5 L5.5,4.5 Z"/>
-              </svg>
-          </span>
-        Create Asset
-      </button> -->
     </div>
   </div>
   <br>
@@ -330,7 +322,11 @@
           <div class="asset-container">
 
             <mat-form-field>
-                <input [readonly]="true" matInput placeholder="Zender" value="{{ asset.sender | slice:45}}">
+              <input [readonly]="true" matInput placeholder="Zender" value="{{ asset.sender | slice:45}}">
+            </mat-form-field>
+
+            <mat-form-field>
+              <input [readonly]="true" matInput placeholder="E-mail" value="{{ asset.contact_email }}">
             </mat-form-field>
 
             <mat-form-field>
@@ -347,7 +343,7 @@
                 </mat-panel-description>  
               </mat-expansion-panel-header>
               <div class="asset-container" *ngIf="asset.log_details; else nodetails" >
-                  <mat-form-field>
+                  <mat-form-field *ngIf="auditorView()">
                       <input [readonly]="true" matInput placeholder="Accessed By" value="{{ asset.log_details.accessed_by | slice:45}}">
                   </mat-form-field>
                   <mat-form-field>
@@ -359,14 +355,14 @@
                   <mat-form-field>
                     <input [readonly]="true" matInput placeholder="Context" value="{{ asset.log_details.context }}">
                   </mat-form-field>
-                  <h4>Details</h4>
-                  <mat-form-field>
+                  <h4 *ngIf="auditorView()">Details</h4>
+                  <mat-form-field *ngIf="auditorView()">
                     <input [readonly]="true" matInput placeholder="Date" value="{{ asset.log_details.timestamp }}">
                   </mat-form-field>
-                  <mat-form-field>
+                  <mat-form-field *ngIf="auditorView()">
                     <input [readonly]="true" matInput placeholder="Carbon Hash" value="{{ asset.log_details.carbon_hash }}">
                   </mat-form-field>
-                  <mat-form-field>
+                  <mat-form-field *ngIf="auditorView()">
                       <input [readonly]="true" matInput placeholder="Log ID" value="{{ asset.log_to_review | slice:34 }}">
                     </mat-form-field>
               </div>
@@ -376,7 +372,7 @@
             </mat-expansion-panel>
             <br>
 
-            <mat-action-row>
+            <mat-action-row *ngIf="auditorView()">
                 <mat-form-field>
                     <mat-select placeholder="Audit Request State" [(ngModel)]="asset.request_state" (selectionChange)="updateState($event.value)">
                         <mat-option value="REQUESTED">Requested</mat-option>
@@ -385,7 +381,7 @@
                     </mat-select>
                   </mat-form-field>
 
-                <button mat-button color="primary" type="button" (click)="commitRequestStateChange()">Commit Changes</button>
+                <button mat-button color="primary" type="button" (click)="commitRequestStateChange(asset.audit_id, asset.request_state)">Commit Changes</button>
             </mat-action-row>
 
           </div>

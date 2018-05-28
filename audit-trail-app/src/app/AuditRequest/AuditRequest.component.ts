@@ -18,6 +18,8 @@ import { AuditRequestService } from './AuditRequest.service';
 import { LogEntryService } from '../LogEntry/LogEntry.service';
 import { ChangeAuditRequestStateService } from '../ChangeAuditRequestState/ChangeAuditRequestState.service';
 
+import { SharedService } from '../shared.service';
+
 import 'rxjs/add/operator/toPromise';
 
 
@@ -25,7 +27,7 @@ import 'rxjs/add/operator/toPromise';
 	selector: 'app-AuditRequest',
 	templateUrl: './AuditRequest.component.html',
 	styleUrls: ['./AuditRequest.component.css'],
-  providers: [AuditRequestService, LogEntryService, ChangeAuditRequestStateService]
+  providers: [AuditRequestService, LogEntryService, ChangeAuditRequestStateService, SharedService]
 })
 export class AuditRequestComponent implements OnInit {
 
@@ -47,6 +49,7 @@ export class AuditRequestComponent implements OnInit {
   constructor(private serviceAuditRequest:AuditRequestService, 
               private serviceLogEntry:LogEntryService, 
               private serviceChangeAuditRequest: ChangeAuditRequestStateService, 
+              private ss: SharedService,
               fb: FormBuilder) {
     this.myForm = fb.group({
       audit_id:this.audit_id,
@@ -58,7 +61,16 @@ export class AuditRequestComponent implements OnInit {
     });
   };
 
+  loggedInUser: String;
+
   ngOnInit(): void {
+    // subscribe component to currently logged in user variable
+    this.ss.currentUser.subscribe(value => this.loggedInUser = value);
+
+    // determine logged in user
+    this.ss.getLoggedInUser();
+
+    // load all audti requests
     this.loadAll();
   }
 
@@ -75,12 +87,23 @@ export class AuditRequestComponent implements OnInit {
     this.new_state = value;
   }
 
+  // returns true is the current logged in user is an auditor
+  auditorView(): boolean {
+    if (this.loggedInUser.split('#')[0] == 'auditor'){
+      return true;
+      
+    } else {
+      return false;
+    }
+  }
+
   // invoke a transaction to change the audit request state
-  commitRequestStateChange(): Promise<any> {
+  commitRequestStateChange(audit_id, new_state): Promise<any> {
+
     let transaction = {
       "$class": "be.vlaanderen.audittrail.ChangeAuditRequestState",
-      "audit_id": this.asset.audit_id,
-      "new_state": this.asset.request_state
+      "audit_id": audit_id,
+      "new_state": new_state
     };
 
     return this.serviceChangeAuditRequest.addTransaction(transaction)

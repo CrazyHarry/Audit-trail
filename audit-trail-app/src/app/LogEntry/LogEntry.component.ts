@@ -16,13 +16,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { LogEntryService } from './LogEntry.service';
 import { NewAuditRequestService } from '../NewAuditRequest/NewAuditRequest.service';
+import { SharedService } from '../shared.service';
 
 import 'rxjs/add/operator/toPromise';
 @Component({
 	selector: 'app-LogEntry',
 	templateUrl: './LogEntry.component.html',
 	styleUrls: ['./LogEntry.component.css'],
-  providers: [LogEntryService, NewAuditRequestService]
+  providers: [LogEntryService, NewAuditRequestService, SharedService]
 })
 export class LogEntryComponent implements OnInit {
 
@@ -45,7 +46,10 @@ export class LogEntryComponent implements OnInit {
   issue_context: String;
   contact_email: String;
 
-  constructor(private serviceLogEntry:LogEntryService, private serviceNewAuditRequest:NewAuditRequestService, fb: FormBuilder) {
+  constructor(private serviceLogEntry:LogEntryService, 
+              private serviceNewAuditRequest:NewAuditRequestService,
+              private ss:SharedService, 
+              fb: FormBuilder) {
     this.myForm = fb.group({
           log_id:this.log_id,
           timestamp:this.timestamp,
@@ -62,14 +66,32 @@ export class LogEntryComponent implements OnInit {
     this.asset = asset;
   }
 
+  loggedInUser: String;
+
   ngOnInit(): void {
+    // subscribe component to currently logged in user variable
+    this.ss.currentUser.subscribe(value => this.loggedInUser = value);
+
+    // determine logged in user
+    this.ss.getLoggedInUser();
+
+    // load all log entries
     this.loadAll();
+  }
+
+  // returns true is the current logged in user is an auditor
+  civilianView(): boolean {
+    if (this.loggedInUser.split('#')[0] == 'civ'){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
    * submits a new audit request based on the current component's details
    */
-  submitAuditRequest(contact_email, issue_text) /*: Promise<any>*/ {
+  submitAuditRequest(contact_email, issue_text): Promise<any> {
 
     let auditRequestTransaction = {
       $class: "be.vlaanderen.audittrail.NewAuditRequest",
