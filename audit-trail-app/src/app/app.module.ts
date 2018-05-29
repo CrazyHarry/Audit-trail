@@ -42,6 +42,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule, MatFormFieldModule, MatButtonModule, MatSelectModule, MatMenuModule} from '@angular/material';
 import {MatIconModule} from '@angular/material/icon';
 
+import { AuditRequestTranslatePipe } from './AuditRequest/AuditRequest.pipe';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,9 @@ import {MatIconModule} from '@angular/material/icon';
 
     NewLogEntryComponent,
     NewAuditRequestComponent,
-    ChangeAuditRequestStateComponent
+    ChangeAuditRequestStateComponent,
+
+    AuditRequestTranslatePipe
   ],
   imports: [
     BrowserModule,

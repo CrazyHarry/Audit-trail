@@ -309,7 +309,7 @@
           <!-- Expansion Panel Header (title and date) -->
           <mat-expansion-panel-header>
               <mat-panel-title>
-                {{ asset.request_state | titlecase }}
+                {{ asset.request_state | AuditRequestTranslatePipe | titlecase }}
               </mat-panel-title>
 
               <mat-panel-description class="asset-short-description">
@@ -360,7 +360,7 @@
                   </mat-form-field>
                   <h4 *ngIf="auditorView()">Details</h4>
                   <mat-form-field *ngIf="auditorView()">
-                    <input [readonly]="true" matInput placeholder="Date" value="{{ asset.log_details.timestamp }}">
+                    <input [readonly]="true" matInput placeholder="Datum" value="{{ asset.log_details.timestamp }}">
                   </mat-form-field>
                   <mat-form-field *ngIf="auditorView()">
                     <input [readonly]="true" matInput placeholder="Carbon Hash" value="{{ asset.log_details.carbon_hash }}">
@@ -377,14 +377,14 @@
 
             <mat-action-row *ngIf="auditorView()">
                 <mat-form-field>
-                    <mat-select placeholder="Audit Request State" [(ngModel)]="asset.request_state" (selectionChange)="updateState($event.value)">
-                        <mat-option value="REQUESTED">Requested</mat-option>
-                        <mat-option value="UNDERREVISION">Under Revision</mat-option>
-                        <mat-option value="DONE">Done</mat-option>
+                    <mat-select placeholder="Audit Request Status" [(ngModel)]="asset.request_state" (selectionChange)="updateState($event.value)">
+                        <mat-option value="REQUESTED">Aangevraagd</mat-option>
+                        <mat-option value="UNDERREVISION">Onder revisie</mat-option>
+                        <mat-option value="DONE">Afgerond</mat-option>
                     </mat-select>
                   </mat-form-field>
 
-                <button mat-button color="primary" type="button" (click)="commitRequestStateChange(asset.audit_id, asset.request_state)">Commit Changes</button>
+                <button mat-button color="primary" type="button" (click)="commitRequestStateChange(asset.audit_id, asset.request_state)">Verander Status</button>
             </mat-action-row>
 
           </div>

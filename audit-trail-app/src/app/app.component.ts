@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
   }
 
   getLoggedInUser(): String {
-    return this.loggedInUser.replace('#', ' ');
+    return this.loggedInUser.replace('#', ': ');
   }
 
   ngAfterViewInit() {
