@@ -1,5 +1,7 @@
 # Audit-trail
 
+![App](audit-trail-app/img/Front-page.jpg)
+
 **Audit-trail** is a Flemish Government ran Proof-of-Concept (PoC) to demonstrate how early-stage blockchain technologies can be leveraged to make a decentralized and immutable logging-system allowing for:
 - Transparent reporting to citizens.
 - Disputing government's access behaviour, by citizens.
@@ -20,6 +22,7 @@ With the hype of blockchain being in full swing since 2017, The Flemish Governme
 - [HyperLedger Composer](https://hyperledger.github.io/composer/latest/)
 - [Ethereum](https://www.ethereum.org/)
 - [Angular](https://angular.io/)
+- [Passport](http://www.passportjs.org/)
 
 ## Repository Structure
 
@@ -33,7 +36,10 @@ Picture of the architecture, where the rest server is located etc
 
 ## Installation and usage
 
-Every folder contains it's own readme with installation steps.
+For a TL;DR installation and setup of **Audit-trail**:
+1. (Install HyperLedger Composer on your machine)[https://hyperledger.github.io/composer/latest/installing/installing-index.html]
+2. (Install and run the **Audit-trail** business network)[./audit-trail-network#deployment-of-the-business-network]
+3. (Run the Composer REST server)[rest-server#running-a-single-user-rest-server-development-and-testing]
+4. (Run the Angular Front-End application)[]
 
-## 
-
+Furthermore, every folder contains it's own readme with documentation and details regarding the code and motivation behind implementation decisions.
