@@ -1,6 +1,6 @@
 # Audit-Trail Application
 
-![App](audit-trail-app/img/app.jpg)
+![App](./img/app.jpg)
 
 This folder contains the front-end application, which uses Angular 6 and the Composer REST server to facilitate interaction with the Audit-trail business network application.
 
@@ -12,13 +12,13 @@ Run `npm start` for a dev server. Navigate to `http://localhost:4200/`.
 
 Add explanation of the application's navigation and elements.
 
-![Log Details](audit-trail-app/img/log-exploration.jpg)
+![Log Details](./img/log-exploration.jpg)
 
-![Disputing](audit-trail-app/img/dispute.jpg)
+![Disputing](./img/dispute.jpg)
 
-![Audit Request](audit-trail-app/img/audit-request.jpg)
+![Audit Request](./img/audit-request.jpg)
 
-![Auditor Review](audit-trail-app/img/auditor-audit-request.jpg)
+![Auditor Review](./img/auditor-audit-request.jpg)
 
 
 ## Authentication
