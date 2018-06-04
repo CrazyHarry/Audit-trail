@@ -37,9 +37,9 @@ Picture of the architecture, where the rest server is located etc
 ## Installation and usage
 
 For a TL;DR installation and setup of **Audit-trail**:
-1. (Install HyperLedger Composer on your machine)[https://hyperledger.github.io/composer/latest/installing/installing-index.html]
-2. (Install and run the **Audit-trail** business network)[./audit-trail-network#deployment-of-the-business-network]
-3. (Run the Composer REST server)[rest-server#running-a-single-user-rest-server-development-and-testing]
-4. (Run the Angular Front-End application)[]
+1. [Install HyperLedger Composer on your machine](https://hyperledger.github.io/composer/latest/installing/installing-index.html)
+2. [Install and run the **Audit-trail** business network](./audit-trail-network#deployment-of-the-business-network)
+3. [Run the Composer REST server](rest-server#running-a-single-user-rest-server-development-and-testing)
+4. [Run the Angular Front-End application]()
 
 Furthermore, every folder contains it's own readme with documentation and details regarding the code and motivation behind implementation decisions.
