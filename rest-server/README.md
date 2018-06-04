@@ -39,32 +39,30 @@ In the PoC a MongoDB storage hosted at [mlab.com](mlab.com) has been used to sto
 In development one can run the REST server in a single-user mode to test it's functionality.
 
 After finishing the [steps for generating dummy participants, data and identity issueing](../audit-trail-app##dummy-data-populating-the-business-network-with-examples), run the following command to run the server for user `adam`:
-```./user-rest-server.sh adam```
+~~~~./user-rest-server.sh adam~~~~
 The command above assumes a business network card `adam@audit-trail-network` has been installed on the machine.
 
 In the same pattern, to run the REST server in (network) admin mode. run:
-```./user-rest-server.sh admin```
+~~~~./user-rest-server.sh admin~~~~
 
 After execution, navigate to (http://localhost:3000/explore)[http://localhost:3000/explore] to explore the REST API and it's supported commands.
 
 This step is nessecary for the `audit-trail-app` front-end application to connect to the business network.
 
 ## Running a Multi-User REST Server (Production environment)
+The REST-Server allows to authenticate multiple users using (Passport)[http://www.passportjs.org/]. If configured correctly, it allows users to authenticate with their facebook, google, github, custom OAUTH2 or even an eID login.
 
+In this PoC, multi-user authentication is implemented for a github sign-in, but (more authentication strategies)[http://www.passportjs.org/packages/] are available.
+
+To run the REST server in a github-based multi-user authentication mode, run the following:
+~~~~
+./multi-user.sh
+~~~~
+
+To change the authentication strategy, or providfe your own github application tokens, one may configure `COMPOSER_DATASOURCES` attributes in `multi-user.sh`.
+
+After running the command, you'll be able to authenticate with your github account on (https://localhost:3000/auth/github)[https://localhost:3000/auth/github]. After logging in, as a user you'll have to upload your `business network card` in the `wallet` endpoint of the REST server. This will match your github authentication with your blockchain identity.
 
 ## Notes
 
-
-
-
-1. run `./github-auth.sh` to setup environment variables
-2. run `./start.sh` to start
-
-## Enabling multi-user RESt server authentication
-
-1. Enable AUTH on the REST Server
-2. Setup peristent storage for wallet management
-3. isntall the loopback DB connector module
-4. Extend the launch script to enable multi-user mode
-5. Setup the identity on BNA = OAuth Identity
-
+- The whole point of a distributed blockchain network is to decentralize authentication and access to citizen's personal data. However, if the REST server together with it's business network card storage are both located in a centralized place, the purpose of the blockchain fades away. A different network architecture needs to proposed to address this issue.
