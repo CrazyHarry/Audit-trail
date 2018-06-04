@@ -107,63 +107,93 @@ Participant | Rule
 
 ## Business Network Cards
 
-A business network model specifies digitized assets and participants. Whenever someone creates a new participant, say a new `ParticipantCivilian`, this partipant needs to be *mapped* to an identity, a civilian in this case. The identity issueing to a particular participant on the blockchain is done by the business network administrator. 
+A business network model specifies digitized assets and participants. Whenever someone creates a new participant, say a new `ParticipantCivilian`, this partipant needs to be *mapped* to an identity, a civilian in this case. The **identity issueing** to a particular participant on the blockchain is done by the business network administrator. 
 
-Whenever a business network admin issues a new identity, a **business network cards** is created. This business network cards is send or given through a secure channel to the person whose identity has been created. The business network card is essentially a wallet containing specifications towards your blockchain identity, the participant you map on, the certficate authority and nessecary information to connect with the Audit-trail business network.
+Whenever a business network admin issues a new identity, a **business network card** is created. This business network cards is send or given through a secure channel to the person whose identity has been created. The business network card is essentially a wallet containing specifications towards your blockchain identity, the participant you map on, the certficate authority and nessecary information to connect with the Audit-trail business network. 
 
-To read more on business network cards, I refer you to the [official documentation](https://hyperledger.github.io/composer/v0.16/playground/id-cards-playground).
+Compromising a business network card means compromising someone else's identity on the blockchain, which makes it important to keep this business network card safe.
 
-For information on card issuing on this business network, see section on **Dummy data** below.
+To read more on business network cards, please visit the [official documentation](https://hyperledger.github.io/composer/v0.16/playground/id-cards-playground).
+
+For information on issuing identities on this business network, see section on **Dummy data** below.
 
 ## Quick Start
 
-To quickly play around with the business network, try using the [Composer Playground](https://composer-playground.mybluemix.net/). It runs locally on your browser and allows to quickly test transactions and the business network. 
+To quickly play around with the business network, try using the [Composer Playground](https://composer-playground.mybluemix.net/). It runs locally in your browser and allows to quickly test transactions and the business network model. 
 
-For usage, upload `dist/audit-trail-network@x.x.x.bna` to Playground and deplay the network.
+For usage, upload `dist/audit-trail-network@x.x.x.bna` to Playground and deploy the network.
 
-## Installion of the business network
+## Deployment of the business network
 
-Create an archive file:
-```composer archive create -t dist -n ../```
+The deployment process has been streamlined with scripts located in the `./dist/` folder. We'll take the following steps to deploy the network:
+1. Run `./dist/1-create-archive.sh` to create a business network archive (*.bna file). A business network archive is a file containing the network model, permissions, transactions and smart contracts in one single file. This script will generate a new file `audit-trail-network@x.x.x.bna` where `x.x.x` is the version of the network specified in `package.json`.
+2. Run `./dist/2-install-bna.sh 0.1.0` to install version `0.1.0` of the business network on the Hyperledger node. After installation, the network definition is known to your local peer node, but the network is not up and running yet. For thes we need the next step.
+3. Run `./dist/3-start-network.sh 0.1.0` to start your previously installed network. After execution the script will have generated a new **network admin business card**. The network administrator is at network start the only identity allowing to issue new identities and make changes to the network.
+4. Run `./dist/4-reinstall-admincard.sh` to install the network admin business card on your system.
 
-Install the archive file on the network
-```composer network install -a cardname.bna -c PeerAdmin@hlfv1```
-
-Start the network, this will generate a network admin card
-```composer network start -c PeerAdmin@hlv1 -n audit-trail-network -V 0.0.1 -A admin -S adminpw```
-
-To import the network admin card
-```composer card import -f filecard```
-
-Check what cards are imported
-```composer card list```
-
-To check if the network is up and running
+You can test if the network is running with the following command:
 ```composer network list -c admin@audit-trail-network```
-```composer network ping -c admin@audit-trail-network```
 
-To upgrade the business network application:
-1. create an archive
-2. install it
-3. composer network upgrade -c PeerAdmin@hlfv1 -n audit-trail-network -V 0.0.2
-
-To start a rest server, just type in `composer-rest-server` and follow along what's written.
+Whenever a new version rolls out and a previous version of audit-trail is running, use `./dist/5-upgrade-network x.x.x` to upgrade the network to version `x.x.x`.
 
 ## Dummy data: Populating the business network with examples
 
-Since this is a Proof-of-Concept implementation of an Audit-Trail on HyperLedger Composer, it's been decided to work with dummy data to demonstrate the business network's functionality.
+Since this repo contains the code of a Proof-of-Concept implementation of an Audit-Trail applicaiton on HyperLedger Composer, it's been decided by authorities to work with dummy data to demonstrate the business network's functionality.
 
-### What is generated?
+The scripts to generate data are located in the folder `./sample-data/`. To execute the scripts first navigate to this folder first.
 
-Explain what is being generated
+### The dummy data
 
-### How to generate sample data?
-step by step tutorial on generating data
+First we'll add participants to our business network, we'll be adding the following partcipants:
+- civilians
+    - adam
+    - dieter
+    - bram
+- public servants
+    - daniel (from entity AIV)
+    - pascal (from entity OMGEVING)
+- auditors
+    - auditor_aiv (from AIV)
+    - auditor_aiv (from OMGEVING)
+- entities
+    - AIV (Agentschap Informatie Vlaanderen)
+    - OMGEVING (Departement Omgeving)
 
-## REST server
+Run the following command to add these participants:
+~~~~
+    cd sample-data
+    node generateParticipants.js
+    # after succesfull adding press ctrl-c 
+~~~~
 
+Second, we'll be issuing identies for these particpants. This will generate business network cards which we'll install to use with the rest-server later on.
+
+Run the following commands to issue identites and install the cards:
+~~~~
+    cd sample-data
+    chmod +x issue-identities.sh
+    ./issue-identities.sh
+    cd cards
+    ./1-delete-cards.sh
+    ./2-import-cards.sh
+    cd ..
+~~~~
+
+The last step involves generating logs and audit requests for these participants. Included is a script which will generate 20 logs and 5 audit requests, attributed randomly to the participants specified above with a random context specification (eg:  'BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK').
+
+Run the following commands to generate new logs
+~~~~
+    cd sample-data
+    node generateData.js
+    # after succesfull generation press ctrl-c 
+~~~~
+
+## Connecting to the business network
+
+Hyperledger Composer comes with a rest-server which automatically scans the business network definition and exposes operations like read, delete, commit transaction and issue identity via a REST protocol.
+
+For more information, visit the README located in the `rest-server` folder at the root of this repository.
 
 ## Important Notes
 
 - Implementation is currently tested on a single node setup. This is because HyperLedger Composer deployment on a multi-node and multi-organizational not officially supported.
-- 

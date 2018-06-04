@@ -13,9 +13,9 @@ The Flemish Government (Vlaamse Overheid) is seeking ways to empower it's citize
 
 The main idea is to make these logs available to citizens in an online portal, allowing citizens to have an idea which of their personal data is being used and in which government process or context. A few applications have been developed allowing for such functionality [MAGDA](https://overheid.vlaanderen.be/magda) and [Burgerprofiel](https://overheid.vlaanderen.be/mijn-burgerprofiel). Both have their strengths and weaknesses. 
 
-With the hype of blockchain being in full swing since 2017, The Flemish Government is investing into innovative blockchain projects to survey and test how the technology can help shape the future of data and privacy, building a decentralized, trustless and transparent government.
+With the hype of blockchain being in full swing since 2017, The Flemish Government is investing into innovative blockchain projects to **survey and test** how the technology can help shape the future of data and privacy, building a decentralized, trustless and transparent government.
 
-## Used Technologies
+## Used Technologies in this PoC
 
 - [HyperLedger Composer](https://hyperledger.github.io/composer/latest/)
 - [Ethereum](https://www.ethereum.org/)
@@ -25,13 +25,15 @@ With the hype of blockchain being in full swing since 2017, The Flemish Governme
 
 - **audt-trail-network**: contains the Audit Trail business network model, for HyperLedger Composer
 - **audit-trail-app**: contains an angular front-end application allowing for direct communication with the Audit Trail business network through a rest-server
-- **rest-server**: rest-server start-up code
+- **rest-server**: rest-server launch scripts
 
-## Getting started
+## Architecture
+
+Picture of the architecture, where the rest server is located etc
 
 ## Installation and usage
 
 Every folder contains it's own readme with installation steps.
 
-
+## 
 
