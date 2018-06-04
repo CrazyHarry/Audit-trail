@@ -1,6 +1,6 @@
 # Audit-trail
 
-![App](audit-trail-app/img/Front-page.jpg)
+![App](audit-trail-app/img/app.jpg)
 
 **Audit-trail** is a Flemish Government ran Proof-of-Concept (PoC) to demonstrate how early-stage blockchain technologies can be leveraged to make a decentralized and immutable logging-system allowing for:
 - Transparent reporting to citizens.
