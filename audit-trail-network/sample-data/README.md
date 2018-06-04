@@ -47,3 +47,10 @@ Run the following commands to generate new logs
     node generateData.js
     # after succesfull generation press ctrl-c 
 ~~~~
+
+## Running Tests
+
+To test the business network
+~~~~
+npm test
+~~~~
