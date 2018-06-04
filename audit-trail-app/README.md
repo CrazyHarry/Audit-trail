@@ -1,28 +1,26 @@
-# audit-trail-app-2
+# Audit-Trail Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.1.
+![App](audit-trail-app/img/app.jpg)
 
-## Development server
+This folder contains the front-end application, which uses Angular 6 and the Composer REST server to facilitate interaction with the Audit-trail business network application.
 
-Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Running development server
 
-## Code scaffolding
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+## Navigating the application
 
-## Build
+Add explanation of the application's navigation and elements.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+![Log Details](audit-trail-app/img/log-exploration.jpg)
 
-## Running unit tests
+![Disputing](audit-trail-app/img/dispute.jpg)
 
-Run `npm test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+![Audit Request](audit-trail-app/img/audit-request.jpg)
 
-## Running end-to-end tests
+![Auditor Review](audit-trail-app/img/auditor-audit-request.jpg)
 
-Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `npm start`.
 
-## Further help
+## Authentication
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Authentication occurs through the rest server, but it's auth-interactions have not been implemented yet with the front-end application.
