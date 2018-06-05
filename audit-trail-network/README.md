@@ -192,7 +192,7 @@ Run the following commands to generate new logs
 
 Hyperledger Composer comes with a rest-server which automatically scans the business network definition and exposes operations like read, delete, commit transaction and issue identity via a REST protocol.
 
-For more information, visit the README located in the `rest-server` folder at the root of this repository.
+For more information on the rest-server, [click here](../rest-server/README.md).
 
 ## Important Notes
 
