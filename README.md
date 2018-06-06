@@ -58,9 +58,9 @@ In this PoC we primarely focused on replicating the **Last of Chain** scenario a
 
 ## Repository Structure
 
-- **audt-trail-network**: contains the Audit Trail business network model, for HyperLedger Composer.
-- **audit-trail-app**: contains an `Angular` front-end application allowing for direct communication with the Audit Trail business network through a rest-server.
-- **rest-server**: contains scriptse to launch the rest-server, which connects to the Audit Trail business network.
+- [**audit-trail-network**](./audit-trail-network): contains the Audit Trail business network model, for HyperLedger Composer.
+- [**audit-trail-app**](./audit-trail-app): contains an `Angular` front-end application allowing for direct communication with the Audit Trail business network through a rest-server.
+- [**rest-server**](./rest-server): contains scriptse to launch the rest-server, which connects to the Audit Trail business network.
 
 ## Installation and usage
 
