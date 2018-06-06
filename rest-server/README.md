@@ -1,13 +1,13 @@
 # Composer REST Server
 
-Hyperledger Composer comes with a rest-server which, after providing the business network and business network cards, allows users to manipulate resources on the blockchain network through the REST protocol. The server allows to be ran on a single-user basis (for development) or a multi-user setup. Both will be discussed below.
+Hyperledger Composer comes with a rest-server which, after providing the business network and business network cards, allows users to manipulate resources on the blockchain network through the REST protocol. The server can run on a single-user basis (for development) or a multi-user setup. Both will be discussed below.
 
 ## Architecture
 
 ![Architecture](architecture.png "Architecture")
 
-Above the architecture of the current implementation of **Audit-trail**.  We have a Hyperledger Composer Peer Node running it's essential components and the audit trail business network. This is essentially the blockchain on a single-node
-- **CA**: which is the certificate authority
+Above the architecture of the current implementation of **Audit-trail**.  We have a Hyperledger Composer Peer Node running it's essential components and the audit trail business network. This is essentially the blockchain on a single-node:
+- **CA**: which is the certificate authority (checks if you're allowed to submit requests and transactions)
 - **Orderer**: which validates transactions and state changes
 - **Peer**: which is this node's endpoint
 - **CoucbDB**: which contains the ledger
@@ -25,9 +25,9 @@ The Composer API is a node.js API which allows for command-line or node.js based
 To learn more about business network cards, read [this section on business network cards](../audit-trail-network#business-network-cards).
 
 ### REST Server
-The REST server allows users to have these interactions through HTTPS and REST commands, frequently used in front-end applications.
+The REST server allows users to have these interactions through HTTP-based REST commands, frequently used in front-end applications.
 
-However, the REST server needs to obtain and store the business network card of it's user to authenticate them correctly. This is the `Business Card Storage` in the architecture picture above.
+However, the REST server needs to obtain and store the business network card of it's user to authenticate them correctly. This is the `Business Card Storage` in the architecture scheme above.
 
 It's really important to understand that the `Business Card Storage` will store all user's business network cards, which if compromised, will allow a malicious intruder to access all identites stored in this storage.
 
@@ -39,29 +39,31 @@ In the PoC a MongoDB storage hosted at [mlab.com](mlab.com) has been used to sto
 In development one can run the REST server in a single-user mode to test it's functionality.
 
 After finishing the [steps for generating dummy participants, data and identity issueing](../audit-trail-app##dummy-data-populating-the-business-network-with-examples), run the following command to run the server for user `adam`:
-~~~~./user-rest-server.sh adam~~~~
+~~~~
+./user-rest-server.sh adam
+~~~~
 The command above assumes a business network card `adam@audit-trail-network` has been installed on the machine.
 
 In the same pattern, to run the REST server in (network) admin mode. run:
-~~~~./user-rest-server.sh admin~~~~
+~~~~
+./user-rest-server.sh admin
+~~~~
 
-After execution, navigate to (http://localhost:3000/explore)[http://localhost:3000/explore] to explore the REST API and it's supported commands.
+After execution, navigate to [http://localhost:3000/explore](http://localhost:3000/explore) to explore the REST API and it's supported commands.
 
 This step is nessecary for the `audit-trail-app` front-end application to connect to the business network.
 
 ## Running a Multi-User REST Server (Production environment)
-The REST-Server allows to authenticate multiple users using (Passport)[http://www.passportjs.org/]. If configured correctly, it allows users to authenticate with their facebook, google, github, custom OAUTH2 or even an eID login.
+The REST-Server allows to authenticate multiple users using [Passport](http://www.passportjs.org/). If configured correctly, it allows users to authenticate with their facebook, google, github, custom OAUTH2 or even an eID login.
 
-In this PoC, multi-user authentication is implemented for a github sign-in, but (more authentication strategies)[http://www.passportjs.org/packages/] are available.
+In this PoC, multi-user authentication is implemented for a github sign-in, but [more authentication strategies](http://www.passportjs.org/packages/) are available. To change the authentication strategy, or provide your own github application tokens, one may configure `COMPOSER_DATASOURCES` attributes in `multi-user.sh`.
 
 To run the REST server in a github-based multi-user authentication mode, run the following:
 ~~~~
 ./multi-user.sh
 ~~~~
 
-To change the authentication strategy, or providfe your own github application tokens, one may configure `COMPOSER_DATASOURCES` attributes in `multi-user.sh`.
-
-After running the command, you'll be able to authenticate with your github account on (https://localhost:3000/auth/github)[https://localhost:3000/auth/github]. After logging in, as a user you'll have to upload your `business network card` in the `wallet` endpoint of the REST server. This will match your github authentication with your blockchain identity.
+After running the command, you'll be able to authenticate with your github account on [https://localhost:3000/auth/github](https://localhost:3000/auth/github). After logging in, as a user you'll have to upload your `business network card` in the `wallet` endpoint of the REST server. This will match your github authentication with your blockchain identity.
 
 ## Notes
 

@@ -2,12 +2,14 @@
 
 ![App](audit-trail-app/img/app.jpg)
 
-**Audit-trail** is a Flemish Government ran Proof-of-Concept (PoC) to demonstrate how early-stage blockchain technologies can be leveraged to make a decentralized and immutable logging-system allowing for:
+**Audit-trail** is a [Flemish Government](https://www.vlaanderen.be/nl) ran Proof-of-Concept (PoC) to demonstrate how early-stage blockchain technologies can be leveraged to make a decentralized and immutable logging-system allowing for:
 - Transparent reporting to citizens.
 - Disputing government's access behaviour, by citizens.
 - Enriched and accurate auditing of logs and disputes.
 
-This project was requested by "Departement Environment", part of the Flemish Government.
+Two popular blockchain technologies came into consideration during this PoC: [Ethereum](https://www.ethereum.org/) and [HyperLedger Fabric](https://www.hyperledger.org/projects/fabric).
+
+This project was requested by [Departement Environment](https://www.omgevingvlaanderen.be/), part of the Flemish Government.
 
 ## Motivation
 
@@ -15,17 +17,15 @@ The Flemish Government (Vlaamse Overheid) is seeking ways to empower it's citize
 
 The main idea is to make these logs available to citizens in an online portal, allowing citizens to have an idea which of their personal data is being used and in which government process or context. A few applications have been developed allowing for such functionality, including [MAGDA](https://overheid.vlaanderen.be/magda) and [Burgerprofiel](https://overheid.vlaanderen.be/mijn-burgerprofiel). Both have their strengths and weaknesses.
 
-With the hype of blockchain being in full swing since 2017, The Flemish Government is investing into innovative blockchain projects to **survey and test** how the technology can help shape the future of data and privacy, building a decentralized, trustless and transparent government.
+With the hype of blockchain being in full swing since 2017, The Flemish Government is investing in innovative blockchain projects to **survey and test** how the technology can help shape the future of data and privacy, building a decentralized, trustless and transparent government.
 
 ## Concepts
 
 ### Last of Chain
 
-If you can't thrust logs, they become worthless. Logs are worthless if they could be modified. They're also worthless if the logging can be disabled. That's why blockchain technologies come to mind as they allow for an immutable, consensus driven, distributed single source of truth of logs to exist.
+If you can't thrust logs, they become worthless. Logs are worthless if they could be modified. They're also worthless if the logging can be temporarily disabled. That's why blockchain technologies come to mind as they allow for an immutable, consensus driven, distributed single source of truth of logs to exist.
 
-However, at the moment of writing this documentation page, the current processes at the flemish government access personal data first and log later on. 
-
-Furthermore, personal data access and logging are 2 seperate systems, which means the logging system could be turned-off for a few minutes if shady access needs to be conducted (through internal or external forces).
+However, at the moment of writing this documentation page, the current processes at the flemish government access personal data first and log later. Furthermore, personal data access and logging are 2 seperate systems, which means the logging system could be turned-off for a few minutes if shady access needs to be conducted (through internal or external forces).
 
 We'll be calling this scheme a **Last of Chain** logging system, as the logging system is literally the last piece of the data-chain, registering what happened before it.
 
@@ -33,15 +33,15 @@ We'll be calling this scheme a **Last of Chain** logging system, as the logging 
 
 The solution to the last of chain problem would be to intergrate the sensitive database and the logging into a single component, essentially making the logging **First of Chain**.
 
-Solutions like these exist already. For example, popular databases like MySQL and Postgresql allow for logging directly by the database itself, which would eliminate this problem. However in a systems like this, the logs are usually encoded in plain-text, not immutable. You could check and test integrity with checksums, but that's about it.
+Solutions like these exist already. For example, popular databases like MySQL and Postgresql allow for logging directly by the database itself, which would eliminate this problem. However in a systems like this, the logs are usually encoded in plain-text, they are not immutable nor protected. You could check and test integrity with checksums, but that's about it.
 
 Other than the immutability problem, databases are usually not built with logs in mind. How do you guarantee logging whenever someone accesses data? I believe this can be done through **smart-contracts**. Smart contracts are self-exucuting and self-enforcing pieces of code that come with a guarantee of execution.
 
-A well written-smart contract would allow for access of the data and have a quaranteed log on the ledger, in one single request. Added to this, with a well protected and thought out encryptic circuitry, the only access-point to this data would be through **one-single-point-of-access**, meaning the data cannot be accessed on any other channel. You use this channel, you're presence has been logged. You go with a different alley, you won't be accessing the data you need.
+A well written-smart contract would allow for access of the data and have a quaranteed log on the ledger, in one single request. Added to this, with a well protected and thought out encryptic circuitry, the only access-point to this data would be through a **single-point-of-access**, meaning the data cannot be accessed on any other channel. You use this channel, you're presence has been logged. You take a different alley, you won't be accessing the data you need.
 
 ### Smart Mandates
 
-What's even more interesting is that in a **First of Chain** scenario built on a blockchain, **smart mandates** would emerge. Smart mandates are an electronic permit allowing an instance to access someone's specific private data if that person allowed for such access in the first place.
+What's even more interesting is that in a **First of Chain** scenario built on a blockchain, **smart mandates** would emerge. Smart mandates are an electronic permits allowing an instance to access someone's specific private data if that person allowed for such access in the first place.
 
 For example, by signing a contract for a building permit, you could automatically generate a smart mandate to allow specific governmental instances to access nesseccary data for as long as the smart mandate is valid.
 
@@ -58,24 +58,25 @@ In this PoC we primarely focused on replicating the **Last of Chain** scenario a
 
 ## Repository Structure
 
-- **audt-trail-network**: contains the Audit Trail business network model, for HyperLedger Composer
-- **audit-trail-app**: contains an angular front-end application allowing for direct communication with the Audit Trail business network through a rest-server
-- **rest-server**: rest-server launch scripts
-
-## Architecture
-
-Go to [this section](./rest-server#architecture) for a complete overview of the currently implemented architecture.
+- **audt-trail-network**: contains the Audit Trail business network model, for HyperLedger Composer.
+- **audit-trail-app**: contains an `Angular` front-end application allowing for direct communication with the Audit Trail business network through a rest-server.
+- **rest-server**: contains scriptse to launch the rest-server, which connects to the Audit Trail business network.
 
 ## Installation and usage
 
-For a TL;DR installation and setup of **Audit-trail**:
+For a **TL;DR** installation and setup of **Audit-trail**:
 1. [Install HyperLedger Composer on your machine](https://hyperledger.github.io/composer/latest/installing/installing-index.html)
 2. [Install and start the **Audit-trail** business network](./audit-trail-network#deployment-of-the-business-network)
 3. [Run the Composer REST server](rest-server#running-a-single-user-rest-server-development-and-testing)
 4. [Run the Angular Front-End application](./audit-trail-app#running-development-server)
 
-Furthermore, every folder contains it's own readme with documentation and details regarding the code and motivation behind implementation decisions.
+Furthermore, every folder contains it's own readme with documentation and details regarding the code and thought process behind implementation decisions.
+
+## Architecture
+
+Go to [this section](./rest-server#architecture) for a complete overview of the currently implemented architecture.
 
 # Ethereum case study
 
 [Click here](./Ethereum.md) to read the Ethereum case study for this PoC.
+
