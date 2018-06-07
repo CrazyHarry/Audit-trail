@@ -8,7 +8,7 @@ This folder contains the front-end application, which uses Angular 6 and the Com
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`.
 
-The application requires a running HyperLedger Composer node with an installed audit-trail network and running rest-server. For more information on the installation process, [read this section](../Audit-trail#installation-and-usage). The rest server is assumed to listen at `https://localhost:3000`. To change these settings, edit `proxy.conf.js`.
+The application requires a running HyperLedger Composer node with an installed audit-trail network and running rest-server. For more information on the installation process, [read this section](https://github.com/VO-Blockchain/Audit-trail#installation-and-usage). The rest server is assumed to listen at `https://localhost:3000`. To change these settings, edit `proxy.conf.js`.
 
 ## Navigating the application
 
