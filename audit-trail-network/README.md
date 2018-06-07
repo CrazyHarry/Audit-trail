@@ -1,10 +1,10 @@
 # Audit Trail Business Network
 
-This directory contains the business network for the Audit Trail PoC, for [environment department](https://www.omgevingvlaanderen.be/). The business network has been modeled in HyperLedger Composer.
+This directory contains the business network for the Audit Trail PoC, for [Department Environment](https://www.omgevingvlaanderen.be/). The business network has been modeled in HyperLedger Composer.
 
 ## Folder Structure
 
-- **dist**: contains bna files (business network archives) and scripts to create, install and upgrade those.
+- **dist**: contains bna files (business network archives) and scripts to create, install and upgrade them.
 - **features**: contains cucumber-style written scenario tests, which test the business network.
 - **lib**: contains execution code for transactions (also known as smart contracts) written in JavaScript.
 - **models**: contains the business network model in a `*.cto` file.
@@ -14,7 +14,7 @@ This directory contains the business network for the Audit Trail PoC, for [envir
 
 HyperLedger Composer is a set of open source tools allowing for rapid application development of blockchain applications, developed by IBM.
 
-HyperLedger Composer makes it "business friendly" to develop blockchain applications as modeling the data, transactions and smart-contracts are written in an easy to read format.
+HyperLedger Composer makes it "business-friendly" to develop blockchain applications as modelling the data, transactions and smart-contracts are written in an easy-to-read format.
 
 Furthermore, HyperLedger Composer provides tools for:
 - Behaviour Driven Development (BDD) tests written in human-readable text
@@ -23,17 +23,17 @@ Furthermore, HyperLedger Composer provides tools for:
 
 HyperLedger Composer runs on top of HyperLedger Fabric, for more information please visit the [official website](https://hyperledger.github.io/composer/latest/).
 
-As a final note, HyperLedger Composer runs it's applications as "business networks".
+As a final note, HyperLedger Composer runs its applications as "business networks".
 
 ## Business Network
 
 A business network is a combination of a **business network model**, **ACLs** (access control lists) and **smart contracts**.
 
-- The **business network model** is a definition of stakeholders, assets and transactions (operations stakeholders can perform on these assets).
+- The **business network model** is a definition of stakeholders, assets and transactions (operations that stakeholders can perform on these assets).
 
 - The **ACLs** are a dynamic rule-based specification for access control on assets.
 
-- **Smart contracts** are execution statements for transactions, written in javascript.
+- **Smart contracts** are execution statements for transactions, written in JavaScript.
 
 ### Business Network Model Definition
 
@@ -42,39 +42,39 @@ The business network model of **Audit-trail** is defined in `./models/be.vlaande
 Stakeholders are represented as `Participants` in HyperLedger Composer. We have the following stakeholders defined in this model:
 - **Civilians**: People like you and me whose data is being accessed.
 - **Public Servants**: Public Servants who access personal data in certain *contexts*.
-- **Auditors**: Auditors or DPOs (Data Privacy Officers) who will review and audit the access-logs in the system.
-- **Entities**: Departments or entities within the flemish government for which Public Servants and DPOs work for.
+- **Auditors**: Auditors are the DPOs (Data Privacy Officers) who will review and audit the access logs in the system.
+- **Entities**: Departments or entities within the Flemish government for which Public Servants and DPOs work.
 
 In **Audit-trail** the primary asset is a `**LogEntry**`, containing essential data including:
-- Whose data got accessed (Citizen's identifier)
+- Whose data was accessed (Citizen's identifier)
 - When the data was created (timestamp)
 - Who accessed the data (entity and person level)
-- Why the data got accessed (context)
+- Why the data was accessed (context)
 
-The owner of a `LogEntry` is a `Civilian`. `Public Servants` create these log entries when personal data is being accessed in governmental applications.
+The owner of a `LogEntry` is a `Civilian`. `Public Servants` create these log entries when personal data is accessed by government applications.
 
-Whenever the citizen does not agree or understand why some data got accessed, he can dispute the `LogEntry` by creating another asset, an `**AuditRequest**`, and specify his reason for disputing this log.
+Whenever the citizen does not agree or understand why certain data was accessed, he can dispute the `LogEntry` by creating another asset, an `**AuditRequest**`, and specify the reason for disputing this log.
 
 An `**AuditRequest**` links back to the original log the `Civilian` disputed and contains data for the `Auditor` to streamline the reviewing process:
-- A hash to the original log in government's databases.
+- A hash to the original log in government databases.
 - Means to contact the civilian in case of dispute settlement.
 - All information included in the `LogEntry`.
 - The state of the audit request (is it being reviewed? Is it settled?)
 
-Per entity or department an assigned auditor can read these `AuditRequests`, follow up with their respective entities and settle disputes by updating the `Audit Request`'s state.
+Per entity or department the respective DPO can read these `AuditRequests`, follow up and settle disputes by updating the `Audit Request`'s state.
 
 All interactions described above can be executed using 3 scoped transactions:
 - **New Log Entry**: creates a new log entry.
 - **New Audit Request**: creates a new audit request.
-- **Update Audit Request**: updates an audit request.
+- **Update Audit Request**: updates an existing audit request.
 
-Transactions in a *business network model* only define what data has to be included in the transaction for it's succesful completion. The execution code of transactions is specified in smart contracts. The smart contracts for the above transactions can be found in `./lib/transactions.js`.
+Transactions in a *business network model* only define what data has to be included in the transaction for its successful completion. The execution code of transactions is specified in smart contracts. The smart contracts for the above transactions can be found in `./lib/transactions.js`.
 
 ### ACLs
 
-Transactions and read access to assets have to be limited to priveleged participants on the network. This is done using **Access Control Lists**, which are specified in `permissions.acl` using a readable code structure.
+Transactions and read access to assets have to be limited to priviledged participants on the network. This is done using **Access Control Lists**, which are specified in `permissions.acl` using a readable code structure.
 
-ACLs in HyperLedger Composer consist of rules. By default all access is denied, unless a rule matches the interaction. A rule describes statically the following: 
+ACLs in HyperLedger Composer consist of rules. By default all access is denied, unless a rule matches the interaction. A rule statically describes the following: 
 ~~~~
 who (participant) can do which action (operation) on what resource (resource), optionally through which transaction (transaction). 
 ~~~~
@@ -108,9 +108,9 @@ Participant | Rule
 
 ## Business Network Cards
 
-A business network model specifies digitized assets and participants. Whenever someone creates a new participant, say a new `ParticipantCivilian`, this partipant needs to be *mapped* to an identity, a civilian in this case. The **identity issueing** to a particular participant on the blockchain is done by the business network administrator. 
+A business network model specifies digitalized assets and participants. Whenever someone creates a new participant, say a new `ParticipantCivilian`, this partipant needs to be *mapped* to an identity, a civilian in this case. The **identity issuing** to a particular participant on the blockchain is done by the business network administrator. 
 
-Whenever a business network admin issues a new identity, a **business network card** is created. This business network cards is send or given through a secure channel to the person whose identity has been created. The business network card is essentially a wallet containing specifications towards your blockchain identity, the participant you map on, the certficate authority and nessecary information to connect with the Audit-trail business network. 
+Whenever a business network admin issues a new identity, a **business network card** is created. This business network cards is sent or given through a secure channel to the person whose identity has been created. The business network card is essentially a wallet containing specifications towards your blockchain identity, the participant you map on, the certficate authority and necessary information to connect with the Audit-trail business network. 
 
 Compromising a business network card means compromising someone else's identity on the blockchain, which makes it important to keep this business network card safe.
 
@@ -138,13 +138,13 @@ Whenever a new version rolls out and a previous version of audit-trail is runnin
 
 ## Dummy data: Populating the business network with examples
 
-Since this repo contains the code of a Proof-of-Concept implementation of an Audit-Trail application on HyperLedger Composer, it's been decided by authorities to work with dummy data to demonstrate the business network's functionality.
+Since this repo contains the code of a Proof-of-Concept implementation of an Audit-Trail application on HyperLedger Composer, we agreed  to work with dummy data to demonstrate the business network's functionality.
 
 The scripts to generate data are located in the folder `./sample-data/`. To execute the scripts first navigate to this folder first.
 
 ### The dummy data
 
-First we'll add participants to our business network, we'll be adding the following partcipants:
+First we'll add participants to our business network, we'll be adding the following participants:
 - civilians
     - adam
     - dieter
@@ -179,7 +179,7 @@ Run the following commands to issue identites and install the cards:
     cd ..
 ~~~~
 
-The last step involves generating logs and audit requests for these participants. Included is a script which will generate 20 logs and 5 audit requests, attributed randomly to the participants specified above with a random context specification (eg:  'BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', ...).
+The last step involves generating logs and audit requests for these participants. There is a script which will generate 20 logs and 5 audit requests, attributed randomly to the participants specified above with a random context specification (eg:  'BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', ...).
 
 Run the following commands to generate new logs
 ~~~~
@@ -196,5 +196,5 @@ For more information on the rest-server, [click here](../rest-server/README.md).
 
 ## Important Notes
 
-- Implementation is currently tested on a single node setup. This is because HyperLedger Composer deployment on a multi-node and multi-organizational not officially supported.
+- Implementation is currently tested on a single node setup. This is because HyperLedger Composer deployment on a multi-node and multi-organizational setup is not officially supported yet.
 - `LogEntry` assets contain too much information for the citizen to read like for example the public servant who accessed the data. This could be solved by splitting the asset's data into 2: `LogEntry` and `LogEntryDetails`. `LogEntryDetails` would get linked to `LogEntry` but with custom ACLs on the `LogEntryDetails` we can only allow auditors to see these details, whereas the citizens can still access the basic information within `LogEntry`.
