@@ -142,7 +142,7 @@ Since this repo contains the code of a Proof-of-Concept implementation of an Aud
 
 The scripts to generate data are located in the folder `./sample-data/`. To execute the scripts first navigate to this folder first.
 
-### The dummy data
+### Dummy data
 
 First we'll add participants to our business network, we'll be adding the following participants:
 - civilians
@@ -186,6 +186,28 @@ Run the following commands to generate new logs
     cd sample-data
     node generateData.js
     # after succesfull generation press ctrl-c 
+~~~~
+
+## Running tests
+The Audit-trail business network is tested with BDD-style tests, using `cucumber-js`. These tests are written in plain english and describe a scenario and the expected outcomes in each scenario. The tests are located in `./features/scenarios.feature`. Here's an example of such a scenario:
+~~~~
+Scenario: Adam can read his own logs, no one else's
+    When I use the identity adam1 
+    Then I should have the following assets of type be.vlaanderen.audittrail.LogEntry
+        | log_id | timestamp   | carbon_hash | accessed_by      | data_owner       | department_name        | context         |
+        | log1   | 22-01-2018  | qgfv34afa   | daniel@email.com | adam@email.com   | Informatie Vlaanderen  |  BOUWVERGUNNING |
+        | log2   | 23-02-2018  | fafvawqfu   | pascal@email.com | adam@email.com   | Departement Omgeving   |  SUBSIDIE       |
+    And I should not have the following assets of type be.vlaanderen.audittrail.LogEntry
+        | log_id | timestamp   | carbon_hash | accessed_by      | data_owner       | department_name        | context         |
+        | log3   | 24-03-2018  | wawew2eaa   | daniel@email.com | dieter@email.com | Informatie Vlaanderen  |  HUWELIJK       |
+        | log4   | 25-04-2018  | 7a2razw2e   | pascal@email.com | dieter@email.com | Departement Omgeving   |  SOCIALEWONING  |
+        | log5   | 26-03-2018  | utpoaojks   | daniel@email.com | tien@email.com   | Informatie Vlaanderen  |  HUWELIJK       |
+        | log6   | 27-04-2018  | 86jd9xjas   | pascal@email.com | tien@email.com   | Departement Omgeving   |  SOCIALEWONING  |
+~~~~
+
+To run the tests of this business network:
+~~~~
+npm test
 ~~~~
 
 ## Connecting to the business network
