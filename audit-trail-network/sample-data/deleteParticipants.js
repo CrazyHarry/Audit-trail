@@ -36,9 +36,9 @@ function main(error){
         return removeType(toRemove[1]).then(() => {
             return removeType(toRemove[2]).then(() => {
                 return removeType(toRemove[3]).then(() => {
-                    console.log("Succesfully removed all participants from all registries");
+                    console.log('Succesfully removed all participants from all registries');
                 });
-            });    
+            });
         });
     });
 

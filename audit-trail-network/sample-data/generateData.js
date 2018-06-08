@@ -50,16 +50,16 @@ function main(error){
         info.id = Math.random().toString(36).substr(2, 15);
 
         // stakeholders
-        let publicServant = rand(publicServants)
+        let publicServant = rand(publicServants);
         info.publicservant = publicServant.name;
         info.civilian = rand(civilians);
 
         // details
-        if (publicServant.dep === "AIV") {
-            info.context = rand(contextTypes_AIV);    
-        } 
-        else if (publicServant.dep === "OMGEVING") {
-            info.context = rand(contextTypes_DO);    
+        if (publicServant.dep === 'AIV') {
+            info.context = rand(contextTypes_AIV);
+        }
+        else if (publicServant.dep === 'OMGEVING') {
+            info.context = rand(contextTypes_DO);
         }
 
         info.department_name = publicServant.dep;
@@ -74,7 +74,7 @@ function main(error){
         // add the dummy logs
         var createLogPromises = [];
         for (let i = 0; i < 20; i++) {
-            createLogPromises.push(addLogEntry(registry, 
+            createLogPromises.push(addLogEntry(registry,
                 logEntryIds[i].id,
                 logEntryIds[i].publicservant,
                 logEntryIds[i].civilian,
