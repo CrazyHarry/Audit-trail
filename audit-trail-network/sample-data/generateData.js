@@ -34,7 +34,8 @@ function main(error){
 
     var civilians = ['adam', 'dieter', 'bram'];
 
-    var contextTypes = ['BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', 'SOCIALEWONING', 'STEMPELGELD', 'VERKAVELING'];
+    var contextTypes_DO = ['Omgevingsvergunning', 'Bestuurlijke sactionering', 'Erkenning', 'Inspectie'];
+    var contextTypes_AIV = ['Subsidie-aanvraag'];
 
     var Promise = require('es6-promise').Promise;
     var loremIpsum = require('lorem-ipsum'); // to generate free-text
@@ -54,7 +55,13 @@ function main(error){
         info.civilian = rand(civilians);
 
         // details
-        info.context = rand(contextTypes);
+        if (publicServant.dep === "AIV") {
+            info.context = rand(contextTypes_AIV);    
+        } 
+        else if (publicServant.dep === "OMGEVING") {
+            info.context = rand(contextTypes_DO);    
+        }
+
         info.department_name = publicServant.dep;
 
         logEntryIds.push(info);
