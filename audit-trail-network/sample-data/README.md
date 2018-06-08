@@ -2,7 +2,7 @@
 
 Since this repo contains the code of a Proof-of-Concept implementation of an Audit-Trail applicaiton on HyperLedger Composer, it's been decided by authorities to work with dummy data to demonstrate the business network's functionality.
 
-### The dummy data
+### Dummy data
 
 First we'll add participants to our business network, we'll be adding the following partcipants:
 - civilians
@@ -46,11 +46,4 @@ Run the following commands to generate new logs
     cd sample-data
     node generateData.js
     # after succesfull generation press ctrl-c 
-~~~~
-
-## Running Tests
-
-To test the business network
-~~~~
-npm test
 ~~~~

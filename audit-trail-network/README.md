@@ -138,9 +138,9 @@ Whenever a new version rolls out and a previous version of audit-trail is runnin
 
 ## Dummy data: Populating the business network with examples
 
-Since this repo contains the code of a Proof-of-Concept implementation of an Audit-Trail application on HyperLedger Composer, we agreed  to work with dummy data to demonstrate the business network's functionality.
+Since this repo contains the code of a Proof-of-Concept implementation of an Audit-Trail application on HyperLedger Composer, we agreed to work with dummy data to demonstrate the business network's functionality.
 
-The scripts to generate data are located in the folder `./sample-data/`. To execute the scripts first navigate to this folder first.
+The scripts to generate data are located in the folder `./sample-data/`. To execute the scripts first navigate to this folder first. The scripts make use of the [HyperLedger Composer API](https://hyperledger.github.io/composer/latest/reference/JSDOC-README) to communicate with the business network. Another way of adding these resources would be through the REST server, discussed later on.
 
 ### Dummy data
 
@@ -179,7 +179,7 @@ Run the following commands to issue identites and install the cards:
     cd ..
 ~~~~
 
-The last step involves generating logs and audit requests for these participants. There is a script which will generate 20 logs and 5 audit requests, attributed randomly to the participants specified above with a random context specification (eg:  'BOUWVERGUNNING', 'SUBSIDIE', 'GESLACHTSVERANDERING', 'HUWELIJK', ...).
+The last step involves generating logs and audit requests for these participants. There is a script which will generate 20 logs and 5 audit requests, attributed randomly to the participants specified above with a random context specification (eg:  'Bouwvergunning', 'Subsidie', 'Geslachtsverandering', 'Huwelijk', ...).
 
 Run the following commands to generate new logs
 ~~~~
@@ -189,7 +189,7 @@ Run the following commands to generate new logs
 ~~~~
 
 ## Running tests
-The Audit-trail business network is tested with BDD-style tests, using `cucumber-js`. These tests are written in plain english and describe a scenario and the expected outcomes in each scenario. The tests are located in `./features/scenarios.feature`. Here's an example of such a scenario:
+The Audit-trail business network is tested with BDD-style tests, using `cucumber-js`. These tests are written in plain english and describe a scenario and the expected outcomes for each scenario. The tests are located in `./features/scenarios.feature`. Here's an example of such a scenario:
 ~~~~
 Scenario: Adam can read his own logs, no one else's
     When I use the identity adam1 
@@ -205,6 +205,8 @@ Scenario: Adam can read his own logs, no one else's
         | log6   | 27-04-2018  | 86jd9xjas   | pascal@email.com | tien@email.com   | Departement Omgeving   |  SOCIALEWONING  |
 ~~~~
 
+HyperLedger Composer comes out of the box with cucumber-js definitions to match above English sentences onto testing code.
+
 To run the tests of this business network:
 ~~~~
 npm test
@@ -215,6 +217,7 @@ npm test
 Hyperledger Composer comes with a rest-server which automatically scans the business network definition and exposes operations like read, delete, commit transaction and issue identity via a REST protocol.
 
 For more information on the rest-server, [click here](../rest-server/README.md).
+
 
 ## Important Notes
 

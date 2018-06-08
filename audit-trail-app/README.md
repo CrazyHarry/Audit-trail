@@ -1,6 +1,6 @@
 # Audit-Trail Application
 
-![App](./img/app.jpg)
+![App](./img/app.png)
 
 This folder contains the front-end application, which uses Angular 6 and the Composer REST server to facilitate interaction with the Audit-trail business network application.
 
@@ -17,15 +17,15 @@ The Flemish government's processes require citizen's personal data to complete r
 ### Citizen view
 
 After logging in succesfully, the user is provided with a list of logs which he can review.
-![Log Details](./img/log-exploration.jpg)
+![Log Details](./img/log-exploration.png)
 
 Whenever the citizen does not understand why certain data has been accessed, he can **dispute** these by pressing the dispute button. This will open a form allowing for the citizen to reach out to the DPOs (Data Privacy Officers) of the respective entities of the Flemish government, with the option to list a reason for dispute and to leave his/her contact information for follow-up purposes.
 
-![Disputing](./img/dispute.jpg)
+![Disputing](./img/dispute.png)
 
 Filing a dispute creates an **audit request** which is a document with an attached log, the citizen's complaint and other important information for the DPO. The user can review his audit-request and their state (In Revision, Requested or Done) by clicking on the 'Audit Request' tab, at the top menu of the application.
 
-![Audit Request](./img/audit-request.jpg)
+![Audit Request](./img/audit-request.png)
 
 The audit request overview looks similar to the log-overview. The user can expand an audit request to review its contents and track the progress.
 
@@ -36,7 +36,7 @@ The auditor has the same views and controls as a citizen user, however the logs 
 
 The auditor is also allowed to see more information within the logs, including a "hash" to a carbon copy log on internal databases and public servant's ID to investigate when and why personal data was accessed.
 
-![Auditor Review](./img/auditor-audit-request.jpg)
+![Auditor Review](./img/auditor-audit-request.png)
 
 ## Authentication
 
