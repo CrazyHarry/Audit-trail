@@ -126,7 +126,21 @@ export class LogEntryComponent implements OnInit {
       result.forEach(asset => {
         tempList.push(asset);
       });
-      this.allAssets = tempList;
+
+      // used to sort output
+      function compare(a,b) {
+        var aa = new Date(a.timestamp);
+        var bb = new Date(b.timestamp);
+
+        if (aa < bb)
+          return 1;
+        if (aa > bb)
+          return -1;
+        return 0;
+      }
+
+      // set allAssets to sorted
+      this.allAssets = tempList.sort(compare);
     })
     .catch((error) => {
         if(error == 'Server error'){

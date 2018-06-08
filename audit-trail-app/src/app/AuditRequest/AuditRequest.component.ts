@@ -135,7 +135,22 @@ export class AuditRequestComponent implements OnInit {
         return this.loadRelevantLog(asset.log_to_review, asset);
       });
       this.allAssets = tempList;
-      console.log(this.allAssets);
+
+      // used to sort output
+      function compare(a,b) {
+        var aa = new Date(a.timestamp);
+        var bb = new Date(b.timestamp);
+
+        if (aa < bb)
+          return 1;
+        if (aa > bb)
+          return -1;
+        return 0;
+      }
+
+      // set allAssets to sorted
+      this.allAssets = tempList.sort(compare);
+
     })
     .catch((error) => {
         if(error == 'Server error'){
