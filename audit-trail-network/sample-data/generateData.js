@@ -143,7 +143,7 @@ function main(error){
         let data_owner = factory.newRelationship(namespace, 'ParticipantCivilian', data_owner_id);
 
         // add timestamp
-        var d = new Date();
+        var d = randomDate();
         var date = d.toUTCString();
         logResource.setPropertyValue('timestamp',date);
 
@@ -155,6 +155,34 @@ function main(error){
         logResource.setPropertyValue('department_name', department);
 
         return registry.add(logResource);
+    }
+
+    /**
+     * @param startHour
+     * @param endHour
+     */
+    function randomDate(startHour = 8, endHour = 17) {
+        // get date from 2 months ago
+        var start = new Date();
+        start.setMonth(start.getMonth() - 2);
+
+        // get the current date
+        var now = new Date();
+        now.setDate(now.getDate() - 1);
+
+        // generate random date between start and now, on workdays
+        var dayOfWeek = 6;
+        var date;
+        while (dayOfWeek === 0 || dayOfWeek === 6){
+            date = new Date(+start + Math.random() * (now - start));
+            dayOfWeek = date.getDay();
+        }
+
+        // make the access hours between 8 and 17
+        var hour = startHour + Math.random() * (endHour - startHour) | 0;
+        date.setHours(hour);
+
+        return date;
     }
 
     /**
@@ -175,7 +203,7 @@ function main(error){
         let log_to_review = factory.newRelationship(namespace, 'LogEntry', log_id);
 
         // add timestamp
-        var d = new Date();
+        var d = randomDate();
         var date = d.toUTCString();
         auditRequestResource.setPropertyValue('timestamp',date);
 
