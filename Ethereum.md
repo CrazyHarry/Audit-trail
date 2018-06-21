@@ -56,4 +56,4 @@ A first of chain scenario would encapsulate the following steps before a user co
 
 ## Conclusion
 
-In the current state of Ethereum development, we wouldn't adivse to use Ethereum as a store for logs or for anchoring. The case does becomes more interesting, when we start seeing smart contracts as autonomous, self-containing and self-enforcing containers, for permissioned private data access. However we believe it will take a few years before this will be the case.
+In the current state of Ethereum development, we wouldn't adivse to use Ethereum as a store for logs or for anchoring. The case does become more interesting, when we start seeing smart contracts as autonomous, self-containing and self-enforcing containers, for permissioned private data access. However we believe it will take a few years before this will be the case.
