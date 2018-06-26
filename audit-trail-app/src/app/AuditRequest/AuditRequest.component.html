@@ -292,7 +292,7 @@
   
   <div class="row">
     <div class="col-md-9">
-        <h1 class="asset-title" id='assetName'>Audit Requests</h1>
+        <h1 class="asset-title" id='assetName'>Mijn Aanvragen</h1>
     </div>
     <div class="col-md-3">
     </div>
@@ -330,13 +330,13 @@
             </mat-form-field>
 
             <mat-form-field>
-              <textarea matInput [readonly]="true" placeholder="Aanvraag context">{{ asset.issue_context }}</textarea>
+              <textarea matInput [readonly]="true" placeholder="Bedenkingen van de zender">{{ asset.issue_context }}</textarea>
             </mat-form-field>
 
             <mat-expansion-panel>
               <mat-expansion-panel-header>
                 <mat-panel-title>
-                    Log in Kwestie
+                    Raadpleging in Kwestie
                 </mat-panel-title>
                 <mat-panel-description class="asset-short-description">
                     {{ asset.timestamp | date: 'dd/MM/yyyy'}}
@@ -347,7 +347,7 @@
                     <input [readonly]="true" matInput placeholder="Context" value="{{ asset.log_details.context }}">
                   </mat-form-field>
                   <mat-form-field>
-                      <input [readonly]="true" matInput placeholder="Departement" value="{{ asset.log_details.department_name }}">
+                      <input [readonly]="true" matInput placeholder="Entiteit" value="{{ asset.log_details.department_name }}">
                   </mat-form-field>
                   <mat-form-field>
                       <input [readonly]="true" matInput placeholder="Weergave gebruiker" value="Entiteit {{ asset.log_details.department_name }} heeft uw gegevens bekeken in het kader van {{ asset.log_details.context | titlecase }}">
@@ -356,7 +356,7 @@
                       <input [readonly]="true" matInput placeholder="Data geraadpleegd door" value="{{ asset.log_details.accessed_by | slice:45}}">
                   </mat-form-field>
                   <mat-form-field>
-                    <input [readonly]="true" matInput placeholder="Data Eigenaar" value="{{ asset.log_details.data_owner | slice:45}}">
+                    <input [readonly]="true" matInput placeholder="Data eigenaar" value="{{ asset.log_details.data_owner | slice:45}}">
                   </mat-form-field>
                   <h4 *ngIf="auditorView()">Details</h4>
                   <mat-form-field *ngIf="auditorView()">

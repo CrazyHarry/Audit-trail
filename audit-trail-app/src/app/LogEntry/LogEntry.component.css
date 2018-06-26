@@ -37,6 +37,10 @@ strong {
     padding-right: 72px;
 }
 
+.btn-send {
+    margin-right: 5px;
+}
+
 .btn-primary {
     background: #844AE4;
     border-radius: 4px;

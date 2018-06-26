@@ -283,11 +283,11 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="deleteAssetModalLabel">Betwist raadpleging</h4>
+        <h4 class="modal-title" id="deleteAssetModalLabel">Verduidelijking vragen</h4>
       </div>
       <form [formGroup]="myForm" (ngSubmit)="submitAuditRequest(issue_context, contact_email)">
         <div class="modal-body">
-          Bent u zeker dat u de raadpleging wilt betwisten en hierbij een audit aanvraag zal doorsturen naar de Vlaamse Overheid?
+          Bent u zeker dat u een verduidelijking wilt opvragen en hierbij een aanvraag zal opsturen naar de Vlaamse Overheid? Beschrijf uw bedenkingen hieronder voor de ombudsman.
         </div>
 
         <!-- Issue context text -->
@@ -302,7 +302,7 @@
 
         <div class="modal-footer">
           <button (click)="alert(issue_context)" type="button" class="btn btn-default" >Terug</button> <!-- data-dismiss="modal" -->
-          <button (click)="submitAuditRequest(contactmail.value, issuecontext.value)" type="submit" class="btn btn-danger" data-dismiss="modal">Versturen</button>
+          <button (click)="submitAuditRequest(contactmail.value, issuecontext.value)" type="submit" class="btn btn-danger btn-send" data-dismiss="modal">Versturen</button>
         </div>
       </form>
     </div>
@@ -317,7 +317,7 @@
   
   <div class="row">
     <div class="col-md-9">
-        <h1 class="asset-title" id='assetName'>Logs</h1>
+        <h1 class="asset-title" id='assetName'>Raadplegingen</h1>
     </div>
     <div class="col-md-3">
       <!-- <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssetModal">
@@ -353,14 +353,14 @@
             <!-- Expansion Panel Contents when expanded (log details) -->
             <div class="asset-container">
               <mat-form-field>
-                  <input [readonly]="true" matInput placeholder="Bekeken door departement" value="{{ asset.department_name }}">
+                  <input [readonly]="true" matInput placeholder="Bekeken door entiteit" value="{{ asset.department_name }}">
               </mat-form-field>
               <mat-form-field>
                 <input [readonly]="true" matInput placeholder="Context" value="{{ asset.context }}">
               </mat-form-field>
               
               <mat-action-row *ngIf="civilianView()">
-                <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Betwist raadpleging</button>
+                <button mat-button color="warn" (click)="setId(asset.log_id);" type="button" data-toggle="modal" data-target="#createAuditReport">Verduidelijking vragen</button>
               </mat-action-row>
             </div>
 

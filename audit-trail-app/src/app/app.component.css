@@ -31,6 +31,7 @@
     /* border: 1px solid green; */
     /* overflow: hidden; */
     margin-top: 16px;
+    padding-left: 10px;
 }
 
 #last {
@@ -42,7 +43,9 @@
 .container-fluid {
     display: grid;
     margin-left: 72px;
-    padding-left: 0px;
+    margin-right: 72px;
+    padding: 0px;
+
 }
 
 .navbar {
