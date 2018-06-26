@@ -34,19 +34,19 @@
       <ul class="nav  nav-tabs">
 
         <li *ngIf="active === 'log'" class="nav active"> 
-          <a [routerLink]="['/LogEntry']" data-toggle="tab" (click)="toggle('log')">Logs</a>
+          <a [routerLink]="['/Raadplegingen']" data-toggle="tab" (click)="toggle('log')">Raadplegingen</a>
         </li>
 
         <li *ngIf="active !== 'log'" class="nav"> 
-          <a [routerLink]="['/LogEntry']" data-toggle="tab" (click)="toggle('log')">Logs</a>
+          <a [routerLink]="['/Raadplegingen']" data-toggle="tab" (click)="toggle('log')">Raadplegingen</a>
         </li>
 
         <li *ngIf="active === 'audit'" class="nav active">
-          <a [routerLink]="['/AuditRequest']" data-toggle="tab" (click)="toggle('audit')">Audit Requests</a>
+          <a [routerLink]="['/Aanvragingen']" data-toggle="tab" (click)="toggle('audit')">Mijn Aanvragen</a>
         </li>
 
         <li *ngIf="active !== 'audit'" class="nav">
-          <a [routerLink]="['/AuditRequest']" data-toggle="tab" (click)="toggle('audit')">Audit Requests</a>
+          <a [routerLink]="['/Aanvragingen']" data-toggle="tab" (click)="toggle('audit')">Mijn Aanvragen</a>
         </li>
 
       </ul>
