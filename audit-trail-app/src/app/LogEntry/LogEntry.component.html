@@ -341,8 +341,12 @@
 
             <!-- Expansion Panel Header (title and date) -->
             <mat-expansion-panel-header>
-                <mat-panel-title>
+                <mat-panel-title *ngIf="civilianView()">
                   Entiteit <strong> {{ asset.department_name }}</strong> heeft uw gegevens bekeken in het kader van <strong>{{ asset.context | titlecase }}</strong>
+                </mat-panel-title>
+
+                <mat-panel-title *ngIf="!civilianView()">
+                  Entiteit <strong> {{ asset.department_name }}</strong> heeft gegevens bekeken in het kader van <strong>{{ asset.context | titlecase }}</strong>
                 </mat-panel-title>
 
                 <mat-panel-description class="asset-short-description">
@@ -352,6 +356,10 @@
             
             <!-- Expansion Panel Contents when expanded (log details) -->
             <div class="asset-container">
+              <mat-form-field *ngIf="!civilianView()">
+                  <input [readonly]="true" matInput placeholder="Eigenaar" value="{{ asset.data_owner  | slice:45 }}">
+              </mat-form-field>
+
               <mat-form-field>
                   <input [readonly]="true" matInput placeholder="Bekeken door entiteit" value="{{ asset.department_name }}">
               </mat-form-field>
